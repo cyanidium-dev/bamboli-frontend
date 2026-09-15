@@ -4,10 +4,11 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
+import { categories } from "@/data/categories";
 import { cn, declOfNum } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 
-type SortKey = "featured" | "price-asc" | "price-desc" | "new";
+export type SortKey = "featured" | "price-asc" | "price-desc" | "new";
 
 const sortOptions: { key: SortKey; label: string }[] = [
   { key: "featured", label: "Рекомендовані" },
@@ -16,11 +17,9 @@ const sortOptions: { key: SortKey; label: string }[] = [
   { key: "price-desc", label: "Ціна: спадання" },
 ];
 
-const categoryLabels: Record<string, string> = {
-  clothing: "Одяг",
-  toys: "Іграшки",
-  accessories: "Аксесуари",
-};
+const categoryLabels: Record<string, string> = Object.fromEntries(
+  categories.map((category) => [category.slug, category.title]),
+);
 
 /**
  * `filterBy` keeps the toolbar honest: a mixed catalogue filters by section,
@@ -30,11 +29,13 @@ const categoryLabels: Record<string, string> = {
 export default function CatalogView({
   products,
   filterBy = "size",
+  initialSort = "featured",
 }: {
   products: Product[];
   filterBy?: "size" | "category";
+  initialSort?: SortKey;
 }) {
-  const [sort, setSort] = useState<SortKey>("featured");
+  const [sort, setSort] = useState<SortKey>(initialSort);
   const [sortOpen, setSortOpen] = useState(false);
   const [size, setSize] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);

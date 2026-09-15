@@ -1,380 +1,675 @@
-import { Product, SizeOption } from "@/types/product";
+import {
+  Audience,
+  Badge,
+  CategorySlug,
+  Product,
+  ProductKind,
+  SizeOption,
+} from "@/types/product";
 
-const sizes = (labels: string[], soldOut: string[] = []): SizeOption[] =>
-  labels.map((label) => ({ label, inStock: !soldOut.includes(label) }));
+/**
+ * Demo catalogue built from the @bamboli.ua / @bamboli.land Instagram export
+ * (docs/spec/instagram-content-export.md). Prices are as posted — verify
+ * against the current price list before launch. Will be replaced by Sanity.
+ */
 
-const BABY = ["56", "62", "68", "74", "80"];
-const TODDLER = ["80", "86", "92", "98", "104"];
-const KID = ["92", "98", "104", "110", "116"];
+type SizeSeed = [label: string, price: number, oldPrice?: number];
 
-export const products: Product[] = [
+interface Seed {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  category: CategorySlug;
+  kind?: ProductKind;
+  badges?: Badge[];
+  audience?: Audience;
+  brand?: string;
+  /** Used when a product has no size groups (toys, accessories). */
+  price?: number;
+  oldPrice?: number;
+  sizes?: SizeSeed[];
+  image: string;
+  colors?: { id: string; name: string; hex: string }[];
+  description: string;
+  details: { label: string; value: string }[];
+}
+
+const photo = (file: string) => `/images/bamboli/products/${file}`;
+const landPhoto = (file: string) => `/images/bamboli/land/${file}`;
+
+const OWN_PRODUCTION = { label: "Виробництво", value: "Власне, Львів" };
+
+function build(seed: Seed): Product {
+  const sizes: SizeOption[] = (seed.sizes ?? []).map(
+    ([label, price, oldPrice]) => ({ label, inStock: true, price, oldPrice }),
+  );
+  const cheapest = sizes.reduce<SizeOption | undefined>(
+    (min, size) => (!min || size.price! < min.price! ? size : min),
+    undefined,
+  );
+
+  return {
+    id: seed.id,
+    slug: seed.slug,
+    title: seed.title,
+    subtitle: seed.subtitle,
+    category: seed.category,
+    kind: seed.kind ?? "apparel",
+    price: cheapest?.price ?? seed.price ?? 0,
+    oldPrice: cheapest?.oldPrice ?? seed.oldPrice,
+    badges: seed.badges ?? [],
+    audience: seed.audience,
+    brand: seed.brand,
+    description: seed.description,
+    details: seed.details,
+    colors: (seed.colors ?? [{ id: "c-main", name: "Як на фото", hex: "#E8DFD2" }]).map(
+      (color) => ({ ...color, images: [seed.image], sizes }),
+    ),
+  };
+}
+
+const seeds: Seed[] = [
+  /* ——— Для малюків ——— */
   {
-    id: "p-001",
-    slug: "komplekt-vyazanyi-norra",
-    title: "Комплект в’язаний Norra",
-    subtitle: "меринос · 100%",
-    category: "clothing",
-    kind: "apparel",
-    price: 2340,
-    badges: ["bestseller"],
-    description:
-      "Кофтинка та штанці з тонкого мериносу з м’якою резинкою на поясі. В’яжеться однією деталлю, тож усередині немає жодного шва, який міг би тиснути.",
-    details: [
-      { label: "Склад", value: "100% меринос (superwash)" },
-      { label: "Догляд", value: "Делікатне прання 30°, сушити горизонтально" },
-      { label: "Виробництво", value: "Україна" },
+    id: "b-001",
+    slug: "romper-z-vushkamy",
+    title: "Ромпер з вушками",
+    subtitle: "трикотаж · на заклепках",
+    category: "dlya-malyukiv",
+    badges: ["top"],
+    sizes: [
+      ["56–62", 880],
+      ["68–74", 980],
+      ["80–86", 1080],
     ],
+    image: photo("DcyHUZyAG5o_1.jpg"),
     colors: [
-      {
-        id: "c-milk",
-        name: "Молочний",
-        hex: "#EFE7DA",
-        images: [
-          "/images/products/knit-set-1.jpg",
-          "/images/products/knit-set-2.jpg",
-        ],
-        sizes: sizes(BABY, ["56"]),
-      },
-      {
-        id: "c-caramel",
-        name: "Карамель",
-        hex: "#C8A882",
-        images: [
-          "/images/products/knit-set-2.jpg",
-          "/images/products/knit-set-1.jpg",
-        ],
-        sizes: sizes(BABY),
-      },
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+      { id: "c-beige", name: "Беж", hex: "#D8C3A5" },
+      { id: "c-mocha", name: "Мокко", hex: "#8B6B55" },
+      { id: "c-grey", name: "Сірий", hex: "#B7B3AC" },
+    ],
+    description:
+      "Наш бестселер: м'який ромпер із вушками на капюшоні та заклепками по всій довжині — легко вдягати навіть сонного малюка. Є в 9 кольорах.",
+    details: [
+      { label: "Застібка", value: "Заклепки" },
+      { label: "Кольори", value: "9 відтінків" },
+      OWN_PRODUCTION,
     ],
   },
   {
-    id: "p-002",
-    slug: "doshchovyk-rain",
-    title: "Дощовик Rain",
-    subtitle: "мембрана · 5 000 мм",
-    category: "clothing",
-    kind: "apparel",
-    price: 1890,
-    badges: [],
+    id: "b-002",
+    slug: "romper-double-face",
+    title: "Ромпер double face",
+    subtitle: "трикотаж double face · сірий",
+    category: "dlya-malyukiv",
+    badges: ["new"],
+    sizes: [
+      ["56–68", 950],
+      ["74–86", 1150],
+    ],
+    image: photo("DdBq1thADEF_1.jpg"),
+    colors: [{ id: "c-grey", name: "Сірий", hex: "#A9A6A1" }],
     description:
-      "Прямий силует, проклеєні шви та капюшон на кнопках. Ширина розрахована так, щоб дощовик легко вдягався поверх светра.",
-    details: [
-      { label: "Склад", value: "Поліестер з PU-мембраною" },
-      { label: "Водостійкість", value: "5 000 мм" },
-      { label: "Догляд", value: "Протирати вологою губкою, не прасувати" },
-    ],
-    colors: [
-      {
-        id: "c-saffron",
-        name: "Шафран",
-        hex: "#E3B23C",
-        images: [
-          "/images/products/raincoat-1.jpg",
-          "/images/products/raincoat-2.jpg",
-        ],
-        sizes: sizes(KID, ["116"]),
-      },
-      {
-        id: "c-graphite",
-        name: "Графіт",
-        hex: "#4A4A48",
-        images: [
-          "/images/products/raincoat-2.jpg",
-          "/images/products/raincoat-1.jpg",
-        ],
-        sizes: sizes(KID),
-      },
-    ],
+      "Щільний двошаровий трикотаж тримає форму й тепло — ромпер для прохолодних осінніх днів.",
+    details: [{ label: "Тканина", value: "Трикотаж double face" }, OWN_PRODUCTION],
   },
   {
-    id: "p-003",
-    slug: "palto-snow",
-    title: "Пальто Snow",
-    subtitle: "вовна · утеплене",
-    category: "clothing",
-    kind: "apparel",
-    price: 3280,
-    oldPrice: 3900,
+    id: "b-003",
+    slug: "kombinezon-na-zamochok",
+    title: "Комбінезон на замочок",
+    subtitle: "верхній шар · молочний, беж",
+    category: "dlya-malyukiv",
+    badges: ["new"],
+    sizes: [
+      ["56–68", 1750],
+      ["74–86", 1950],
+    ],
+    image: photo("DdOY5H9AFNP_frame.jpg"),
+    colors: [
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+      { id: "c-beige", name: "Беж", hex: "#D8C3A5" },
+    ],
+    description:
+      "Комбінезон на блискавці як верхній шар для прогулянок: швидко вдягається й зручно поєднується з ромпером.",
+    details: [{ label: "Застібка", value: "Блискавка" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-004",
+    slug: "romper-u-rubchyk",
+    title: "Ромпер у рубчик",
+    subtitle: "рубчик · на ґудзичках",
+    category: "dlya-malyukiv",
+    sizes: [
+      ["56–68", 580],
+      ["74–86", 680],
+    ],
+    image: photo("DctTwuVAL0__1.jpg"),
+    description:
+      "Базовий ромпер у м'який рубчик на ґудзичках — на кожен день і під плед.",
+    details: [{ label: "Тканина", value: "Трикотаж у рубчик" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-005",
+    slug: "bodi-pisochnyk-muslin",
+    title: "Боді + пісочник у полоску",
+    subtitle: "муслін · комплект",
+    category: "dlya-malyukiv",
     badges: ["sale"],
+    sizes: [
+      ["56–68", 1280, 1600],
+      ["74–86", 1280, 1600],
+    ],
+    image: photo("DbiFxSIjK2v_1.jpg"),
     description:
-      "Утеплене пальто прямого крою з вовняної тканини. Приховані кнопки, глибокі кишені й підкладка з бавовни, яка не електризується.",
-    details: [
-      { label: "Склад", value: "60% вовна, підкладка — бавовна" },
-      { label: "Температура", value: "від +5 до −5 °C" },
-      { label: "Догляд", value: "Хімчистка або делікатне прання 30°" },
-    ],
-    colors: [
-      {
-        id: "c-sand",
-        name: "Пісочний",
-        hex: "#D9CBB6",
-        images: [
-          "/images/products/coat-1.jpg",
-          "/images/products/coat-2.jpg",
-        ],
-        sizes: sizes(TODDLER, ["80"]),
-      },
-      {
-        id: "c-moss",
-        name: "Мох",
-        hex: "#7C8A72",
-        images: [
-          "/images/products/coat-2.jpg",
-          "/images/products/coat-1.jpg",
-        ],
-        sizes: sizes(TODDLER),
-      },
-    ],
+      "Легкий мусліновий комплект у полоску: боді й пісочник, які дихають навіть у спеку.",
+    details: [{ label: "Тканина", value: "Муслін" }, OWN_PRODUCTION],
   },
   {
-    id: "p-004",
-    slug: "romper-cloud",
-    title: "Ромпер Cloud",
-    subtitle: "органічна бавовна",
-    category: "clothing",
-    kind: "apparel",
-    price: 1240,
+    id: "b-006",
+    slug: "lyanyi-pisochnyk",
+    title: "Лляний пісочник у полоску",
+    subtitle: "льон",
+    category: "dlya-malyukiv",
+    badges: ["sale"],
+    sizes: [
+      ["56–68", 675, 750],
+      ["74–86", 765, 850],
+    ],
+    image: photo("DbJBQU6srKj_frame.jpg"),
+    description: "Лляний пісочник у тонку полоску — прохолодний і приємний до шкіри.",
+    details: [{ label: "Тканина", value: "Льон" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-007",
+    slug: "vyshytyi-pisochnyk",
+    title: "Вишитий пісочник",
+    subtitle: "білий, коричневий",
+    category: "dlya-malyukiv",
+    sizes: [
+      ["56–68", 1750],
+      ["74–86", 1950],
+    ],
+    image: photo("DaaJHaejOA3_1.jpg"),
+    colors: [
+      { id: "c-white", name: "Білий", hex: "#F6F3EE" },
+      { id: "c-brown", name: "Коричневий", hex: "#7A5A45" },
+    ],
+    description:
+      "Перша вишиванка для найменших: пісочник із вишивкою, до якого пасує вишитий плед.",
+    details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
+  },
+
+  /* ——— Костюми ——— */
+  {
+    id: "b-010",
+    slug: "lyanyi-kostyum",
+    title: "Лляний костюм",
+    subtitle: "льон · 4 кольори",
+    category: "kostyumy",
+    badges: ["top"],
+    sizes: [
+      ["80–104", 2350],
+      ["110–134", 2650],
+    ],
+    image: photo("Dau5VCljHF6_1.jpg"),
+    colors: [
+      { id: "c-ivory", name: "Айворі", hex: "#F3EDE1" },
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+      { id: "c-blue", name: "Блакитний", hex: "#BCCBD8" },
+      { id: "c-pink", name: "Пудрово-рожевий", hex: "#E5C9C3" },
+    ],
+    description:
+      "Топ продажів сезону: лляний костюм вільного крою, у якому дитині легко й гарно — і на прогулянку, і на свято.",
+    details: [{ label: "Тканина", value: "Льон" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-011",
+    slug: "kostyumchyk-v-klitynku",
+    title: "Костюмчик у клітинку",
+    subtitle: "комплект · хіт",
+    category: "kostyumy",
+    badges: ["top", "sale"],
+    sizes: [
+      ["80–92", 1488, 1860],
+      ["110–116", 1648, 2060],
+    ],
+    image: photo("DbLMqjDDOpx_1.jpg"),
+    description: "Костюмчик у клітинку, який повторювали на прохання мам.",
+    details: [OWN_PRODUCTION],
+  },
+  {
+    id: "b-012",
+    slug: "sportyvnyi-kostyum-polar",
+    title: "Спортивний костюм полар фліс",
+    subtitle: "полар фліс · молочний, чорний",
+    category: "kostyumy",
     badges: ["new"],
-    description:
-      "Ромпер на кнопках по всій довжині ніжки — перевдягти можна однією рукою. Полотно пом’якшене без хімії, тому приємне з першого дня.",
-    details: [
-      { label: "Склад", value: "100% органічна бавовна GOTS" },
-      { label: "Застібка", value: "Нікель-фрі кнопки" },
-      { label: "Догляд", value: "Прання 40°, без відбілювача" },
+    sizes: [
+      ["80–104", 2080],
+      ["110–134", 2280],
     ],
+    image: photo("Dc3mdRMgKVa_1.jpg"),
     colors: [
-      {
-        id: "c-powder",
-        name: "Пудра",
-        hex: "#E8D3D1",
-        images: [
-          "/images/products/romper-1.jpg",
-          "/images/products/romper-2.jpg",
-        ],
-        sizes: sizes(BABY),
-      },
-      {
-        id: "c-milk",
-        name: "Молочний",
-        hex: "#F2EDE6",
-        images: [
-          "/images/products/romper-2.jpg",
-          "/images/products/romper-1.jpg",
-        ],
-        sizes: sizes(BABY, ["80"]),
-      },
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+      { id: "c-black", name: "Чорний", hex: "#2A2826" },
     ],
+    description: "Теплий флісовий костюм на осінь — м'який, легкий і не сковує рухів.",
+    details: [{ label: "Тканина", value: "Полар фліс" }, OWN_PRODUCTION],
   },
   {
-    id: "p-005",
-    slug: "kardygan-oversayz-olen",
-    title: "Кардиган оверсайз Olen",
-    subtitle: "вовна · альпака",
-    category: "clothing",
-    kind: "apparel",
-    price: 2680,
-    badges: ["bestseller"],
-    description:
-      "Об’ємне плетіння з домішкою альпаки й приспущена лінія плеча. Носиться і як кардиган, і як легке пальто в міжсезоння.",
-    details: [
-      { label: "Склад", value: "70% вовна, 30% альпака" },
-      { label: "Посадка", value: "Оверсайз, беріть свій розмір" },
-      { label: "Догляд", value: "Хімчистка або ручне прання 30°" },
+    id: "b-013",
+    slug: "kostyum-muslinovyi",
+    title: "Мусліновий костюм",
+    subtitle: "муслін · довгий рукав",
+    category: "kostyumy",
+    badges: ["sale"],
+    sizes: [
+      ["80–104", 826, 1180],
+      ["110–134", 966, 1380],
     ],
-    colors: [
-      {
-        id: "c-oat",
-        name: "Вівсяний",
-        hex: "#D8C9AF",
-        images: [
-          "/images/products/cardigan-1.jpg",
-          "/images/products/cardigan-2.jpg",
-        ],
-        sizes: sizes(KID, ["92"]),
-      },
-      {
-        id: "c-terracotta",
-        name: "Теракота",
-        hex: "#B4674D",
-        images: [
-          "/images/products/cardigan-2.jpg",
-          "/images/products/cardigan-1.jpg",
-        ],
-        sizes: sizes(KID),
-      },
-    ],
+    image: photo("DbVVrvsjFDv_1.jpg"),
+    description: "Легкий мусліновий костюм з довгим рукавом для теплих днів.",
+    details: [{ label: "Тканина", value: "Муслін" }, OWN_PRODUCTION],
   },
   {
-    id: "p-006",
-    slug: "suknya-tula",
-    title: "Сукня Tula",
-    subtitle: "фатин · бавовняна підкладка",
-    category: "clothing",
-    kind: "apparel",
-    price: 2150,
+    id: "b-014",
+    slug: "sorochka-shorty",
+    title: "Сорочка + шорти",
+    subtitle: "комплект",
+    category: "kostyumy",
+    badges: ["sale"],
+    audience: "boys",
+    sizes: [
+      ["86–104", 2032, 2540],
+      ["116–146", 2032, 2540],
+    ],
+    image: photo("DbGVpStDJHT_1.jpg"),
+    description: "Сорочка й шорти — стриманий комплект у дорослому стилі.",
+    details: [OWN_PRODUCTION],
+  },
+  {
+    id: "b-015",
+    slug: "lyanyi-kostyum-z-bluzoyu",
+    title: "Лляний костюм з блузою",
+    subtitle: "льон · блакитний",
+    category: "kostyumy",
+    badges: ["sale"],
+    sizes: [
+      ["92–104", 1660, 2260],
+      ["110–134", 1960, 2260],
+    ],
+    image: photo("DbDleIFjJTR_1.jpg"),
+    colors: [{ id: "c-blue", name: "Блакитний", hex: "#BCCBD8" }],
+    description: "Блуза на зав'язках і штани з льону у ніжному блакитному.",
+    details: [{ label: "Тканина", value: "Льон" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-016",
+    slug: "kostyum-bluza-z-ryusheyu",
+    title: "Костюм: блуза з рюшею + палаццо",
+    subtitle: "у клітинку",
+    category: "kostyumy",
+    audience: "girls",
+    sizes: [
+      ["80–104", 1860],
+      ["110–134", 2060],
+    ],
+    image: photo("DaSzYEZDPcT_1.jpg"),
+    description: "Блуза з рюшею та широкі палаццо у клітинку.",
+    details: [OWN_PRODUCTION],
+  },
+
+  /* ——— Верхній одяг ——— */
+  {
+    id: "b-020",
+    slug: "kurtka-z-komirom",
+    title: "Куртка з коміром",
+    subtitle: "вельветовий комір · коричневий, беж",
+    category: "verkhniy-odyag",
+    badges: ["top", "new"],
+    sizes: [
+      ["80–104", 2380],
+      ["110–134", 2680],
+    ],
+    image: photo("DdTpZ6sgAxN_1.jpg"),
+    colors: [
+      { id: "c-beige", name: "Беж", hex: "#B9A48F" },
+      { id: "c-brown", name: "Коричневий", hex: "#6E5140" },
+    ],
+    description:
+      "Хіт минулого сезону, який ми повторили через попит. Виглядає вдало і зі спортивним костюмом, і в класичному образі.",
+    details: [OWN_PRODUCTION],
+  },
+  {
+    id: "b-021",
+    slug: "trench",
+    title: "Тренч",
+    subtitle: "беж, шоколад, коричневий",
+    category: "verkhniy-odyag",
     badges: ["new"],
-    description:
-      "Три шари м’якого фатину на бавовняній підкладці — тримає форму, але не колеться. Пояс на широкій резинці без застібок.",
-    details: [
-      { label: "Склад", value: "Верх — поліамід, підкладка — бавовна" },
-      { label: "Довжина", value: "Міді, нижче коліна" },
-      { label: "Догляд", value: "Ручне прання 30°, сушити на плічках" },
+    sizes: [
+      ["80–104", 2190],
+      ["110–134", 2390],
     ],
+    image: photo("Dc_H2t7AAcg_1.jpg"),
     colors: [
-      {
-        id: "c-charcoal",
-        name: "Вугільний",
-        hex: "#2A2826",
-        images: ["/images/products/dress-1.jpg", "/images/products/dress-2.jpg"],
-        sizes: sizes(KID),
-      },
-      {
-        id: "c-powder",
-        name: "Пудра",
-        hex: "#E8D3D1",
-        images: ["/images/products/dress-2.jpg", "/images/products/dress-1.jpg"],
-        sizes: sizes(KID, ["110", "116"]),
-      },
+      { id: "c-beige", name: "Беж", hex: "#CDB89C" },
+      { id: "c-choco", name: "Шоколад", hex: "#4E3A2F" },
+      { id: "c-brown", name: "Коричневий", hex: "#7A5A45" },
     ],
+    description: "Стильний тренч для осінніх прогулянок — як у мами, тільки менший.",
+    details: [OWN_PRODUCTION],
   },
   {
-    id: "p-007",
-    slug: "pinetky-vyazani-lys",
-    title: "Пінетки в’язані Lys",
-    subtitle: "меринос · ручна робота",
-    category: "accessories",
-    kind: "apparel",
-    price: 690,
-    badges: [],
+    id: "b-022",
+    slug: "bomber",
+    title: "Бомбер",
+    subtitle: "осінній образ",
+    category: "verkhniy-odyag",
+    sizes: [
+      ["80–104", 1850],
+      ["110–134", 2050],
+    ],
+    image: photo("Dc6HRO8AI2x_1.jpg"),
+    description: "Бомбер, який легко поєднати з костюмом олімпійка + палаццо.",
+    details: [OWN_PRODUCTION],
+  },
+
+  /* ——— Вишиванки ——— */
+  {
+    id: "b-030",
+    slug: "vyshyta-suknya-kvity",
+    title: "Вишита сукня з квітами",
+    subtitle: "червоно-блакитна вишивка",
+    category: "vyshyvanky",
+    badges: ["top"],
+    audience: "girls",
+    sizes: [
+      ["80–104", 2950],
+      ["110–134", 3250],
+      ["140–164", 3550],
+    ],
+    image: photo("DbvJ1YpjGv7_1.jpg"),
     description:
-      "В’яжуться вручну, з нееластичною петлею на щиколотці — тримаються навіть на активному малюку. Підошва з подвійного полотна.",
-    details: [
-      { label: "Склад", value: "100% меринос" },
-      { label: "Розміри", value: "16–19 (0–12 місяців)" },
-      { label: "Догляд", value: "Ручне прання 30°" },
-    ],
-    colors: [
-      {
-        id: "c-milk",
-        name: "Молочний",
-        hex: "#F2EDE6",
-        images: [
-          "/images/products/booties-1.jpg",
-          "/images/products/booties-2.jpg",
-        ],
-        sizes: sizes(["16", "17", "18", "19"], ["19"]),
-      },
-      {
-        id: "c-sage",
-        name: "Шавлія",
-        hex: "#A8B5A0",
-        images: [
-          "/images/products/booties-2.jpg",
-          "/images/products/booties-1.jpg",
-        ],
-        sizes: sizes(["16", "17", "18", "19"]),
-      },
-    ],
+      "Сукня з червоно-блакитною квітковою вишивкою — одна з наймиліших моделей колекції.",
+    details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
   },
   {
-    id: "p-008",
-    slug: "shapka-vyazana-vinter",
-    title: "Шапка в’язана Vinter",
-    subtitle: "меринос · подвійне полотно",
-    category: "accessories",
-    kind: "apparel",
-    price: 780,
+    id: "b-031",
+    slug: "suknya-yavorivska-vyshyvka",
+    title: "Сукня з яворівською вишивкою",
+    subtitle: "яворівська вишивка",
+    category: "vyshyvanky",
+    audience: "girls",
+    sizes: [
+      ["80–104", 2950],
+      ["110–134", 3150],
+      ["140–164", 3450],
+    ],
+    image: photo("Db-hXnSM1K6_frame.jpg"),
+    description: "Традиційна яворівська вишивка в сучасному крої.",
+    details: [{ label: "Оздоблення", value: "Яворівська вишивка" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-032",
+    slug: "zhyletka-z-velyuru",
+    title: "Вишита жилетка з велюру",
+    subtitle: "велюр · шоколад, молочний",
+    category: "vyshyvanky",
+    badges: ["top"],
+    audience: "girls",
+    sizes: [
+      ["80–116", 2580],
+      ["122–164", 2980],
+    ],
+    image: photo("Db8XNlgDKsj_1.jpg"),
+    colors: [
+      { id: "c-choco", name: "Шоколад", hex: "#4E3A2F" },
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+    ],
+    description:
+      "Вишита жилетка з велюру, яку можна поєднати із сукнею, спідницею чи блузою.",
+    details: [{ label: "Тканина", value: "Велюр" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-033",
+    slug: "vyshyta-sorochka-dlya-divchynky",
+    title: "Вишита сорочка для дівчинки",
+    subtitle: "5 моделей у серії",
+    category: "vyshyvanky",
+    audience: "girls",
+    sizes: [
+      ["80–104", 2190],
+      ["110–134", 2390],
+      ["140–146", 2590],
+    ],
+    image: photo("Db5rPYtjBZ9_1.jpg"),
+    description:
+      "Серія вишитих сорочок: синьо-червона нитка, квіти, хакі-блакитний, з комірцем і з прямим рукавчиком.",
+    details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-034",
+    slug: "keip-vyshyvanka",
+    title: "Кейп-вишиванка",
+    subtitle: "поверх сукні, блузи чи пальта",
+    category: "vyshyvanky",
+    audience: "girls",
+    sizes: [
+      ["80–116", 3350],
+      ["122–164", 3750],
+    ],
+    image: photo("Db3A8Z4MtfS_frame.jpg"),
+    description: "Вишитий кейп, який носиться поверх сукні, блузи чи пальта.",
+    details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-035",
+    slug: "vyshyta-sorochka-dlya-khlopchyka",
+    title: "Вишита сорочка для хлопчика",
+    subtitle: "хакі, блакитна, червона",
+    category: "vyshyvanky",
+    audience: "boys",
+    sizes: [
+      ["80–104", 2150],
+      ["110–134", 2350],
+      ["140–164", 2550],
+    ],
+    image: photo("DbnmicQDEPN_1.jpg"),
+    colors: [
+      { id: "c-khaki", name: "Хакі", hex: "#8A8B6C" },
+      { id: "c-blue", name: "Блакитна", hex: "#BCCBD8" },
+      { id: "c-red", name: "Червона", hex: "#A8483E" },
+    ],
+    description: "Чотири моделі вишитих сорочок для хлопчиків — від 80 до 164 см.",
+    details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
+  },
+  {
+    id: "b-036",
+    slug: "vyshyta-sorochka-velvetovi-shtany",
+    title: "Вишита сорочка + вельветові штани",
+    subtitle: "комплект для хлопчика",
+    category: "vyshyvanky",
     badges: ["new"],
-    description:
-      "Подвійне полотно без внутрішніх швів і флісової підкладки, яка електризує волосся. Тримає форму після прання.",
-    details: [
-      { label: "Склад", value: "100% меринос" },
-      { label: "Розміри", value: "За обхватом голови" },
-      { label: "Догляд", value: "Ручне прання 30°, сушити горизонтально" },
+    audience: "boys",
+    sizes: [
+      ["80–104", 2450],
+      ["110–134", 2650],
+      ["140–164", 2850],
     ],
-    colors: [
-      {
-        id: "c-caramel",
-        name: "Карамель",
-        hex: "#C8A882",
-        images: [
-          "/images/products/beanie-1.jpg",
-          "/images/products/beanie-2.jpg",
-        ],
-        sizes: sizes(["44–46", "48–50", "52–54"]),
-      },
-      {
-        id: "c-milk",
-        name: "Молочний",
-        hex: "#F2EDE6",
-        images: [
-          "/images/products/beanie-2.jpg",
-          "/images/products/beanie-1.jpg",
-        ],
-        sizes: sizes(["44–46", "48–50", "52–54"], ["44–46"]),
-      },
-    ],
+    image: photo("DcD9LV_Mjs8_frame.jpg"),
+    description: "Вишита сорочка, до якої ми пошили вельветові штани.",
+    details: [{ label: "Тканина штанів", value: "Вельвет" }, OWN_PRODUCTION],
   },
   {
-    id: "p-009",
-    slug: "ksylofon-piramidka-tra",
-    title: "Ксилофон-пірамідка Trä",
-    subtitle: "бук · від 12 місяців",
-    category: "toys",
+    id: "b-037",
+    slug: "sorochka-v-klitynku",
+    title: "Сорочка в клітинку",
+    subtitle: "для хлопчиків",
+    category: "kostyumy",
+    audience: "boys",
+    sizes: [
+      ["80–104", 1480],
+      ["110–134", 1680],
+    ],
+    image: photo("Da-rqUojCCP_1.jpg"),
+    description: "Сорочка в клітинку — базова річ у гардеробі хлопчика.",
+    details: [OWN_PRODUCTION],
+  },
+
+  /* ——— Сукні ——— */
+  {
+    id: "b-040",
+    slug: "suknya-v-klitynku-z-komirtsem",
+    title: "Сукня в клітинку з комірцем",
+    subtitle: "комірець",
+    category: "sukni",
+    badges: ["top"],
+    audience: "girls",
+    sizes: [
+      ["80–104", 2630],
+      ["110–134", 2930],
+    ],
+    image: photo("DbQlNzOjF-w_1.jpg"),
+    description: "Сукня в клітинку з акуратним комірцем. Деталь, яка змінює весь образ.",
+    details: [OWN_PRODUCTION],
+  },
+  {
+    id: "b-041",
+    slug: "suknya-aivori",
+    title: "Сукня айворі",
+    subtitle: "айворі, рожева",
+    category: "sukni",
+    audience: "girls",
+    sizes: [
+      ["80–104", 1650],
+      ["110–134", 1850],
+    ],
+    image: photo("DbfbitKDNnK_1.jpg"),
+    colors: [
+      { id: "c-ivory", name: "Айворі", hex: "#F3EDE1" },
+      { id: "c-pink", name: "Рожева", hex: "#E5C9C3" },
+    ],
+    description: "Ніжна сукня на щодень і на свято.",
+    details: [OWN_PRODUCTION],
+  },
+
+  /* ——— Аксесуари ——— */
+  {
+    id: "b-050",
+    slug: "pled-z-muslinu",
+    title: "Плед із мусліну",
+    subtitle: "муслін · беж, молочний",
+    category: "aksesuary",
+    price: 1550,
+    image: photo("DasGY3ZDCup_1.jpg"),
+    colors: [
+      { id: "c-beige", name: "Беж", hex: "#D8C3A5" },
+      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
+    ],
+    description: "Легкий мусліновий плед для коляски, сну й фотосесій.",
+    details: [{ label: "Тканина", value: "Муслін" }, OWN_PRODUCTION],
+  },
+
+  /* ——— Іграшки, посуд і сон (bamboli.land) ——— */
+  {
+    id: "l-001",
+    slug: "vedmedyk-jollein-teddy-bear",
+    title: "Ведмедик Jollein Teddy Bear",
+    subtitle: "м'яка іграшка · бісквітний",
+    category: "igrashky",
     kind: "toy",
-    price: 1460,
-    badges: [],
+    brand: "Jollein",
+    badges: ["top"],
+    price: 1139,
+    image: landPhoto("Dc5XiPZDfmj_1.jpg"),
     description:
-      "Дві іграшки в одній: настроєний ксилофон і пірамідка на кільцях. Фарби на водній основі, кромки заокруглені вручну.",
+      "Іноді найулюбленіші іграшки — це ті, з якими просто хочеться бути поруч. Можна доповнити мобілем з ведмедиками.",
+    details: [{ label: "Бренд", value: "Jollein" }],
+  },
+  {
+    id: "l-002",
+    slug: "spalnyi-mishok-jollein-velvet",
+    title: "Спальний мішок Jollein Velvet",
+    subtitle: "велюр · нуга · 90 см",
+    category: "igrashky",
+    kind: "toy",
+    brand: "Jollein",
+    price: 2219,
+    image: landPhoto("DdPUYZ7kQEM_1.jpg"),
+    description: "Велюровий спальник зі знімними рукавами, який не сповзає під час сну.",
     details: [
-      { label: "Матеріал", value: "Масив бука, фарби на водній основі" },
-      { label: "Вік", value: "Від 12 місяців" },
-      { label: "Розмір", value: "28 × 12 × 14 см" },
-    ],
-    colors: [
-      {
-        id: "c-natural",
-        name: "Натуральне дерево",
-        hex: "#C89F6B",
-        images: [
-          "/images/products/xylophone-1.jpg",
-          "/images/products/xylophone-2.jpg",
-        ],
-        sizes: [],
-      },
+      { label: "Бренд", value: "Jollein" },
+      { label: "Розмір", value: "90 см" },
     ],
   },
   {
-    id: "p-010",
-    slug: "zaichyk-vyazanyi-bo",
-    title: "Зайчик в’язаний Bo",
-    subtitle: "бавовна · ручна робота",
-    category: "toys",
+    id: "l-003",
+    slug: "spalnyi-mishok-jollein-rib",
+    title: "Спальний мішок Jollein Rib",
+    subtitle: "рубчик · айворі",
+    category: "igrashky",
     kind: "toy",
-    price: 980,
-    badges: ["bestseller"],
-    description:
-      "В’язаний гачком зайчик з довгими вухами, за які зручно тримати. Наповнювач — гіпоалергенний холлофайбер, очі вишиті ниткою.",
+    brand: "Jollein",
+    badges: ["new"],
+    price: 1979,
+    image: landPhoto("DdBQ0kejSbi_1.jpg"),
+    description: "Мінімалістичний спальник у рубчик зі знімними рукавами.",
     details: [
-      { label: "Матеріал", value: "Бавовна, холлофайбер" },
-      { label: "Висота", value: "26 см разом з вухами" },
-      { label: "Догляд", value: "Ручне прання 30°" },
+      { label: "Бренд", value: "Jollein" },
+      { label: "Розміри", value: "60 / 70 / 90 см" },
     ],
-    colors: [
-      {
-        id: "c-milk",
-        name: "Молочний",
-        hex: "#F2EDE6",
-        images: ["/images/products/bunny-1.jpg", "/images/products/bunny-2.jpg"],
-        sizes: [],
-      },
-      {
-        id: "c-sand",
-        name: "Пісок",
-        hex: "#D8C9AF",
-        images: ["/images/products/bunny-2.jpg", "/images/products/bunny-1.jpg"],
-        sizes: [],
-      },
+  },
+  {
+    id: "l-004",
+    slug: "knyzhka-jollein-tiny-park",
+    title: "Книжка-шарудійка Jollein Tiny Park",
+    subtitle: "тактильна · в дорогу",
+    category: "igrashky",
+    kind: "toy",
+    brand: "Jollein",
+    price: 959,
+    image: landPhoto("Dc9LxQmDasv_1.jpg"),
+    description:
+      "М'яка книжечка, що розвиває дрібну моторику. Зручно брати в коляску й автокрісло.",
+    details: [{ label: "Бренд", value: "Jollein" }],
+  },
+  {
+    id: "l-005",
+    slug: "bryazkaltse-hryzunets-clucky",
+    title: "Брязкальце-гризунець Clucky",
+    subtitle: "сенсорне · від 3 місяців",
+    category: "igrashky",
+    kind: "toy",
+    brand: "Done by Deer",
+    price: 1139,
+    image: landPhoto("Dc6weYGkSMH_1.jpg"),
+    description:
+      "Пісочне брязкальце з дзвіночком усередині й рельєфом для прорізування зубів.",
+    details: [
+      { label: "Вік", value: "Від 3 місяців" },
+      { label: "Бренд", value: "Done by Deer" },
+    ],
+  },
+  {
+    id: "l-006",
+    slug: "lanchboks-done-by-deer",
+    title: "Двосекційний ланчбокс Done by Deer",
+    subtitle: "150 + 320 мл · пісочний",
+    category: "igrashky",
+    kind: "toy",
+    brand: "Done by Deer",
+    price: 569,
+    image: landPhoto("Dc4FTSwjRvh_1.jpg"),
+    description:
+      "Герметичний ланчбокс для садочка й прогулянок. Можна заморожувати, гріти в мікрохвильовці (без кришки) і мити у верхньому кошику посудомийки.",
+    details: [
+      { label: "Матеріал", value: "Поліпропілен" },
+      { label: "Бренд", value: "Done by Deer" },
     ],
   },
 ];
+
+export const products: Product[] = seeds.map(build);

@@ -4,18 +4,18 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Product } from "@/types/product";
-import { cn, formatPrice } from "@/lib/utils";
+import { Badge, Product } from "@/types/product";
+import { cn, discountPercent, formatPrice, hasPriceRange } from "@/lib/utils";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
 import { useCartStore } from "@/store/cartStore";
 import { PlusIcon, CloseIcon } from "@/components/shared/ui/Icons";
 import FavoriteButton from "./FavoriteButton";
 import ColorSwatches from "./ColorSwatches";
 
-const badgeLabel: Record<string, string> = {
+const badgeLabel: Record<Badge, string> = {
   new: "Новинка",
-  bestseller: "Хіт",
-  sale: "Sale",
+  top: "Топ",
+  sale: "Знижка",
 };
 
 export default function ProductCard({
@@ -27,6 +27,7 @@ export default function ProductCard({
 }) {
   const [colorIndex, setColorIndex] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   const addToCart = useAddToCart();
@@ -93,7 +94,9 @@ export default function ProductCard({
                   badge === "sale" && "bg-clay text-bg",
                 )}
               >
-                {badgeLabel[badge]}
+                {badge === "sale" && discountPercent(product.price, product.oldPrice)
+                  ? `−${discountPercent(product.price, product.oldPrice)}%`
+                  : badgeLabel[badge]}
               </span>
             ))}
           </div>
@@ -188,6 +191,7 @@ export default function ProductCard({
               product.oldPrice && "text-clay",
             )}
           >
+            {hasPriceRange(product) && "від "}
             {formatPrice(product.price)}
           </motion.span>
           {product.oldPrice && (

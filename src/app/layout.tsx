@@ -20,17 +20,19 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lumi-kids.vercel.app"),
+  // TODO: production domain.
+  metadataBase: new URL("https://bamboli.ua"),
   title: {
-    default: "LUMI — дитячий одяг та іграшки",
-    template: "%s · LUMI",
+    default: "Bamboli — базовий дитячий одяг як у дорослих",
+    template: "%s · Bamboli",
   },
   description:
-    "Дитячий одяг та іграшки з натуральних матеріалів: меринос, органічна бавовна, дерево. Небагато речей, але кожна надовго.",
+    "Дитячий одяг власного виробництва зі Львова: натуральні тканини, вишиванки, розміри 56–164 см. Іграшки, посуд і товари для сну Done by Deer та Jollein.",
   openGraph: {
     type: "website",
     locale: "uk_UA",
-    siteName: "LUMI",
+    siteName: "Bamboli",
+    images: ["/images/bamboli/site/lifestyle-street-boutique.jpg"],
   },
 };
 

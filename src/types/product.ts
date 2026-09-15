@@ -6,16 +6,30 @@
  * without touching a single component. See `src/lib/api.ts`.
  */
 
-export type CategorySlug = "clothing" | "toys" | "accessories";
+export type CategorySlug =
+  | "dlya-malyukiv"
+  | "kostyumy"
+  | "verkhniy-odyag"
+  | "vyshyvanky"
+  | "sukni"
+  | "igrashky"
+  | "aksesuary";
 
 export type ProductKind = "apparel" | "toy";
 
-export type Badge = "new" | "bestseller" | "sale";
+/** "top" — Sanity-прапорець «Топ», "sale" — «Знижка». */
+export type Badge = "new" | "top" | "sale";
+
+/** Used by the «Дівчатка / Хлопчики» tabs on vyshyvanky. */
+export type Audience = "girls" | "boys";
 
 export interface SizeOption {
-  /** Human label shown on the size chip, e.g. "86" or "2-3 роки". */
+  /** Human label shown on the size chip — a height range, e.g. "80–104". */
   label: string;
   inStock: boolean;
+  /** Bamboli prices by size group; falls back to `Product.price`. */
+  price?: number;
+  oldPrice?: number;
 }
 
 export interface ColorVariant {
@@ -32,13 +46,16 @@ export interface Product {
   id: string;
   slug: string;
   title: string;
-  /** Short qualifier under the title: "бавовна · 100%". */
+  /** Short qualifier under the title: "льон · 80–134 см". */
   subtitle: string;
   category: CategorySlug;
   kind: ProductKind;
+  /** Lowest price across size groups — what the card shows as «від». */
   price: number;
   oldPrice?: number;
   badges: Badge[];
+  audience?: Audience;
+  brand?: string;
   description: string;
   details: { label: string; value: string }[];
   colors: ColorVariant[];

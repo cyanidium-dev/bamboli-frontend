@@ -1,50 +1,58 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
-import Reveal from "@/components/shared/ui/Reveal";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { Category } from "@/types/product";
-import { ArrowIcon } from "@/components/shared/ui/Icons";
 
+/** Seven tiles: a swipeable row on phones and tablets, one row on desktop. */
 export default function CategoryStrip({
   categories,
 }: {
   categories: Category[];
 }) {
   return (
-    <section className="pt-16 lg:pt-24">
+    <section className="pt-20 lg:pt-28">
       <Container>
-        <div className="grid gap-3 md:grid-cols-3 md:gap-5">
+        <SectionHeading
+          label="Категорії"
+          title="Усе для дитини в одному стилі"
+          href="/catalog"
+          hrefLabel="Каталог"
+        />
+
+        <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 lg:mx-0 lg:grid lg:grid-cols-7 lg:gap-4 lg:overflow-visible lg:px-0">
           {categories.map((category, index) => (
-            <Reveal key={category.slug} delay={index * 0.08}>
+            <li
+              key={category.slug}
+              className="w-[40vw] shrink-0 snap-start sm:w-[28vw] lg:w-auto"
+            >
               <Link
                 href={`/catalog/${category.slug}`}
                 className="group/tile block"
               >
-                <div className="relative aspect-4/5 w-full overflow-hidden bg-sand md:aspect-3/4">
-                  <div className="absolute -inset-px transform-gpu transition-transform duration-[900ms] ease-out group-hover/tile:scale-[1.035]">
+                <div className="relative aspect-3/4 w-full overflow-hidden bg-sand">
+                  <div className="absolute -inset-px transform-gpu transition-transform duration-[900ms] ease-out group-hover/tile:scale-[1.04]">
                     <Image
                       src={category.image}
                       alt={category.title}
                       fill
-                      sizes="(max-width: 767px) 100vw, 33vw"
+                      priority={index < 2}
+                      sizes="(max-width: 639px) 40vw, (max-width: 1023px) 28vw, 14vw"
                       className="object-cover"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-ink/10 transition-opacity duration-700 group-hover/tile:opacity-0" />
+                  <div className="absolute inset-0 bg-ink/5 transition-opacity duration-700 group-hover/tile:opacity-0" />
                 </div>
-                <div className="flex items-start justify-between gap-4 pt-4">
-                  <div>
-                    <h3 className="u-label mb-1.5">{category.title}</h3>
-                    <p className="max-w-[260px] text-[12px] text-muted">
-                      {category.caption}
-                    </p>
-                  </div>
-                  <ArrowIcon className="mt-0.5 size-4 shrink-0 transition-transform duration-500 group-hover/tile:translate-x-1" />
-                </div>
+                <h3 className="u-label mt-3 transition-colors group-hover/tile:text-clay">
+                  {category.title}
+                </h3>
+                <p className="mt-1.5 line-clamp-2 text-[11px] text-muted">
+                  {category.caption}
+                </p>
               </Link>
-            </Reveal>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

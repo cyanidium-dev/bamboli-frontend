@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Product } from "@/types/product";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn, formatPrice, hasPriceRange, priceForSize } from "@/lib/utils";
 import ColorSwatches from "@/components/shared/productCard/ColorSwatches";
 import FavoriteButton from "@/components/shared/productCard/FavoriteButton";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
@@ -23,6 +23,7 @@ export default function ProductView({ product }: { product: Product }) {
 
   const color = product.colors[colorIndex];
   const hasSizes = color.sizes.length > 0;
+  const { price, oldPrice } = priceForSize(product, size);
 
   const handleColorChange = (index: number) => {
     setColorIndex(index);
@@ -98,23 +99,19 @@ export default function ProductView({ product }: { product: Product }) {
             </h1>
             <p className="mt-2 text-[12px] text-muted">{product.subtitle}</p>
           </div>
-          <div className="group/card">
-            <FavoriteButton slug={product.slug} className="lg:opacity-70" />
-          </div>
+          <FavoriteButton slug={product.slug} variant="plain" />
         </div>
 
         <div className="mt-5 flex items-baseline gap-3">
           <span
-            className={cn(
-              "text-[18px] tabular-nums",
-              product.oldPrice && "text-clay",
-            )}
+            className={cn("text-[18px] tabular-nums", oldPrice && "text-clay")}
           >
-            {formatPrice(product.price)}
+            {!size && hasPriceRange(product) && "від "}
+            {formatPrice(price)}
           </span>
-          {product.oldPrice && (
+          {oldPrice && (
             <span className="text-[14px] text-muted line-through tabular-nums">
-              {formatPrice(product.oldPrice)}
+              {formatPrice(oldPrice)}
             </span>
           )}
         </div>
