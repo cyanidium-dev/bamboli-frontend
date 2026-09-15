@@ -21,6 +21,6 @@ export const useFavoritesStore = create<FavoritesStore>()(
         }),
       has: (slug) => get().slugs.includes(slug),
     }),
-    { name: "lumi-favorites" },
+    { name: "bamboli-favorites" },
   ),
 );

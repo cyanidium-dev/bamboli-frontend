@@ -1,72 +1,134 @@
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
+import { categories } from "@/data/categories";
+import { siteInfo } from "@/data/siteInfo";
 
-const columns = [
-  {
-    title: "Магазин",
-    links: [
-      { href: "/catalog/clothing", label: "Одяг" },
-      { href: "/catalog/toys", label: "Іграшки" },
-      { href: "/catalog/accessories", label: "Аксесуари" },
-      { href: "/catalog", label: "Уся колекція" },
-    ],
-  },
-  {
-    title: "Сервіс",
-    links: [
-      { href: "/catalog", label: "Доставка й оплата" },
-      { href: "/catalog", label: "Обмін і повернення" },
-      { href: "/catalog", label: "Таблиця розмірів" },
-      { href: "/catalog", label: "Догляд за речами" },
-    ],
-  },
-  {
-    title: "Контакти",
-    links: [
-      { href: "tel:+380440000000", label: "+38 044 000 00 00" },
-      { href: "mailto:hello@lumi.studio", label: "hello@lumi.studio" },
-      { href: "/catalog", label: "Київ, вул. Лугова 12" },
-    ],
-  },
+const buyers = [
+  { href: "/delivery", label: "Доставка й оплата" },
+  { href: "/delivery#returns", label: "Обмін і повернення" },
+  { href: "/size-guide", label: "Таблиця розмірів" },
+  { href: "/blog", label: "Блог" },
+];
+
+const socials = [
+  { href: siteInfo.instagram.url, label: "Instagram" },
+  { href: siteInfo.telegram.url, label: "Telegram" },
+  { href: siteInfo.threads.url, label: "Threads" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-bg lg:mt-32">
+    <footer className="border-t border-line bg-bg">
       <Container className="py-14 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8">
           <div>
-            <p className="u-display mb-4 text-[28px] leading-none tracking-[0.22em]">
-              LUMI
+            <p className="u-display mb-4 text-[26px] leading-none tracking-[0.18em]">
+              BAMBOLI
             </p>
-            <p className="max-w-[280px] text-[13px] text-muted">
-              Дитячий одяг та іграшки з натуральних матеріалів. Небагато речей,
-              але кожна — надовго.
+            <p className="max-w-[300px] text-[13px] text-muted">
+              Базовий дитячий одяг як у дорослих. Шиємо у Львові з натуральних
+              тканин — з любов&apos;ю до кожної деталі.
             </p>
+            <ul className="mt-6 flex gap-5">
+              {socials.map((social) => (
+                <li key={social.label}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="u-label u-underline"
+                  >
+                    {social.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {columns.map((column) => (
-            <div key={column.title}>
-              <p className="u-label mb-4 text-muted">{column.title}</p>
-              <ul className="space-y-2.5">
-                {column.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="u-underline text-[13px] transition-colors hover:text-ink"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <p className="u-label mb-4 text-muted">Каталог</p>
+            <ul className="space-y-2.5">
+              {categories.map((category) => (
+                <li key={category.slug}>
+                  <Link
+                    href={`/catalog/${category.slug}`}
+                    className="u-underline text-[13px]"
+                  >
+                    {category.title}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/catalog/sale" className="u-underline text-[13px] text-clay">
+                  Знижки
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="u-label mb-4 text-muted">Покупцям</p>
+            <ul className="space-y-2.5">
+              {buyers.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="u-underline text-[13px]">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="u-label mb-4 text-muted">Контакти</p>
+            <ul className="space-y-2.5 text-[13px]">
+              <li>
+                <a href={siteInfo.phoneHref} className="u-underline">
+                  {siteInfo.phone}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${siteInfo.email}`} className="u-underline">
+                  {siteInfo.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteInfo.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="u-underline"
+                >
+                  {siteInfo.address}
+                </a>
+              </li>
+              <li className="text-muted">{siteInfo.hours}</li>
+              <li className="pt-2">
+                <Link href="/contacts" className="u-label border-b border-ink pb-1">
+                  Усі контакти
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-[11px] text-muted lg:mt-16 lg:flex-row lg:items-center lg:justify-between">
-          <p>© {new Date().getFullYear()} LUMI. Демонстраційний проєкт.</p>
-          <p>Зображення: Pexels</p>
+        <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 text-[11px] text-muted lg:mt-16 lg:flex-row lg:items-center lg:justify-between">
+          <ul className="flex flex-wrap gap-2">
+            {["MonoPay", "LiqPay", "Нова Пошта"].map((item) => (
+              <li key={item} className="u-label border border-line px-2.5 py-1.5">
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link href="/offer" className="transition hover:text-ink">
+              Публічна оферта
+            </Link>
+            <Link href="/privacy" className="transition hover:text-ink">
+              Політика конфіденційності
+            </Link>
+            <p>© {new Date().getFullYear()} Bamboli</p>
+          </div>
         </div>
       </Container>
     </footer>

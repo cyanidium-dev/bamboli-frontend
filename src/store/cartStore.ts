@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { CartItem, CartSelection } from "@/types/cart";
-import { variantKey } from "@/lib/utils";
+import { priceForSize, variantKey } from "@/lib/utils";
 
 const FREE_SHIPPING_FROM = 2500;
 
@@ -55,7 +55,7 @@ export const useCartStore = create<CartStore>()(
             slug: product.slug,
             title: product.title,
             image: color.images[0],
-            price: product.price,
+            price: priceForSize(product, size).price,
             colorId: color.id,
             colorName: color.name,
             size,
@@ -105,7 +105,7 @@ export const useCartStore = create<CartStore>()(
         Math.max(0, FREE_SHIPPING_FROM - get().subtotal()),
     }),
     {
-      name: "lumi-cart",
+      name: "bamboli-cart",
       partialize: (state) => ({ items: state.items }),
       onRehydrateStorage: () => (state) => {
         if (state) state.hydrated = true;

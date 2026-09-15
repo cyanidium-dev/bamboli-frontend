@@ -1,6 +1,6 @@
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
-import { Category, CategorySlug, Product } from "@/types/product";
+import { Audience, Category, CategorySlug, Product } from "@/types/product";
 
 /**
  * The single seam between the UI and the data source.
@@ -15,8 +15,11 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProductsByCategory(
   slug: CategorySlug,
+  limit?: number,
 ): Promise<Product[]> {
-  return products.filter((product) => product.category === slug);
+  return products
+    .filter((product) => product.category === slug)
+    .slice(0, limit);
 }
 
 export async function getProductBySlug(
@@ -38,10 +41,29 @@ export async function getRelatedProducts(
   return [...sameCategory, ...rest].slice(0, limit);
 }
 
-export async function getFeaturedProducts(limit = 8): Promise<Product[]> {
-  const featured = products.filter((product) => product.badges.length > 0);
-  const rest = products.filter((product) => product.badges.length === 0);
-  return [...featured, ...rest].slice(0, limit);
+/** Sanity flag «Топ». */
+export async function getTopProducts(limit = 8): Promise<Product[]> {
+  return products.filter((product) => product.badges.includes("top")).slice(0, limit);
+}
+
+/** Sanity flag «Знижка». */
+export async function getSaleProducts(limit?: number): Promise<Product[]> {
+  return products
+    .filter((product) => product.badges.includes("sale"))
+    .slice(0, limit);
+}
+
+export async function getProductsByAudience(
+  category: CategorySlug,
+  audience: Audience,
+  limit?: number,
+): Promise<Product[]> {
+  return products
+    .filter(
+      (product) =>
+        product.category === category && product.audience === audience,
+    )
+    .slice(0, limit);
 }
 
 export async function getCategories(): Promise<Category[]> {

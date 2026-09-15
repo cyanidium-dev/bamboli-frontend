@@ -18,6 +18,8 @@
 | Адмін-панель Sanity | [docs/spec/admin-sanity.md](docs/spec/admin-sanity.md) |
 | Інтеграції (KeyCRM, платіжні системи, Нова Пошта, GTM) | [docs/spec/integrations.md](docs/spec/integrations.md) |
 | SEO | [docs/spec/seo.md](docs/spec/seo.md) |
+| **Маркетингова структура сайту** (цінності, УТП, FAQ, блоки всіх сторінок) | [docs/spec/marketing-structure.md](docs/spec/marketing-structure.md) |
+| Контент з Instagram (каталог, фото, tone of voice) | [docs/spec/instagram-content-export.md](docs/spec/instagram-content-export.md) |
 | **⚠️ Що НЕ входить в обсяг** | [docs/spec/scope-boundaries.md](docs/spec/scope-boundaries.md) |
 
 ---

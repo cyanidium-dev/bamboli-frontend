@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { Product } from "@/types/product";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,6 +12,32 @@ const priceFormatter = new Intl.NumberFormat("uk-UA", {
 
 export function formatPrice(value: number) {
   return `${priceFormatter.format(value)} ₴`;
+}
+
+/** Price of the chosen size group; product-level price when nothing is chosen. */
+export function priceForSize(product: Product, size: string | null) {
+  const option = product.colors
+    .flatMap((color) => color.sizes)
+    .find((item) => item.label === size);
+  return {
+    price: option?.price ?? product.price,
+    oldPrice: option?.oldPrice ?? product.oldPrice,
+  };
+}
+
+/** True when size groups are priced differently — the card then says «від». */
+export function hasPriceRange(product: Product) {
+  const prices = new Set(
+    product.colors.flatMap((color) =>
+      color.sizes.map((size) => size.price ?? product.price),
+    ),
+  );
+  return prices.size > 1;
+}
+
+export function discountPercent(price: number, oldPrice?: number) {
+  if (!oldPrice || oldPrice <= price) return 0;
+  return Math.round((1 - price / oldPrice) * 100);
 }
 
 export function variantKey(
