@@ -37,15 +37,25 @@ export default function ProductCard({
   const [front, back = front] = color.images;
   const hasSizes = color.sizes.length > 0;
 
-  const handleAdd = (size: string | null) => {
+  const canAdd = !hasSizes || selectedSize !== null;
+
+  const handleAdd = () => {
+    if (!canAdd) return;
     addToCart({
       product,
       colorId: color.id,
-      size,
+      size: selectedSize,
       origin: imageRef.current,
     });
     setPanelOpen(false);
+    setSelectedSize(null);
     window.setTimeout(openCart, 900);
+  };
+
+  const handleColorChange = (index: number) => {
+    setColorIndex(index);
+    // Sizes and stock differ per colour, so a previous pick may not exist.
+    setSelectedSize(null);
   };
 
   return (
@@ -131,36 +141,50 @@ export default function ProductCard({
             panelOpen && "translate-y-0",
           )}
         >
-          {hasSizes ? (
+          {hasSizes && (
             <>
               <p className="u-label mb-2 text-muted">Розмір</p>
-              <div className="flex flex-wrap gap-1.5">
-                {color.sizes.map((size) => (
-                  <button
-                    key={size.label}
-                    type="button"
-                    disabled={!size.inStock}
-                    onClick={() => handleAdd(size.label)}
-                    className={cn(
-                      "min-w-9 border border-line px-2 py-1.5 text-[11px] leading-none transition",
-                      size.inStock
-                        ? "hover:border-ink hover:bg-ink hover:text-bg"
-                        : "cursor-not-allowed text-muted/50 line-through",
-                    )}
-                  >
-                    {size.label}
-                  </button>
-                ))}
+              <div className="mb-3 flex flex-wrap gap-1.5">
+                {color.sizes.map((size) => {
+                  const selected = selectedSize === size.label;
+                  return (
+                    <button
+                      key={size.label}
+                      type="button"
+                      disabled={!size.inStock}
+                      aria-pressed={selected}
+                      onClick={() => setSelectedSize(selected ? null : size.label)}
+                      className={cn(
+                        "min-w-9 border px-2 py-1.5 text-[11px] leading-none transition",
+                        selected
+                          ? "border-ink bg-ink text-bg"
+                          : "border-line",
+                        size.inStock
+                          ? !selected && "hover:border-ink"
+                          : "cursor-not-allowed text-muted/50 line-through",
+                      )}
+                    >
+                      {size.label}
+                    </button>
+                  );
+                })}
               </div>
             </>
-          ) : (
+          )}
+          {canAdd ? (
             <button
               type="button"
-              onClick={() => handleAdd(null)}
+              onClick={handleAdd}
               className="u-label w-full border border-ink bg-ink px-3 py-2.5 text-bg transition hover:bg-transparent hover:text-ink"
             >
               Додати в кошик
             </button>
+          ) : (
+            // Same box as the button (border-transparent keeps the height),
+            // so the panel doesn't jump once a size is picked.
+            <p className="u-label w-full truncate border border-transparent py-2.5 text-muted">
+              Оберіть розмір
+            </p>
           )}
         </div>
       </div>
@@ -170,7 +194,7 @@ export default function ProductCard({
           <ColorSwatches
             colors={product.colors}
             activeIndex={colorIndex}
-            onChange={setColorIndex}
+            onChange={handleColorChange}
             className="mb-2.5"
           />
         )}

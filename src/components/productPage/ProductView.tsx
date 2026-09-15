@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Product } from "@/types/product";
@@ -10,12 +10,15 @@ import FavoriteButton from "@/components/shared/productCard/FavoriteButton";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
 import { useCartStore } from "@/store/cartStore";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
+import SizeGuideModal from "@/components/productPage/SizeGuideModal";
 
 export default function ProductView({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
   const [size, setSize] = useState<string | null>(null);
   const [error, setError] = useState(false);
   const [openDetail, setOpenDetail] = useState<string | null>("Опис");
+  const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+  const closeSizeGuide = useCallback(() => setSizeGuideOpen(false), []);
 
   const galleryRef = useRef<HTMLDivElement>(null);
   const addToCart = useAddToCart();
@@ -137,6 +140,7 @@ export default function ProductView({ product }: { product: Product }) {
               </p>
               <button
                 type="button"
+                onClick={() => setSizeGuideOpen(true)}
                 className="u-label text-muted underline underline-offset-4 transition hover:text-ink"
               >
                 Таблиця розмірів
@@ -234,6 +238,8 @@ export default function ProductView({ product }: { product: Product }) {
           })}
         </div>
       </div>
+
+      <SizeGuideModal isOpen={sizeGuideOpen} onClose={closeSizeGuide} />
     </div>
   );
 }
