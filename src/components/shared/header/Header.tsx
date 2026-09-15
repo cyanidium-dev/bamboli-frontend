@@ -26,11 +26,11 @@ interface NavItem {
 }
 
 const nav: NavItem[] = [
-  { href: "/catalog/dlya-malyukiv", label: "Для малюків" },
   {
     href: "/catalog",
     label: "Одяг",
     children: [
+      { href: "/catalog/dlya-malyukiv", label: "Для малюків" },
       { href: "/catalog/kostyumy", label: "Костюми" },
       { href: "/catalog/verkhniy-odyag", label: "Верхній одяг" },
       { href: "/catalog/sukni", label: "Сукні" },
