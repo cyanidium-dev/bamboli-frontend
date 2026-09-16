@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
+import Logo from "@/components/shared/ui/Logo";
 import { categories } from "@/data/categories";
 import { siteInfo } from "@/data/siteInfo";
 
@@ -22,9 +23,7 @@ export default function Footer() {
       <Container className="py-14 lg:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8">
           <div>
-            <p className="u-display mb-4 text-[26px] leading-none tracking-[0.18em]">
-              BAMBOLI
-            </p>
+            <Logo className="mb-4 w-[140px]" />
             <p className="max-w-[300px] text-[13px] text-muted">
               Базовий дитячий одяг як у дорослих. Шиємо у Львові з натуральних
               тканин — з любов&apos;ю до кожної деталі.
