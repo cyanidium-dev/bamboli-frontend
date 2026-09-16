@@ -18,6 +18,7 @@ import {
 } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
+import { useFavoritesStore } from "@/store/favoritesStore";
 import { siteInfo } from "@/data/siteInfo";
 import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
 
@@ -35,6 +36,7 @@ export default function Header() {
   const items = useCartStore((state) => state.items);
   const openCart = useCartStore((state) => state.open);
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
+  const favoritesCount = useFavoritesStore((state) => state.slugs.length);
 
   useEffect(() => setMounted(true), []);
 
@@ -189,10 +191,24 @@ export default function Header() {
 
           <Link
             href="/favorites"
-            aria-label="Обране"
-            className="flex size-9 items-center justify-center text-ink transition hover:opacity-60"
+            aria-label={`Обране, ${favoritesCount} товарів`}
+            className="relative flex size-9 items-center justify-center text-ink transition hover:opacity-60"
           >
             <HeartIcon className="size-[19px]" />
+            <AnimatePresence>
+              {mounted && favoritesCount > 0 && (
+                <motion.span
+                  key={favoritesCount}
+                  initial={{ scale: 0.4, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.4, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 520, damping: 22 }}
+                  className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] leading-4 text-bg tabular-nums"
+                >
+                  {favoritesCount}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </Link>
 
           <button
