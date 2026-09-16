@@ -66,7 +66,7 @@ export const contactsShowroom = {
   label: "Шоурум у Львові",
   title: "Приходьте приміряти наживо",
   image: showroom.image,
-  note: "Тут можна приміряти одяг і подивитися іграшки bamboli.land.",
+  note: "Тут можна приміряти одяг і подивитися іграшки та посуд Bamboli.",
   ctaLabel: "Прокласти маршрут",
 };
 

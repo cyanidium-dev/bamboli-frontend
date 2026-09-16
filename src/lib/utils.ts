@@ -65,3 +65,14 @@ export function declOfNum(n: number, forms: [string, string, string]) {
   if (mod10 >= 2 && mod10 <= 4) return forms[1];
   return forms[2];
 }
+
+const dateFormatter = new Intl.DateTimeFormat("uk-UA", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+/** "2026-08-18" → "18 серпня 2026" — used on blog cards and article pages. */
+export function formatDate(isoDate: string) {
+  return dateFormatter.format(new Date(isoDate));
+}

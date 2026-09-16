@@ -1,8 +1,10 @@
 import { categories } from "@/data/categories";
 import { findOdyagGroup } from "@/data/categoryTree";
 import { products } from "@/data/products";
+import { blogCategories, blogPosts } from "@/data/blog";
 import { slugify } from "@/lib/utils";
 import { Audience, Category, Collection, MainCategorySlug, Product } from "@/types/product";
+import { BlogCategorySlug, BlogPost } from "@/types/blog";
 
 /**
  * The single seam between the UI and the data source.
@@ -141,5 +143,33 @@ export async function getVyshyvankaProducts(
         product.collections?.includes("vyshyvanky") &&
         (!audience || product.audience?.includes(audience)),
     )
+    .slice(0, limit);
+}
+
+/** Newest first — matches the ordering a Sanity `_createdAt desc` query would return. */
+export async function getBlogPosts(category?: BlogCategorySlug): Promise<BlogPost[]> {
+  return [...blogPosts]
+    .filter((post) => !category || post.category === category)
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  return blogPosts.find((post) => post.slug === slug);
+}
+
+export async function getBlogCategories() {
+  return blogCategories;
+}
+
+/** Same category first, newest first, current post excluded. */
+export async function getRelatedBlogPosts(post: BlogPost, limit = 3): Promise<BlogPost[]> {
+  const sameCategory = blogPosts.filter(
+    (item) => item.category === post.category && item.id !== post.id,
+  );
+  const rest = blogPosts.filter(
+    (item) => item.category !== post.category && item.id !== post.id,
+  );
+  return [...sameCategory, ...rest]
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, limit);
 }
