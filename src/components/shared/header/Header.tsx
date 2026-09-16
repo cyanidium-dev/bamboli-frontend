@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import Container from "@/components/shared/ui/Container";
+import Logo from "@/components/shared/ui/Logo";
 import {
   BagIcon,
   ChevronIcon,
@@ -83,12 +84,8 @@ export default function Header() {
             )}
           </button>
 
-          <Link
-            href="/"
-            aria-label="Bamboli — головна"
-            className="u-display shrink-0 text-[24px] leading-none tracking-[0.18em] lg:text-[28px]"
-          >
-            BAMBOLI
+          <Link href="/" aria-label="Bamboli — головна" className="shrink-0">
+            <Logo />
           </Link>
         </div>
 
