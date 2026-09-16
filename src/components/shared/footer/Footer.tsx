@@ -4,7 +4,7 @@ import { categories } from "@/data/categories";
 import { siteInfo } from "@/data/siteInfo";
 
 const buyers = [
-  { href: "/delivery", label: "Доставка й оплата" },
+  { href: "/delivery", label: "Доставка та оплата" },
   { href: "/delivery#returns", label: "Обмін і повернення" },
   { href: "/size-guide", label: "Таблиця розмірів" },
   { href: "/blog", label: "Блог" },

@@ -92,6 +92,8 @@ export const headerMegaMenus: NavMenu[] = [odyagMenu, igrashkyMenu, aksesuaryMen
 
 export const headerSimpleLinks: NavLink[] = [
   { label: "SALE", href: "/catalog/sale" },
+  { label: "Доставка та оплата", href: "/delivery" },
   { label: "Про нас", href: "/about" },
   { label: "Контакти", href: "/contacts" },
+  { label: "Блог", href: "/blog" },
 ];
