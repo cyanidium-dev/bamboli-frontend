@@ -27,4 +27,8 @@ export const siteInfo = {
   },
   telegram: { handle: "@bamboli_sale", url: "https://t.me/bamboli_sale" },
   threads: { handle: "@bamboli.ua", url: "https://www.threads.net/@bamboli.ua" },
+
+  // TODO: legal entity name and ЄДРПОУ from the client.
+  legalName: "ФОП Іваненко І. І.",
+  edrpou: "00000000000",
 } as const;
