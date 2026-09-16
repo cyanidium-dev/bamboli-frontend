@@ -38,6 +38,8 @@ interface Seed {
   oldPrice?: number;
   sizes?: SizeSeed[];
   image: string;
+  /** Extra gallery photos shown alongside `image` (all colors share them). */
+  images?: string[];
   colors?: { id: string; name: string; hex: string }[];
   description: string;
   details: { label: string; value: string }[];
@@ -74,7 +76,7 @@ function build(seed: Seed): Product {
     description: seed.description,
     details: seed.details,
     colors: (seed.colors ?? [{ id: "c-main", name: "Як на фото", hex: "#E8DFD2" }]).map(
-      (color) => ({ ...color, images: [seed.image], sizes }),
+      (color) => ({ ...color, images: seed.images ?? [seed.image], sizes }),
     ),
   };
 }
