@@ -9,8 +9,8 @@ import { CheckIcon } from "@/components/shared/ui/Icons";
  */
 export default function Hero() {
   return (
-    <section className="grid lg:h-[min(720px,calc(100svh-74px))] lg:grid-cols-[1fr_1.05fr]">
-      <div className="order-2 flex flex-col justify-center overflow-y-auto bg-sand py-12 pr-5 pl-[max(20px,calc((100vw-1200px)/2+20px))] lg:order-1 lg:py-10 lg:pr-14 lg:pl-[max(40px,calc((100vw-1200px)/2+40px))] xl:pr-20">
+    <section className="grid lg:h-[min(720px,calc(100svh-74px))] lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="order-2 flex flex-col justify-center overflow-y-auto bg-sand py-12 pr-5 pl-[max(20px,calc((100vw-1280px)/2+20px))] lg:order-1 lg:py-10 lg:pr-14 lg:pl-[max(40px,calc((100vw-1280px)/2+40px))] xl:pr-20">
         <p className="u-label mb-6 text-muted">{hero.label}</p>
         <h1 className="u-display max-w-[600px] text-[40px] leading-[1.04] sm:text-[52px] lg:text-[48px] xl:text-[56px]">
           {hero.title}
