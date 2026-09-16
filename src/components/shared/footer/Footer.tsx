@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import Logo from "@/components/shared/ui/Logo";
+import TagIcon from "@/components/shared/icons/TagIcon";
 import { categories } from "@/data/categories";
 import { siteInfo } from "@/data/siteInfo";
 
@@ -119,7 +120,7 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <Link href="/offer" className="transition hover:text-ink">
               Публічна оферта
             </Link>
@@ -127,6 +128,20 @@ export default function Footer() {
               Політика конфіденційності
             </Link>
             <p>© {new Date().getFullYear()} Bamboli</p>
+          </div>
+
+          <div>
+            <p className="text-[8px] leading-[120%] font-medium uppercase">
+              Created by:
+            </p>
+            <a
+              href={siteInfo.developer.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[13px] leading-[120%] transition-colors duration-300 hover:text-ink"
+            >
+              {siteInfo.developer.name} <TagIcon className="mb-1" />
+            </a>
           </div>
         </div>
       </Container>
