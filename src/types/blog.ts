@@ -21,6 +21,11 @@ export interface BlogCategory {
   title: string;
 }
 
+/**
+ * Paragraph text supports inline links using `[текст](href)` markdown-style
+ * syntax — parsed and rendered by `ArticleContent`. Internal hrefs (starting
+ * with `/`) render as `next/link`; anything else opens in a new tab.
+ */
 export interface BlogParagraphBlock {
   type: "paragraph";
   text: string;
@@ -60,6 +65,13 @@ export interface BlogProductEmbedBlock {
   productSlug: string;
 }
 
+/** A short list of related pages/articles/products — "Дивіться також" style. */
+export interface BlogLinksBlock {
+  type: "links";
+  title?: string;
+  items: { label: string; href: string }[];
+}
+
 export type BlogContentBlock =
   | BlogParagraphBlock
   | BlogHeadingBlock
@@ -67,7 +79,8 @@ export type BlogContentBlock =
   | BlogListBlock
   | BlogImageBlock
   | BlogTableBlock
-  | BlogProductEmbedBlock;
+  | BlogProductEmbedBlock
+  | BlogLinksBlock;
 
 export interface BlogFaqItem {
   id: string;

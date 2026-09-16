@@ -1,7 +1,50 @@
+import { Fragment, type ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { BlogContentBlock } from "@/types/blog";
 import { getProductBySlug } from "@/lib/api";
+import { ArrowIcon } from "@/components/shared/ui/Icons";
 import ArticleProductEmbed from "./ArticleProductEmbed";
+
+const LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+function isExternal(href: string) {
+  return /^https?:\/\//.test(href);
+}
+
+/** Parses `[текст](href)` markdown-style links inside paragraph/list/quote text. */
+function InlineText({ text }: { text: string }) {
+  const parts: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  LINK_PATTERN.lastIndex = 0;
+  while ((match = LINK_PATTERN.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(<Fragment key={key++}>{text.slice(lastIndex, match.index)}</Fragment>);
+    }
+    const [, label, href] = match;
+    const linkClass = "text-clay underline underline-offset-2 transition hover:opacity-70";
+    parts.push(
+      isExternal(href) ? (
+        <a key={key++} href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          {label}
+        </a>
+      ) : (
+        <Link key={key++} href={href} className={linkClass}>
+          {label}
+        </Link>
+      ),
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    parts.push(<Fragment key={key++}>{text.slice(lastIndex)}</Fragment>);
+  }
+
+  return <>{parts}</>;
+}
 
 /**
  * Renders the mock Portable-Text-shaped body. Each block kind maps 1:1 onto
@@ -15,7 +58,11 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
         blocks.map(async (block, index) => {
           switch (block.type) {
             case "paragraph":
-              return <p key={index}>{block.text}</p>;
+              return (
+                <p key={index}>
+                  <InlineText text={block.text} />
+                </p>
+              );
 
             case "heading":
               return (
@@ -33,7 +80,7 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
                   key={index}
                   className="border-l-2 border-clay pl-5 text-[15px] italic text-muted"
                 >
-                  {block.text}
+                  <InlineText text={block.text} />
                 </blockquote>
               );
 
@@ -43,7 +90,9 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
                   {block.items.map((item) => (
                     <li key={item} className="flex gap-3">
                       <span className="mt-2 size-1 shrink-0 rounded-full bg-clay" aria-hidden />
-                      <span>{item}</span>
+                      <span>
+                        <InlineText text={item} />
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -97,6 +146,26 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
                       ))}
                     </tbody>
                   </table>
+                </div>
+              );
+
+            case "links":
+              return (
+                <div key={index} className="border border-line p-5 lg:p-6">
+                  <p className="u-label mb-4 text-muted">{block.title ?? "Дивіться також"}</p>
+                  <ul className="space-y-3">
+                    {block.items.map((item) => (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="group/link flex items-center justify-between gap-4 text-[14px] text-ink transition hover:text-clay"
+                        >
+                          <span>{item.label}</span>
+                          <ArrowIcon className="size-4 shrink-0 transition-transform group-hover/link:translate-x-1" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               );
 
