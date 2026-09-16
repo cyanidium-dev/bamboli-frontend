@@ -8,12 +8,16 @@ export default function Faq({
   items,
   label = "Питання й відповіді",
   title = "Часті питання",
+  description = "Про розміри, тканини, доставку й шоурум — коротко й по суті.",
   allHref,
+  id,
 }: {
   items: FaqItem[];
   label?: string;
   title?: string;
+  description?: string;
   allHref?: string;
+  id?: string;
 }) {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -26,7 +30,10 @@ export default function Faq({
   };
 
   return (
-    <section className="pt-20 lg:pt-28">
+    <section
+      id={id}
+      className={id ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28" : "pt-20 lg:pt-28"}
+    >
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
           <div className="lg:sticky lg:top-[110px] lg:self-start">
@@ -35,7 +42,7 @@ export default function Faq({
               {title}
             </h2>
             <p className="mt-5 max-w-[340px] text-[13px] leading-relaxed text-muted">
-              Про розміри, тканини, доставку й шоурум — коротко й по суті.
+              {description}
             </p>
             {allHref && (
               <Link
