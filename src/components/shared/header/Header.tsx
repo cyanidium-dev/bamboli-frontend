@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import { useSearchStore } from "@/store/searchStore";
 import { siteInfo } from "@/data/siteInfo";
 import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
 
@@ -37,6 +38,8 @@ export default function Header() {
   const openCart = useCartStore((state) => state.open);
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const favoritesCount = useFavoritesStore((state) => state.slugs.length);
+  const openSearch = useSearchStore((state) => state.open);
+  const closeSearch = useSearchStore((state) => state.close);
 
   useEffect(() => setMounted(true), []);
 
@@ -52,8 +55,9 @@ export default function Header() {
     setOpenMobileMenu(null);
     setOpenMobileGroup(null);
     setOpenDesktopMenu(null);
+    closeSearch();
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [pathname]);
+  }, [pathname, closeSearch]);
 
   const linkClass = (href: string) =>
     cn(
@@ -181,13 +185,14 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center justify-end gap-1 lg:gap-2">
-          <Link
-            href="/catalog"
+          <button
+            type="button"
+            onClick={openSearch}
             aria-label="Пошук"
             className="flex size-9 items-center justify-center text-ink transition hover:opacity-60"
           >
             <SearchIcon className="size-[19px]" />
-          </Link>
+          </button>
 
           <Link
             href="/favorites"
