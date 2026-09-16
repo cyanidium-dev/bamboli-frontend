@@ -4,8 +4,7 @@
  */
 
 import { siteInfo } from "@/data/siteInfo";
-
-const site = (file: string) => `/images/bamboli/site/${file}`;
+import { showroom } from "@/data/about";
 
 export const contactsHero = {
   title: "Контакти",
@@ -66,10 +65,7 @@ export const onlineHours = `Онлайн-підтримка: ${siteInfo.hours}`;
 export const contactsShowroom = {
   label: "Шоурум у Львові",
   title: "Приходьте приміряти наживо",
-  image: {
-    src: site("store-interior-1.jpg"),
-    alt: "Інтер'єр шоуруму Bamboli на Театральній у Львові",
-  },
+  image: showroom.image,
   note: "Тут можна приміряти одяг і подивитися іграшки bamboli.land.",
   ctaLabel: "Прокласти маршрут",
 };
