@@ -32,6 +32,13 @@ export async function getProductBySlug(
   return products.find((product) => product.slug === slug);
 }
 
+/** Resolves favorited slugs (localStorage) to full products, favorites order preserved. */
+export async function getProductsBySlugs(slugs: string[]): Promise<Product[]> {
+  return slugs
+    .map((slug) => products.find((product) => product.slug === slug))
+    .filter((product): product is Product => Boolean(product));
+}
+
 export async function getRelatedProducts(
   product: Product,
   limit = 4,
