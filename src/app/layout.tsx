@@ -5,6 +5,7 @@ import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
 import CartDrawer from "@/components/shared/cart/CartDrawer";
 import FlyToCartLayer from "@/components/shared/addToCart/FlyToCartLayer";
+import SearchProvider from "@/components/shared/search/SearchProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +50,7 @@ export default function RootLayout({
         <Footer />
         <CartDrawer />
         <FlyToCartLayer />
+        <SearchProvider />
       </body>
     </html>
   );

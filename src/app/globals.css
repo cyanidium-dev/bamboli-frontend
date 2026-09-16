@@ -27,6 +27,8 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
   }
 
   html,
