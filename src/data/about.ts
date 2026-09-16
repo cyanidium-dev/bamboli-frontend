@@ -120,7 +120,7 @@ export const toysSection = {
 export const showroom = {
   label: "Шоурум у Львові",
   title: "Приходьте приміряти наживо",
-  text: "У нашому шоурумі на Театральній можна приміряти одяг Bamboli й подивитися іграшки та посуд суміжного магазину bamboli.land.",
+  text: "У нашому шоурумі на Театральній можна приміряти одяг Bamboli, а також подивитися іграшки та посуд Bamboli.",
   image: {
     src: photo("DbJBQU6srKj_frame.jpg"),
     alt: "Немовля в лляному пісочнику у смужку Bamboli спить у кошику для сну",
