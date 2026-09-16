@@ -117,18 +117,21 @@ export default function ProductCard({
           className="absolute right-3 top-3 z-20"
         />
 
-        {/* Mobile trigger: hover has no equivalent on touch. */}
+        {/* Mobile trigger: hover has no equivalent on touch. Hidden once the
+            panel is open — closing happens via the button inside the panel,
+            so this one doesn't sit on top of the panel's own content. */}
         <button
           type="button"
-          onClick={() => setPanelOpen((open) => !open)}
-          aria-label={panelOpen ? "Закрити вибір" : "Швидке додавання"}
-          className="absolute bottom-3 right-3 z-20 flex size-9 items-center justify-center rounded-full bg-bg/95 text-ink shadow-[0_1px_8px_rgba(23,22,20,0.08)] transition active:scale-95 lg:hidden"
-        >
-          {panelOpen ? (
-            <CloseIcon className="size-4" />
-          ) : (
-            <PlusIcon className="size-4" />
+          onClick={() => setPanelOpen(true)}
+          aria-label="Швидке додавання"
+          aria-hidden={panelOpen}
+          tabIndex={panelOpen ? -1 : 0}
+          className={cn(
+            "absolute bottom-3 right-3 z-20 flex size-9 items-center justify-center rounded-full bg-bg/95 text-ink shadow-[0_1px_8px_rgba(23,22,20,0.08)] transition active:scale-95 lg:hidden",
+            panelOpen && "pointer-events-none opacity-0",
           )}
+        >
+          <PlusIcon className="size-4" />
         </button>
 
         {/* Quick add — revealed on hover (desktop) or by the + button (mobile). */}
@@ -141,6 +144,17 @@ export default function ProductCard({
             panelOpen && "translate-y-0",
           )}
         >
+          {/* Closes the mobile panel; the corner trigger is hidden while it's
+              open so the two don't overlap. Free corner next to "Розмір". */}
+          <button
+            type="button"
+            onClick={() => setPanelOpen(false)}
+            aria-label="Закрити вибір"
+            className="absolute right-2 top-2 flex size-7 items-center justify-center rounded-full text-muted transition hover:text-ink lg:hidden"
+          >
+            <CloseIcon className="size-3.5" />
+          </button>
+
           {hasSizes && (
             <>
               <p className="u-label mb-2 text-muted">Розмір</p>
