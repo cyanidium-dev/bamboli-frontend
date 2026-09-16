@@ -20,11 +20,7 @@ import { useCartStore } from "@/store/cartStore";
 import { siteInfo } from "@/data/siteInfo";
 import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
 
-const mobileExtra = [
-  { href: "/delivery", label: "Доставка й оплата" },
-  { href: "/size-guide", label: "Таблиця розмірів" },
-  { href: "/blog", label: "Блог" },
-];
+const mobileExtra = [{ href: "/size-guide", label: "Таблиця розмірів" }];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
