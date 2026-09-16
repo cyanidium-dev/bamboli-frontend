@@ -31,4 +31,9 @@ export const siteInfo = {
   // TODO: legal entity name and ЄДРПОУ from the client.
   legalName: "ФОП Іваненко І. І.",
   edrpou: "00000000000",
+
+  developer: {
+    name: "CODE-SITE.ART",
+    url: "https://www.code-site.art/",
+  },
 } as const;
