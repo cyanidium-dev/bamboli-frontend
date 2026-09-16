@@ -65,8 +65,11 @@ export default async function ProductPage({
 
       <ProductView product={product} />
 
-      <section className="pt-24 lg:pt-32">
-        <SectionHeading label="Вам також сподобається" title="Схожі речі" />
+      <section className="pt-24 pb-16 lg:pt-32 lg:pb-24">
+        <SectionHeading
+          label="Вам також сподобається"
+          title="Батьки часто обирають це"
+        />
         <ProductGrid products={related} priorityCount={0} />
       </section>
     </Container>
