@@ -7,24 +7,30 @@ import { AnimatePresence, motion } from "motion/react";
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
+import AudienceTabs, { AudienceTab } from "@/components/homePage/AudienceTabs";
 import { vyshyvanka } from "@/data/home";
-import { cn } from "@/lib/utils";
-import { Audience, Product } from "@/types/product";
-
-const tabs: { key: Audience; label: string }[] = [
-  { key: "girls", label: "Дівчатка" },
-  { key: "boys", label: "Хлопчики" },
-];
+import { Product } from "@/types/product";
 
 export default function VyshyvankaSpotlight({
+  all,
   girls,
   boys,
+  babies,
 }: {
+  all: Product[];
   girls: Product[];
   boys: Product[];
+  babies: Product[];
 }) {
-  const [tab, setTab] = useState<Audience>("girls");
-  const products = tab === "girls" ? girls : boys;
+  const [tab, setTab] = useState<AudienceTab>("all");
+  const products =
+    tab === "all"
+      ? all
+      : tab === "divchatka"
+        ? girls
+        : tab === "khlopchyky"
+          ? boys
+          : babies;
 
   return (
     <section className="pt-20 lg:pt-28">
@@ -54,29 +60,7 @@ export default function VyshyvankaSpotlight({
               {vyshyvanka.text}
             </p>
 
-            <div
-              role="tablist"
-              aria-label="Для кого"
-              className="mb-8 mt-9 flex gap-1.5 border-b border-line"
-            >
-              {tabs.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  role="tab"
-                  aria-selected={tab === item.key}
-                  onClick={() => setTab(item.key)}
-                  className={cn(
-                    "u-label relative -mb-px border-b px-1 pb-3 pt-1 transition-colors mr-5",
-                    tab === item.key
-                      ? "border-ink text-ink"
-                      : "border-transparent text-muted hover:text-ink",
-                  )}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+            <AudienceTabs active={tab} onChange={setTab} className="mb-8 mt-9" />
 
             <AnimatePresence mode="wait">
               <motion.div

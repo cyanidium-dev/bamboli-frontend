@@ -1,16 +1,21 @@
 import {
   Audience,
   Badge,
-  CategorySlug,
+  Collection,
+  MainCategorySlug,
   Product,
   ProductKind,
   SizeOption,
+  Subcategory,
 } from "@/types/product";
 
 /**
  * Demo catalogue built from the @bamboli.ua / @bamboli.land Instagram export
  * (docs/spec/instagram-content-export.md). Prices are as posted — verify
  * against the current price list before launch. Will be replaced by Sanity.
+ *
+ * category/subcategory/audience/collections follow the tree in
+ * docs/spec/marketing-structure.md §2.1 (see src/data/categoryTree.ts).
  */
 
 type SizeSeed = [label: string, price: number, oldPrice?: number];
@@ -20,10 +25,13 @@ interface Seed {
   slug: string;
   title: string;
   subtitle: string;
-  category: CategorySlug;
+  category: MainCategorySlug;
+  subcategory: Subcategory;
   kind?: ProductKind;
   badges?: Badge[];
-  audience?: Audience;
+  /** Empty/omitted = unisex — shows only under «Для всіх». */
+  audience?: Audience[];
+  collections?: Collection[];
   brand?: string;
   /** Used when a product has no size groups (toys, accessories). */
   price?: number;
@@ -55,11 +63,13 @@ function build(seed: Seed): Product {
     title: seed.title,
     subtitle: seed.subtitle,
     category: seed.category,
+    subcategory: seed.subcategory,
     kind: seed.kind ?? "apparel",
     price: cheapest?.price ?? seed.price ?? 0,
     oldPrice: cheapest?.oldPrice ?? seed.oldPrice,
     badges: seed.badges ?? [],
     audience: seed.audience,
+    collections: seed.collections,
     brand: seed.brand,
     description: seed.description,
     details: seed.details,
@@ -70,13 +80,15 @@ function build(seed: Seed): Product {
 }
 
 const seeds: Seed[] = [
-  /* ——— Для малюків ——— */
+  /* ——— Для малюків (Одяг → Малюки) ——— */
   {
     id: "b-001",
     slug: "romper-z-vushkamy",
     title: "Ромпер з вушками",
     subtitle: "трикотаж · на заклепках",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "bodi",
+    audience: ["malyuky"],
     badges: ["top"],
     sizes: [
       ["56–62", 880],
@@ -103,7 +115,9 @@ const seeds: Seed[] = [
     slug: "romper-double-face",
     title: "Ромпер double face",
     subtitle: "трикотаж double face · сірий",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "bodi",
+    audience: ["malyuky"],
     badges: ["new"],
     sizes: [
       ["56–68", 950],
@@ -120,7 +134,9 @@ const seeds: Seed[] = [
     slug: "kombinezon-na-zamochok",
     title: "Комбінезон на замочок",
     subtitle: "верхній шар · молочний, беж",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "kombinezony",
+    audience: ["malyuky"],
     badges: ["new"],
     sizes: [
       ["56–68", 1750],
@@ -140,7 +156,9 @@ const seeds: Seed[] = [
     slug: "romper-u-rubchyk",
     title: "Ромпер у рубчик",
     subtitle: "рубчик · на ґудзичках",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "bodi",
+    audience: ["malyuky"],
     sizes: [
       ["56–68", 580],
       ["74–86", 680],
@@ -155,7 +173,9 @@ const seeds: Seed[] = [
     slug: "bodi-pisochnyk-muslin",
     title: "Боді + пісочник у полоску",
     subtitle: "муслін · комплект",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "komplekty",
+    audience: ["malyuky"],
     badges: ["sale"],
     sizes: [
       ["56–68", 1280, 1600],
@@ -171,7 +191,10 @@ const seeds: Seed[] = [
     slug: "lyanyi-pisochnyk",
     title: "Лляний пісочник у полоску",
     subtitle: "льон",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "odyag",
+    audience: ["malyuky"],
+    collections: ["llon"],
     badges: ["sale"],
     sizes: [
       ["56–68", 675, 750],
@@ -186,7 +209,10 @@ const seeds: Seed[] = [
     slug: "vyshytyi-pisochnyk",
     title: "Вишитий пісочник",
     subtitle: "білий, коричневий",
-    category: "dlya-malyukiv",
+    category: "odyag",
+    subcategory: "odyag",
+    audience: ["malyuky"],
+    collections: ["vyshyvanky"],
     sizes: [
       ["56–68", 1750],
       ["74–86", 1950],
@@ -201,13 +227,15 @@ const seeds: Seed[] = [
     details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
   },
 
-  /* ——— Костюми ——— */
+  /* ——— Костюми (Одяг → Для всіх / Дівчатка / Хлопчики) ——— */
   {
     id: "b-010",
     slug: "lyanyi-kostyum",
     title: "Лляний костюм",
     subtitle: "льон · 4 кольори",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "kostyumy",
+    collections: ["llon"],
     badges: ["top"],
     sizes: [
       ["80–104", 2350],
@@ -229,7 +257,8 @@ const seeds: Seed[] = [
     slug: "kostyumchyk-v-klitynku",
     title: "Костюмчик у клітинку",
     subtitle: "комплект · хіт",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "kostyumy",
     badges: ["top", "sale"],
     sizes: [
       ["80–92", 1488, 1860],
@@ -244,7 +273,8 @@ const seeds: Seed[] = [
     slug: "sportyvnyi-kostyum-polar",
     title: "Спортивний костюм полар фліс",
     subtitle: "полар фліс · молочний, чорний",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "kostyumy",
     badges: ["new"],
     sizes: [
       ["80–104", 2080],
@@ -263,7 +293,8 @@ const seeds: Seed[] = [
     slug: "kostyum-muslinovyi",
     title: "Мусліновий костюм",
     subtitle: "муслін · довгий рукав",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "kostyumy",
     badges: ["sale"],
     sizes: [
       ["80–104", 826, 1180],
@@ -278,9 +309,10 @@ const seeds: Seed[] = [
     slug: "sorochka-shorty",
     title: "Сорочка + шорти",
     subtitle: "комплект",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "komplekty",
+    audience: ["khlopchyky"],
     badges: ["sale"],
-    audience: "boys",
     sizes: [
       ["86–104", 2032, 2540],
       ["116–146", 2032, 2540],
@@ -294,7 +326,10 @@ const seeds: Seed[] = [
     slug: "lyanyi-kostyum-z-bluzoyu",
     title: "Лляний костюм з блузою",
     subtitle: "льон · блакитний",
-    category: "kostyumy",
+    category: "odyag",
+    subcategory: "kostyumy",
+    audience: ["divchatka"],
+    collections: ["llon"],
     badges: ["sale"],
     sizes: [
       ["92–104", 1660, 2260],
@@ -310,8 +345,9 @@ const seeds: Seed[] = [
     slug: "kostyum-bluza-z-ryusheyu",
     title: "Костюм: блуза з рюшею + палаццо",
     subtitle: "у клітинку",
-    category: "kostyumy",
-    audience: "girls",
+    category: "odyag",
+    subcategory: "kostyumy",
+    audience: ["divchatka"],
     sizes: [
       ["80–104", 1860],
       ["110–134", 2060],
@@ -320,14 +356,31 @@ const seeds: Seed[] = [
     description: "Блуза з рюшею та широкі палаццо у клітинку.",
     details: [OWN_PRODUCTION],
   },
+  {
+    id: "b-037",
+    slug: "sorochka-v-klitynku",
+    title: "Сорочка в клітинку",
+    subtitle: "для хлопчиків",
+    category: "odyag",
+    subcategory: "sorochky",
+    audience: ["khlopchyky"],
+    sizes: [
+      ["80–104", 1480],
+      ["110–134", 1680],
+    ],
+    image: photo("Da-rqUojCCP_1.jpg"),
+    description: "Сорочка в клітинку — базова річ у гардеробі хлопчика.",
+    details: [OWN_PRODUCTION],
+  },
 
-  /* ——— Верхній одяг ——— */
+  /* ——— Верхній одяг (Одяг → Для всіх) ——— */
   {
     id: "b-020",
     slug: "kurtka-z-komirom",
     title: "Куртка з коміром",
     subtitle: "вельветовий комір · коричневий, беж",
-    category: "verkhniy-odyag",
+    category: "odyag",
+    subcategory: "verkhniy-odyag",
     badges: ["top", "new"],
     sizes: [
       ["80–104", 2380],
@@ -347,7 +400,8 @@ const seeds: Seed[] = [
     slug: "trench",
     title: "Тренч",
     subtitle: "беж, шоколад, коричневий",
-    category: "verkhniy-odyag",
+    category: "odyag",
+    subcategory: "verkhniy-odyag",
     badges: ["new"],
     sizes: [
       ["80–104", 2190],
@@ -367,7 +421,8 @@ const seeds: Seed[] = [
     slug: "bomber",
     title: "Бомбер",
     subtitle: "осінній образ",
-    category: "verkhniy-odyag",
+    category: "odyag",
+    subcategory: "verkhniy-odyag",
     sizes: [
       ["80–104", 1850],
       ["110–134", 2050],
@@ -377,15 +432,17 @@ const seeds: Seed[] = [
     details: [OWN_PRODUCTION],
   },
 
-  /* ——— Вишиванки ——— */
+  /* ——— Вишиванки (Одяг → Вишиванки) ——— */
   {
     id: "b-030",
     slug: "vyshyta-suknya-kvity",
     title: "Вишита сукня з квітами",
     subtitle: "червоно-блакитна вишивка",
-    category: "vyshyvanky",
+    category: "odyag",
+    subcategory: "sukni",
+    audience: ["divchatka"],
+    collections: ["vyshyvanky"],
     badges: ["top"],
-    audience: "girls",
     sizes: [
       ["80–104", 2950],
       ["110–134", 3250],
@@ -401,8 +458,10 @@ const seeds: Seed[] = [
     slug: "suknya-yavorivska-vyshyvka",
     title: "Сукня з яворівською вишивкою",
     subtitle: "яворівська вишивка",
-    category: "vyshyvanky",
-    audience: "girls",
+    category: "odyag",
+    subcategory: "sukni",
+    audience: ["divchatka"],
+    collections: ["vyshyvanky"],
     sizes: [
       ["80–104", 2950],
       ["110–134", 3150],
@@ -417,9 +476,11 @@ const seeds: Seed[] = [
     slug: "zhyletka-z-velyuru",
     title: "Вишита жилетка з велюру",
     subtitle: "велюр · шоколад, молочний",
-    category: "vyshyvanky",
+    category: "odyag",
+    subcategory: "verkhniy-odyag",
+    audience: ["divchatka"],
+    collections: ["vyshyvanky"],
     badges: ["top"],
-    audience: "girls",
     sizes: [
       ["80–116", 2580],
       ["122–164", 2980],
@@ -438,8 +499,10 @@ const seeds: Seed[] = [
     slug: "vyshyta-sorochka-dlya-divchynky",
     title: "Вишита сорочка для дівчинки",
     subtitle: "5 моделей у серії",
-    category: "vyshyvanky",
-    audience: "girls",
+    category: "odyag",
+    subcategory: "sorochky",
+    audience: ["divchatka"],
+    collections: ["vyshyvanky"],
     sizes: [
       ["80–104", 2190],
       ["110–134", 2390],
@@ -455,8 +518,10 @@ const seeds: Seed[] = [
     slug: "keip-vyshyvanka",
     title: "Кейп-вишиванка",
     subtitle: "поверх сукні, блузи чи пальта",
-    category: "vyshyvanky",
-    audience: "girls",
+    category: "odyag",
+    subcategory: "verkhniy-odyag",
+    audience: ["divchatka"],
+    collections: ["vyshyvanky"],
     sizes: [
       ["80–116", 3350],
       ["122–164", 3750],
@@ -470,8 +535,10 @@ const seeds: Seed[] = [
     slug: "vyshyta-sorochka-dlya-khlopchyka",
     title: "Вишита сорочка для хлопчика",
     subtitle: "хакі, блакитна, червона",
-    category: "vyshyvanky",
-    audience: "boys",
+    category: "odyag",
+    subcategory: "sorochky",
+    audience: ["khlopchyky"],
+    collections: ["vyshyvanky"],
     sizes: [
       ["80–104", 2150],
       ["110–134", 2350],
@@ -491,9 +558,11 @@ const seeds: Seed[] = [
     slug: "vyshyta-sorochka-velvetovi-shtany",
     title: "Вишита сорочка + вельветові штани",
     subtitle: "комплект для хлопчика",
-    category: "vyshyvanky",
+    category: "odyag",
+    subcategory: "komplekty",
+    audience: ["khlopchyky"],
+    collections: ["vyshyvanky"],
     badges: ["new"],
-    audience: "boys",
     sizes: [
       ["80–104", 2450],
       ["110–134", 2650],
@@ -503,31 +572,17 @@ const seeds: Seed[] = [
     description: "Вишита сорочка, до якої ми пошили вельветові штани.",
     details: [{ label: "Тканина штанів", value: "Вельвет" }, OWN_PRODUCTION],
   },
-  {
-    id: "b-037",
-    slug: "sorochka-v-klitynku",
-    title: "Сорочка в клітинку",
-    subtitle: "для хлопчиків",
-    category: "kostyumy",
-    audience: "boys",
-    sizes: [
-      ["80–104", 1480],
-      ["110–134", 1680],
-    ],
-    image: photo("Da-rqUojCCP_1.jpg"),
-    description: "Сорочка в клітинку — базова річ у гардеробі хлопчика.",
-    details: [OWN_PRODUCTION],
-  },
 
-  /* ——— Сукні ——— */
+  /* ——— Сукні (Одяг → Дівчатка) ——— */
   {
     id: "b-040",
     slug: "suknya-v-klitynku-z-komirtsem",
     title: "Сукня в клітинку з комірцем",
     subtitle: "комірець",
-    category: "sukni",
+    category: "odyag",
+    subcategory: "sukni",
+    audience: ["divchatka"],
     badges: ["top"],
-    audience: "girls",
     sizes: [
       ["80–104", 2630],
       ["110–134", 2930],
@@ -541,8 +596,9 @@ const seeds: Seed[] = [
     slug: "suknya-aivori",
     title: "Сукня айворі",
     subtitle: "айворі, рожева",
-    category: "sukni",
-    audience: "girls",
+    category: "odyag",
+    subcategory: "sukni",
+    audience: ["divchatka"],
     sizes: [
       ["80–104", 1650],
       ["110–134", 1850],
@@ -563,6 +619,8 @@ const seeds: Seed[] = [
     title: "Плед із мусліну",
     subtitle: "муслін · беж, молочний",
     category: "aksesuary",
+    subcategory: "pledy-ta-konverty",
+    kind: "toy",
     price: 1550,
     image: photo("DasGY3ZDCup_1.jpg"),
     colors: [
@@ -572,29 +630,13 @@ const seeds: Seed[] = [
     description: "Легкий мусліновий плед для коляски, сну й фотосесій.",
     details: [{ label: "Тканина", value: "Муслін" }, OWN_PRODUCTION],
   },
-
-  /* ——— Іграшки, посуд і сон (bamboli.land) ——— */
-  {
-    id: "l-001",
-    slug: "vedmedyk-jollein-teddy-bear",
-    title: "Ведмедик Jollein Teddy Bear",
-    subtitle: "м'яка іграшка · бісквітний",
-    category: "igrashky",
-    kind: "toy",
-    brand: "Jollein",
-    badges: ["top"],
-    price: 1139,
-    image: landPhoto("Dc5XiPZDfmj_1.jpg"),
-    description:
-      "Іноді найулюбленіші іграшки — це ті, з якими просто хочеться бути поруч. Можна доповнити мобілем з ведмедиками.",
-    details: [{ label: "Бренд", value: "Jollein" }],
-  },
   {
     id: "l-002",
     slug: "spalnyi-mishok-jollein-velvet",
     title: "Спальний мішок Jollein Velvet",
     subtitle: "велюр · нуга · 90 см",
-    category: "igrashky",
+    category: "aksesuary",
+    subcategory: "tekstyl-dlya-snu",
     kind: "toy",
     brand: "Jollein",
     price: 2219,
@@ -610,7 +652,8 @@ const seeds: Seed[] = [
     slug: "spalnyi-mishok-jollein-rib",
     title: "Спальний мішок Jollein Rib",
     subtitle: "рубчик · айворі",
-    category: "igrashky",
+    category: "aksesuary",
+    subcategory: "tekstyl-dlya-snu",
     kind: "toy",
     brand: "Jollein",
     badges: ["new"],
@@ -622,12 +665,31 @@ const seeds: Seed[] = [
       { label: "Розміри", value: "60 / 70 / 90 см" },
     ],
   },
+
+  /* ——— Іграшки, посуд і сон (bamboli.land) ——— */
+  {
+    id: "l-001",
+    slug: "vedmedyk-jollein-teddy-bear",
+    title: "Ведмедик Jollein Teddy Bear",
+    subtitle: "м'яка іграшка · бісквітний",
+    category: "igrashky",
+    subcategory: "myaki-igrashky",
+    kind: "toy",
+    brand: "Jollein",
+    badges: ["top"],
+    price: 1139,
+    image: landPhoto("Dc5XiPZDfmj_1.jpg"),
+    description:
+      "Іноді найулюбленіші іграшки — це ті, з якими просто хочеться бути поруч. Можна доповнити мобілем з ведмедиками.",
+    details: [{ label: "Бренд", value: "Jollein" }],
+  },
   {
     id: "l-004",
     slug: "knyzhka-jollein-tiny-park",
     title: "Книжка-шарудійка Jollein Tiny Park",
     subtitle: "тактильна · в дорогу",
     category: "igrashky",
+    subcategory: "rozvyvayuchi-igrashky",
     kind: "toy",
     brand: "Jollein",
     price: 959,
@@ -642,6 +704,7 @@ const seeds: Seed[] = [
     title: "Брязкальце-гризунець Clucky",
     subtitle: "сенсорне · від 3 місяців",
     category: "igrashky",
+    subcategory: "gryzuntsi",
     kind: "toy",
     brand: "Done by Deer",
     price: 1139,
@@ -659,6 +722,7 @@ const seeds: Seed[] = [
     title: "Двосекційний ланчбокс Done by Deer",
     subtitle: "150 + 320 мл · пісочний",
     category: "igrashky",
+    subcategory: "posud",
     kind: "toy",
     brand: "Done by Deer",
     price: 569,

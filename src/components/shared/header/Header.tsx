@@ -18,31 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/cartStore";
 import { siteInfo } from "@/data/siteInfo";
-
-interface NavItem {
-  href: string;
-  label: string;
-  children?: { href: string; label: string }[];
-}
-
-const nav: NavItem[] = [
-  {
-    href: "/catalog",
-    label: "Одяг",
-    children: [
-      { href: "/catalog/dlya-malyukiv", label: "Для малюків" },
-      { href: "/catalog/kostyumy", label: "Костюми" },
-      { href: "/catalog/verkhniy-odyag", label: "Верхній одяг" },
-      { href: "/catalog/sukni", label: "Сукні" },
-      { href: "/catalog/aksesuary", label: "Аксесуари" },
-    ],
-  },
-  { href: "/catalog/vyshyvanky", label: "Вишиванки" },
-  { href: "/catalog/igrashky", label: "Іграшки" },
-  { href: "/catalog/sale", label: "Знижки" },
-  { href: "/about", label: "Про нас" },
-  { href: "/contacts", label: "Контакти" },
-];
+import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
 
 const mobileExtra = [
   { href: "/delivery", label: "Доставка й оплата" },
@@ -54,6 +30,9 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
+  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
+  const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const pathname = usePathname();
 
   const items = useCartStore((state) => state.items);
@@ -69,7 +48,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+    setOpenMobileMenu(null);
+    setOpenMobileGroup(null);
+    setOpenDesktopMenu(null);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
 
   const linkClass = (href: string) =>
     cn(
@@ -112,41 +97,92 @@ export default function Header() {
         </div>
 
         <nav className="hidden flex-1 items-center justify-center gap-6 xl:flex 2xl:gap-8">
-          {nav.map((item) =>
-            item.children ? (
-              <div key={item.label} className="group/drop relative">
-                <Link href={item.href} className={cn(linkClass(item.href), "flex items-center gap-1")}>
-                  {item.label}
-                  <ChevronIcon className="size-3.5 transition-transform duration-300 group-hover/drop:rotate-180" />
+          {headerMegaMenus.map((menu) => {
+            const isOpen = openDesktopMenu === menu.label;
+            return (
+              <div
+                key={menu.label}
+                className="relative"
+                onMouseEnter={() => setOpenDesktopMenu(menu.label)}
+                onMouseLeave={() => setOpenDesktopMenu(null)}
+              >
+                <Link
+                  href={menu.href}
+                  className={cn(linkClass(menu.href), "flex items-center gap-1")}
+                  onFocus={() => setOpenDesktopMenu(menu.label)}
+                  onClick={() => setOpenDesktopMenu(null)}
+                >
+                  {menu.label}
+                  <ChevronIcon
+                    className={cn("size-3.5 transition-transform duration-300", isOpen && "rotate-180")}
+                  />
                 </Link>
-                <div className="invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-4 opacity-0 transition duration-300 group-focus-within/drop:visible group-focus-within/drop:opacity-100 group-hover/drop:visible group-hover/drop:opacity-100">
-                  <ul className="w-[200px] border border-line bg-bg py-2 shadow-[0_8px_30px_rgba(23,22,20,0.06)]">
-                    {item.children.map((child) => (
-                      <li key={child.href}>
-                        <Link
-                          href={child.href}
-                          className="block px-5 py-2.5 text-[13px] text-muted transition hover:bg-sand hover:text-ink"
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                <div
+                  className={cn(
+                    "absolute left-1/2 top-full z-40 -translate-x-1/2 pt-4 transition duration-300",
+                    isOpen ? "visible opacity-100" : "invisible opacity-0",
+                  )}
+                >
+                  <div className="flex w-[min(88vw,880px)] gap-8 border border-line bg-bg p-7 shadow-[0_8px_30px_rgba(23,22,20,0.06)]">
+                    <div className="flex flex-1 flex-wrap gap-x-8 gap-y-6">
+                      {menu.columns.map((column) => (
+                        <div key={column.title} className="min-w-[150px] flex-1">
+                          <Link
+                            href={column.href}
+                            className="u-label mb-3 block text-[12px] text-ink transition hover:opacity-60"
+                            onClick={() => setOpenDesktopMenu(null)}
+                          >
+                            {column.title}
+                          </Link>
+                          <ul className="flex flex-col gap-2">
+                            {column.links.map((link) => (
+                              <li key={link.href}>
+                                <Link
+                                  href={link.href}
+                                  className="block text-[13px] text-muted transition hover:text-ink"
+                                  onClick={() => setOpenDesktopMenu(null)}
+                                >
+                                  {link.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex w-[150px] shrink-0 flex-col gap-3 border-l border-line pl-7">
+                      <Link
+                        href={menu.href}
+                        className="u-underline self-start text-[13px] text-ink transition hover:opacity-60"
+                        onClick={() => setOpenDesktopMenu(null)}
+                      >
+                        {menu.allLabel}
+                      </Link>
+                      <Link
+                        href="/catalog/sale"
+                        className="u-underline self-start text-[13px] text-clay transition hover:opacity-70"
+                        onClick={() => setOpenDesktopMenu(null)}
+                      >
+                        SALE
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  linkClass(item.href),
-                  item.href === "/catalog/sale" && "text-clay hover:text-clay",
-                )}
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+            );
+          })}
+          {headerSimpleLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                linkClass(item.href),
+                item.href === "/catalog/sale" && "text-clay hover:text-clay",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center justify-end gap-1 lg:gap-2">
@@ -202,25 +238,31 @@ export default function Header() {
             className="max-h-[calc(100dvh-62px)] overflow-y-auto border-t border-line bg-bg xl:hidden"
           >
             <Container className="flex flex-col py-2">
-              {nav.map((item) => (
-                <div key={item.label} className="border-b border-line/70">
-                  <Link href={item.href} className="u-label block py-4">
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <div className="-mt-1 flex flex-wrap gap-x-5 gap-y-2 pb-4">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="text-[13px] text-muted"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
+              {headerMegaMenus.map((menu) => (
+                <MobileMegaMenu
+                  key={menu.label}
+                  menu={menu}
+                  open={openMobileMenu === menu.label}
+                  onToggle={() =>
+                    setOpenMobileMenu((current) => (current === menu.label ? null : menu.label))
+                  }
+                  openGroup={openMobileGroup}
+                  onToggleGroup={(title) =>
+                    setOpenMobileGroup((current) => (current === title ? null : title))
+                  }
+                />
+              ))}
+              {headerSimpleLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "u-label block border-b border-line/70 py-4",
+                    item.href === "/catalog/sale" && "text-clay",
                   )}
-                </div>
+                >
+                  {item.label}
+                </Link>
               ))}
               {mobileExtra.map((item) => (
                 <Link
@@ -256,5 +298,90 @@ export default function Header() {
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+function MobileMegaMenu({
+  menu,
+  open,
+  onToggle,
+  openGroup,
+  onToggleGroup,
+}: {
+  menu: NavMenu;
+  open: boolean;
+  onToggle: () => void;
+  openGroup: string | null;
+  onToggleGroup: (title: string) => void;
+}) {
+  return (
+    <div className="border-b border-line/70">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="u-label flex w-full items-center justify-between py-4"
+      >
+        {menu.label}
+        <ChevronIcon className={cn("size-3.5 transition-transform duration-300", open && "rotate-180")} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col gap-1 pb-4">
+              <Link href={menu.href} className="py-2 text-[13px] text-ink">
+                {menu.allLabel}
+              </Link>
+              {menu.columns.map((column) => (
+                <div key={column.title} className="border-t border-line/50 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => onToggleGroup(column.title)}
+                    aria-expanded={openGroup === column.title}
+                    className="flex w-full items-center justify-between py-2 text-[13px] text-ink"
+                  >
+                    {column.title}
+                    <ChevronIcon
+                      className={cn(
+                        "size-3 transition-transform duration-300",
+                        openGroup === column.title && "rotate-180",
+                      )}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {openGroup === column.title && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="flex flex-wrap gap-x-5 gap-y-2 py-2 pl-3">
+                          {column.links.map((link) => (
+                            <Link key={link.href} href={link.href} className="text-[13px] text-muted">
+                              {link.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+              <Link href="/catalog/sale" className="pt-2 text-[13px] text-clay">
+                SALE
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

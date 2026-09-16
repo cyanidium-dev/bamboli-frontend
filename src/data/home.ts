@@ -12,7 +12,7 @@ export const hero = {
   title: "Базовий дитячий одяг як у дорослих",
   text: "Шиємо самі — з льону, мусліну, велюру й трикотажу double face. Стриманий крій, у якому дитині зручно щодня, а родинні фото виходять теплими.",
   primaryCta: { label: "Дивитись каталог", href: "/catalog" },
-  secondaryCta: { label: "Вишиванки", href: "/catalog/vyshyvanky" },
+  secondaryCta: { label: "Вишиванки", href: "/catalog/odyag/vyshyvanky" },
   perks: [
     "Власне виробництво",
     "Натуральні тканини",
@@ -29,7 +29,7 @@ export const promo = {
   label: "Осінь 26",
   title: "Нова колекція: тепло, м'яко й затишно",
   text: "Ромпери, комбінезони, куртки з вельветовим коміром і тренчі — речі, в яких приємно гуляти осіннім Львовом і солодко спати.",
-  cta: { label: "Нова колекція", href: "/catalog?sort=new" },
+  cta: { label: "Нова колекція", href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
   image: {
     src: site("autumn-collection-teaser.jpg"),
     alt: "Малюк у коричневому ромпері й шапочці спить у кошику під мобілем з ведмедиками",
@@ -44,7 +44,7 @@ export const vyshyvanka = {
   quote:
     "Є речі, які залишаються у пам'яті назавжди. Перша вишиванка. Перші родинні світлини. Перші свята, які згодом стануть найтеплішими спогадами.",
   text: "У сучасному крої, натуральній тканині та з любов'ю до кожної деталі. Кожен стібок — з любов'ю до вас.",
-  cta: { label: "Усі вишиванки", href: "/catalog/vyshyvanky" },
+  cta: { label: "Усі вишиванки", href: "/catalog/odyag/vyshyvanky" },
   image: {
     src: site("brand-emotion-vyshyvanka.jpg"),
     alt: "Усміхнена дівчинка у білій вишиванці з червоно-синьою вишивкою на тлі зелені",
@@ -54,8 +54,131 @@ export const vyshyvanka = {
 export const babyCollection = {
   label: "Для малюків 0–2",
   title: "М'які натуральні тканини від 56 см",
-  href: "/catalog/dlya-malyukiv",
+  href: "/catalog/odyag/malyuky",
 };
+
+/**
+ * Home page «Категорії-плитки» — docs/spec/marketing-structure.md §3.1
+ * block 3: three main categories + popular subcategory/collection picks
+ * from the §2.1 tree. Scrolls as a slider (`ScrollRow`, like the product
+ * carousels elsewhere on the page) instead of wrapping into a fixed grid,
+ * so the list can grow without a hard cap on tile count.
+ */
+export interface CategoryTile {
+  slug: string;
+  title: string;
+  caption: string;
+  image: string;
+  href: string;
+}
+
+export const categoryTiles: CategoryTile[] = [
+  {
+    slug: "odyag",
+    title: "Одяг",
+    caption: "Сукні, костюми, верхній одяг — для дівчаток, хлопчиків і малюків.",
+    image: photo("DdTpZ6sgAxN_1.jpg"),
+    href: "/catalog/odyag",
+  },
+  {
+    slug: "divchatka",
+    title: "Дівчатка",
+    caption: "Сукні, костюми й верхній одяг для дівчаток.",
+    image: photo("DbQlNzOjF-w_1.jpg"),
+    href: "/catalog/odyag/divchatka",
+  },
+  {
+    slug: "khlopchyky",
+    title: "Хлопчики",
+    caption: "Комбінезони, костюми й верхній одяг для хлопчиків.",
+    image: photo("Da-rqUojCCP_1.jpg"),
+    href: "/catalog/odyag/khlopchyky",
+  },
+  {
+    slug: "malyuky",
+    title: "Малюки",
+    caption: "М'які натуральні тканини від 56 см.",
+    image: photo("DcyHUZyAG5o_1.jpg"),
+    href: "/catalog/odyag/malyuky",
+  },
+  {
+    slug: "vyshyvanky",
+    title: "Вишиванки",
+    caption: "Власного пошиття, з яворівською вишивкою.",
+    image: photo("DbvJ1YpjGv7_1.jpg"),
+    href: "/catalog/odyag/vyshyvanky",
+  },
+  {
+    slug: "llon",
+    title: "Колекція «Льон»",
+    caption: "Вільний крій із натурального льону.",
+    image: photo("Dau5VCljHF6_1.jpg"),
+    href: "/catalog/odyag/kolektsiyi/llon",
+  },
+  {
+    slug: "kostyumy",
+    title: "Костюми",
+    caption: "На щодень і на свято — льон, муслін, полар фліс.",
+    image: photo("Dc3mdRMgKVa_1.jpg"),
+    href: "/catalog/odyag/dlya-vsih/kostyumy",
+  },
+  {
+    slug: "verkhniy-odyag",
+    title: "Верхній одяг",
+    caption: "Куртки, тренчі й бомбери у стриманих відтінках.",
+    image: photo("Dc_H2t7AAcg_1.jpg"),
+    href: "/catalog/odyag/dlya-vsih/verkhniy-odyag",
+  },
+  {
+    slug: "nova-kolektsiya",
+    title: "Нова колекція",
+    caption: "Ромпери, куртки з вельветовим коміром і тренчі цього сезону.",
+    image: site("autumn-collection-teaser.jpg"),
+    href: "/catalog/odyag/kolektsiyi/nova-kolektsiya",
+  },
+  {
+    slug: "igrashky",
+    title: "Іграшки",
+    caption: "Done by Deer, Jollein та інші — для гри, прикорму й сну.",
+    image: land("Dc-966pt_PG_1.jpg"),
+    href: "/catalog/igrashky",
+  },
+  {
+    slug: "myaki-igrashky",
+    title: "М'які іграшки",
+    caption: "Ведмедики, зайчики, ляльки.",
+    image: land("Dc5XiPZDfmj_1.jpg"),
+    href: "/catalog/igrashky/myaki-igrashky",
+  },
+  {
+    slug: "posud",
+    title: "Посуд",
+    caption: "Тарілки, поїльники, ланчбокси, набори для прикорму.",
+    image: land("Dc4FTSwjRvh_1.jpg"),
+    href: "/catalog/igrashky/posud",
+  },
+  {
+    slug: "aksesuary",
+    title: "Аксесуари",
+    caption: "Шапочки й пледи, які завершують образ.",
+    image: photo("DasGY3ZDCup_1.jpg"),
+    href: "/catalog/aksesuary",
+  },
+  {
+    slug: "tekstyl-dlya-snu",
+    title: "Текстиль для сну",
+    caption: "Спальники, ковдри, постіль.",
+    image: land("DdPUYZ7kQEM_1.jpg"),
+    href: "/catalog/aksesuary/tekstyl-dlya-snu",
+  },
+  {
+    slug: "sale",
+    title: "SALE",
+    caption: "Улюблені моделі за вигідною ціною.",
+    image: photo("DbLMqjDDOpx_1.jpg"),
+    href: "/catalog/sale",
+  },
+];
 
 export const toysCollection = {
   label: "Іграшки, посуд і сон",
