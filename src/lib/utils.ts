@@ -48,6 +48,15 @@ export function variantKey(
   return `${productId}:${colorId}:${size ?? "-"}`;
 }
 
+/** "Done by Deer" → "done-by-deer" — used to route the brand directory. */
+export function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export function declOfNum(n: number, forms: [string, string, string]) {
   const mod100 = n % 100;
   const mod10 = n % 10;

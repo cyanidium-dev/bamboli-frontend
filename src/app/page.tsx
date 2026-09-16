@@ -3,6 +3,7 @@ import SectionHeading from "@/components/shared/ui/SectionHeading";
 import Faq from "@/components/shared/faq/Faq";
 import Hero from "@/components/homePage/Hero";
 import ProductCarousel from "@/components/homePage/ProductCarousel";
+import ProductCarouselTabs from "@/components/homePage/ProductCarouselTabs";
 import CategoryStrip from "@/components/homePage/CategoryStrip";
 import PromoBanner from "@/components/homePage/PromoBanner";
 import VyshyvankaSpotlight from "@/components/homePage/VyshyvankaSpotlight";
@@ -11,26 +12,48 @@ import Benefits from "@/components/homePage/Benefits";
 import InstagramReels from "@/components/homePage/InstagramReels";
 import Reviews from "@/components/homePage/Reviews";
 import ContactSection from "@/components/homePage/ContactSection";
-import { babyCollection, saleCollection } from "@/data/home";
+import { babyCollection, categoryTiles, saleCollection } from "@/data/home";
 import { faq } from "@/data/faq";
 import {
-  getCategories,
-  getProductsByAudience,
+  getOdyagProducts,
   getProductsByCategory,
   getSaleProducts,
   getTopProducts,
+  getVyshyvankaProducts,
 } from "@/lib/api";
 
 /** Block order: docs/spec/marketing-structure.md § 3.1. */
 export default async function HomePage() {
-  const [top, categories, girls, boys, baby, toys, sale] = await Promise.all([
+  const [
+    top,
+    topGirls,
+    topBoys,
+    topBabies,
+    vyshyvankaAll,
+    girls,
+    boys,
+    vyshyvankaBabies,
+    baby,
+    toys,
+    sale,
+    saleGirls,
+    saleBoys,
+    saleBabies,
+  ] = await Promise.all([
     getTopProducts(8),
-    getCategories(),
-    getProductsByAudience("vyshyvanky", "girls", 4),
-    getProductsByAudience("vyshyvanky", "boys", 4),
-    getProductsByCategory("dlya-malyukiv", 8),
+    getTopProducts(8, "divchatka"),
+    getTopProducts(8, "khlopchyky"),
+    getTopProducts(8, "malyuky"),
+    getVyshyvankaProducts(undefined, 4),
+    getVyshyvankaProducts("divchatka", 4),
+    getVyshyvankaProducts("khlopchyky", 4),
+    getVyshyvankaProducts("malyuky", 4),
+    getOdyagProducts("malyuky", undefined, 8),
     getProductsByCategory("igrashky", 8),
     getSaleProducts(8),
+    getSaleProducts(8, "divchatka"),
+    getSaleProducts(8, "khlopchyky"),
+    getSaleProducts(8, "malyuky"),
   ]);
 
   return (
@@ -44,13 +67,24 @@ export default async function HomePage() {
             title="Найулюбленіше мамами"
             href="/catalog"
           />
-          <ProductCarousel products={top} label="Топ товарів" />
+          <ProductCarouselTabs
+            all={top}
+            girls={topGirls}
+            boys={topBoys}
+            babies={topBabies}
+            label="Топ товарів"
+          />
         </Container>
       </section>
 
-      <CategoryStrip categories={categories} />
+      <CategoryStrip categories={categoryTiles} />
       <PromoBanner />
-      <VyshyvankaSpotlight girls={girls} boys={boys} />
+      <VyshyvankaSpotlight
+        all={vyshyvankaAll}
+        girls={girls}
+        boys={boys}
+        babies={vyshyvankaBabies}
+      />
 
       <section className="pt-20 lg:pt-28">
         <Container>
@@ -75,7 +109,13 @@ export default async function HomePage() {
               href={saleCollection.href}
               hrefLabel="Усі знижки"
             />
-            <ProductCarousel products={sale} label={saleCollection.label} />
+            <ProductCarouselTabs
+              all={sale}
+              girls={saleGirls}
+              boys={saleBoys}
+              babies={saleBabies}
+              label={saleCollection.label}
+            />
           </Container>
         </section>
       )}

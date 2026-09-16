@@ -21,8 +21,7 @@ export default function ProductCarousel({
 }) {
   return (
     <div className={cn(className)}>
-      {/* Arrows sit on the photo's midline, not the card's (price row below). */}
-      <ScrollRow label={label} itemClassName={widths[perView]} arrowTop="38%">
+      <ScrollRow label={label} itemClassName={widths[perView]}>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
