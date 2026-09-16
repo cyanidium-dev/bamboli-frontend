@@ -113,13 +113,6 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-line pt-6 text-[11px] text-muted lg:mt-16 lg:flex-row lg:items-center lg:justify-between">
-          <ul className="flex flex-wrap gap-2">
-            {["MonoPay", "LiqPay", "Нова Пошта"].map((item) => (
-              <li key={item} className="u-label border border-line px-2.5 py-1.5">
-                {item}
-              </li>
-            ))}
-          </ul>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <Link href="/offer" className="transition hover:text-ink">
               Публічна оферта
