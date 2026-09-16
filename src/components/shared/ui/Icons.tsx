@@ -195,3 +195,53 @@ export function TelegramIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function PhoneIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M5.6 3.4 8 4.2c.4.14.62.58.5.98l-.72 2.1a.9.9 0 0 1-.42.48c-.62.32-1.04 1.02-.7 1.68a8.2 8.2 0 0 0 4 4c.66.34 1.36-.08 1.68-.7a.9.9 0 0 1 .48-.42l2.1-.72c.4-.12.84.1.98.5l.8 2.4a1 1 0 0 1-.5 1.22c-.66.34-1.6.76-2.42.76-2.9 0-8.86-2.66-11.5-8.5-.5-1.1-.42-2.6-.06-3.42.24-.56.76-1.16 1.18-1.4.36-.2.8-.24 1.18-.18Z" />
+    </svg>
+  );
+}
+
+export function MailIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <rect x="2.8" y="4.8" width="14.4" height="10.4" rx="1.6" />
+      <path d="m3.4 5.6 6.6 5 6.6-5" />
+    </svg>
+  );
+}
+
+export function ThreadsIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M10 3.4c3.2 0 5.6 1.7 5.6 5.4v2.4c0 3.2-2.2 5.4-5.4 5.4-2.5 0-4.4-1.2-4.4-3.3 0-2 1.8-3 4.1-3 1.4 0 2.6.32 3.5.82" />
+      <path d="M12.2 8.2c0-1.3-.9-2.1-2.3-2.1-1.5 0-2.6.9-2.9 2.2" />
+    </svg>
+  );
+}
