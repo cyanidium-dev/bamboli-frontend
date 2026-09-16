@@ -21,15 +21,23 @@ export default function ArticleHero({ post }: { post: BlogPost }) {
         <span className="text-ink">{post.title}</span>
       </nav>
 
-      <div className="u-label mb-4 flex items-center gap-3 text-muted lg:mb-6">
-        {category && <span>{category.title}</span>}
-        <span aria-hidden>·</span>
-        <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-      </div>
+      {category && <p className="u-label mb-4 text-muted lg:mb-6">{category.title}</p>}
 
-      <h1 className="u-display mb-8 max-w-[820px] text-[32px] leading-[1.1] lg:mb-12 lg:text-[52px]">
+      <h1 className="u-display mb-8 max-w-[820px] text-[32px] leading-[1.1] lg:mb-10 lg:text-[52px]">
         {post.title}
       </h1>
+
+      <div className="mb-8 flex items-center gap-3 lg:mb-12">
+        <span className="u-label flex size-11 shrink-0 items-center justify-center rounded-full border border-ink bg-ink text-bg">
+          {post.author.charAt(0)}
+        </span>
+        <div className="flex flex-col">
+          <span className="text-[13px] text-ink">{post.author}</span>
+          <time dateTime={post.publishedAt} className="u-label text-muted">
+            {formatDate(post.publishedAt)}
+          </time>
+        </div>
+      </div>
 
       <div className="relative aspect-16/9 w-full overflow-hidden bg-sand lg:aspect-[21/9]">
         <Image

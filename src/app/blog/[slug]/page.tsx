@@ -44,21 +44,23 @@ export default async function BlogArticlePage({
   const post = await getBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const related = await getRelatedBlogPosts(post, 3);
+  const related = await getRelatedBlogPosts(post, 4);
 
   return (
     <Container className="pb-20 lg:pb-28">
       <ArticleHero post={post} />
 
-      <div className="pt-12 lg:pt-16">
-        <ArticleContent blocks={post.content} />
+      <div className="pt-12 lg:flex lg:gap-16 lg:pt-16">
+        <article className="min-w-0 flex-1 lg:max-w-3xl">
+          <ArticleContent blocks={post.content} />
 
-        {post.faq && post.faq.length > 0 && <ArticleFaq items={post.faq} />}
+          {post.faq && post.faq.length > 0 && <ArticleFaq items={post.faq} />}
 
-        <CatalogCta />
+          <CatalogCta />
+        </article>
+
+        <RelatedArticles posts={related} className="lg:w-80 lg:shrink-0" />
       </div>
-
-      <RelatedArticles posts={related} />
 
       <ArticleSchema post={post} />
     </Container>

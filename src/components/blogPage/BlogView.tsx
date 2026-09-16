@@ -31,9 +31,20 @@ export default function BlogView({
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paged = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
+  const scrollToTop = () => {
+    if (typeof window === "undefined") return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleCategory = (slug: string | null) => {
     setCategory(slug);
     setPage(1);
+    scrollToTop();
+  };
+
+  const handlePage = (pageNumber: number) => {
+    setPage(pageNumber);
+    scrollToTop();
   };
 
   return (
@@ -96,7 +107,7 @@ export default function BlogView({
             <button
               key={pageNumber}
               type="button"
-              onClick={() => setPage(pageNumber)}
+              onClick={() => handlePage(pageNumber)}
               aria-current={pageNumber === page ? "page" : undefined}
               className={cn(
                 "u-label flex size-9 items-center justify-center border transition",
