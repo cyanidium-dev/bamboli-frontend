@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Product } from "@/types/product";
 import { cn, formatPrice, hasPriceRange, priceForSize } from "@/lib/utils";
@@ -11,6 +10,7 @@ import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
 import { useCartStore } from "@/store/cartStore";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import SizeGuideModal from "@/components/productPage/SizeGuideModal";
+import ProductGallery from "@/components/productPage/ProductGallery";
 
 export default function ProductView({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
@@ -65,33 +65,11 @@ export default function ProductView({ product }: { product: Product }) {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
       <div ref={galleryRef}>
-        {/* Keyed on the colour so the whole gallery crossfades as one unit
-            instead of each frame animating independently. */}
-        <motion.div
+        <ProductGallery
           key={color.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-2 overflow-x-auto px-5 lg:mx-0 lg:grid lg:grid-cols-1 lg:gap-2 lg:overflow-visible lg:px-0"
-        >
-          {color.images.map((src, index) => (
-            <div
-              key={src}
-              className="relative aspect-3/4 w-[86vw] shrink-0 snap-center overflow-hidden bg-sand lg:w-full"
-            >
-              <div className="absolute -inset-px">
-                <Image
-                  src={src}
-                  alt={`${product.title} — ${color.name}`}
-                  fill
-                  priority={index === 0}
-                  sizes="(max-width: 1023px) 86vw, 55vw"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          ))}
-        </motion.div>
+          images={color.images}
+          alt={`${product.title} — ${color.name}`}
+        />
       </div>
 
       <div className="lg:sticky lg:top-[110px] lg:self-start">

@@ -89,7 +89,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <nav className="hidden flex-1 items-center justify-center gap-6 xl:flex 2xl:gap-8">
+        <nav className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-6">
           {headerMegaMenus.map((menu) => {
             const isOpen = openDesktopMenu === menu.label;
             return (

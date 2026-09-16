@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
@@ -39,6 +39,27 @@ export default function CatalogView({
   const [sortOpen, setSortOpen] = useState(false);
   const [size, setSize] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sortOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!sortRef.current?.contains(event.target as Node)) {
+        setSortOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSortOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [sortOpen]);
 
   const allCategories = useMemo(() => {
     const set = new Set<string>();
@@ -138,7 +159,7 @@ export default function CatalogView({
           )}
         </div>
 
-        <div className="relative shrink-0">
+        <div ref={sortRef} className="relative shrink-0">
           <button
             type="button"
             onClick={() => setSortOpen((open) => !open)}
@@ -160,7 +181,7 @@ export default function CatalogView({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-0 top-full z-40 mt-2 w-[210px] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
+                className="absolute left-0 top-full z-40 mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
               >
                 {sortOptions.map((option) => (
                   <li key={option.key}>
