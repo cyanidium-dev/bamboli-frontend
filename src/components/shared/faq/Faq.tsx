@@ -57,7 +57,7 @@ export default function Faq({
               width={441}
               height={373}
               aria-hidden
-              className="pointer-events-none absolute right-[-41%] xs:right-[-20%] lg:left-[-23%] top-[-30px] lg:top-[35%] -z-10 w-[90%] xs:w-[60%] sm:w-[45%] lg:w-[37%] h-auto lg:block"
+              className="pointer-events-none absolute right-[-41%] xs:right-[-20%] lg:left-[-23%] top-[-30px] lg:top-[35%] -z-10 w-[80%] xs:w-[60%] sm:w-[45%] lg:w-[37%] h-auto lg:block"
             />
           )}
 

@@ -15,7 +15,7 @@ export default function ContactSection() {
           width={139}
           height={117}
           aria-hidden
-          className="pointer-events-none absolute left-[30%] bottom-[-150px] -z-10 hidden w-[11%] h-auto lg:block"
+          className="pointer-events-none absolute right-[5%] lg:left-[30%] bottom-[-12%] xs:bottom-[-18%] sm:bottom-[-22%] md:bottom-[-18%] lg:bottom-[-150px] -z-10 w-[40%] sm:w-[30%] md:w-[25%] lg:w-[11%] h-auto"
         />
         <Image
           src="/images/bamboli/decor/stitch-line-short.svg"
@@ -33,7 +33,6 @@ export default function ContactSection() {
           aria-hidden
           className="pointer-events-none absolute lg:left-[-1%] xl:left-[-7.4%] bottom-[-400px] xl:bottom-[-480px] -z-20 hidden w-[38%] xl:w-[43.4%] h-auto lg:block"
         />
-
 
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
@@ -73,9 +72,7 @@ export default function ContactSection() {
             </ul>
           </div>
 
-          <ContactForm
-          
-          />
+          <ContactForm />
         </div>
       </Container>
     </section>
