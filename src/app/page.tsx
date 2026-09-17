@@ -122,7 +122,7 @@ export default async function HomePage() {
 
       <InstagramReels />
       <Reviews />
-      <Faq items={faq.filter((item) => item.home)} />
+      <Faq items={faq.filter((item) => item.home)} decorative />
       <ContactSection />
     </>
   );

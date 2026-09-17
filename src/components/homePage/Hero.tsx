@@ -12,7 +12,7 @@ export default function Hero() {
     <section className="grid lg:h-[min(720px,calc(100svh-74px))] lg:grid-cols-[1.05fr_0.95fr]">
       <div className="order-2 flex flex-col justify-center overflow-y-auto bg-sand py-12 pr-5 pl-[max(20px,calc((100vw-1280px)/2+20px))] lg:order-1 lg:py-10 lg:pr-14 lg:pl-[max(40px,calc((100vw-1280px)/2+40px))] xl:pr-20">
         <p className="u-label mb-6 text-muted">{hero.label}</p>
-        <h1 className="u-display max-w-[600px] text-[40px] leading-[1.04] sm:text-[52px] lg:text-[48px] xl:text-[56px]">
+        <h1 className="u-display max-w-[600px] text-[40px] leading-[1.04] uppercase sm:text-[52px] lg:text-[48px] xl:text-[56px]">
           {hero.title}
         </h1>
         <p className="mt-7 max-w-[440px] text-[13px] leading-relaxed text-muted">
@@ -44,8 +44,8 @@ export default function Hero() {
         </ul>
       </div>
 
-      <div className="relative order-1 aspect-4/5 w-full overflow-hidden bg-sand sm:aspect-16/11 lg:order-2 lg:aspect-auto lg:h-full">
-        <div className="absolute -inset-px">
+      <div className="relative order-1 aspect-4/5 w-full bg-sand lg:order-2 lg:aspect-auto lg:h-full">
+        <div className="absolute -inset-px overflow-hidden">
           <Image
             src={hero.image.src}
             alt={hero.image.alt}
@@ -55,6 +55,24 @@ export default function Hero() {
             className="object-cover object-[50%_40%]"
           />
         </div>
+
+        {/* Decorative accents from the Figma design — anchored to the photo's left edge. */}
+        <Image
+          src="/images/bamboli/decor/hero-dot.svg"
+          alt=""
+          width={31}
+          height={31}
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-[74.6%] size-[5.2%] max-w-10 min-w-4 -translate-x-1/2"
+        />
+        <Image
+          src="/images/bamboli/decor/hero-heart.svg"
+          alt=""
+          width={187}
+          height={161}
+          aria-hidden
+          className="pointer-events-none absolute left-0 top-[81.25%] h-auto w-[28.8%] max-w-[173px] min-w-[70px] -translate-x-1/2"
+        />
       </div>
     </section>
   );

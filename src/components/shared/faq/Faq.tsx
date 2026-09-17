@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import { FaqItem } from "@/data/faq";
@@ -15,6 +16,7 @@ export default function Faq({
   description = "Про розміри, тканини, доставку й шоурум — коротко й по суті.",
   allHref,
   id,
+  decorative = false,
 }: {
   items: FaqItem[];
   label?: string;
@@ -22,6 +24,8 @@ export default function Faq({
   description?: string;
   allHref?: string;
   id?: string;
+  /** Home-page-only decorative petal from the Figma design, bleeding off the left edge. */
+  decorative?: boolean;
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -38,11 +42,26 @@ export default function Faq({
   return (
     <section
       id={id}
-      className={id ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28" : "pt-20 lg:pt-28"}
+      className={
+        id
+          ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28"
+          : "pt-20 lg:pt-28"
+      }
     >
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
-          <div className="lg:sticky lg:top-[110px] lg:self-start">
+        <div className="relative isolate grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+          {decorative && (
+            <Image
+              src="/images/bamboli/decor/petal-white.svg"
+              alt=""
+              width={441}
+              height={373}
+              aria-hidden
+              className="pointer-events-none absolute right-[-41%] xs:right-[-20%] lg:left-[-23%] top-[-30px] lg:top-[35%] -z-10 w-[80%] xs:w-[60%] sm:w-[45%] lg:w-[37%] h-auto lg:block"
+            />
+          )}
+
+          <div className="relative lg:sticky lg:top-[110px] lg:self-start">
             <p className="u-label mb-3 text-muted">{label}</p>
             <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
               {title}
@@ -76,7 +95,7 @@ export default function Faq({
                     <PlusIcon
                       className={cn(
                         "size-5 shrink-0 transition-transform duration-300",
-                        isOpen && "rotate-45",
+                        isOpen && "rotate-45"
                       )}
                     />
                   </button>
@@ -88,7 +107,7 @@ export default function Faq({
                     role="region"
                     className={cn(
                       "grid transition-[grid-template-rows] duration-300 ease-out",
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                   >
                     <div className="overflow-hidden">
