@@ -34,6 +34,13 @@ export const promo = {
     width: 2370,
     height: 708,
   },
+  imageMobile: {
+    // TODO: замінити на зображення з Sanity, коли банер переїде в CMS.
+    src: site("nova-kolektsiya-banner-mobile.png"),
+    alt: "Нова колекція: тепло, м'яко й затишно",
+    width: 2240,
+    height: 1416,
+  },
 };
 
 export const vyshyvanka = {

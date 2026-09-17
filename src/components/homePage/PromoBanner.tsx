@@ -11,12 +11,20 @@ export default function PromoBanner() {
         <Reveal>
           <Link href={promo.cta.href} className="block">
             <Image
+              src={promo.imageMobile.src}
+              alt={promo.imageMobile.alt}
+              width={promo.imageMobile.width}
+              height={promo.imageMobile.height}
+              sizes="100vw"
+              className="h-auto w-full lg:hidden"
+            />
+            <Image
               src={promo.image.src}
               alt={promo.image.alt}
               width={promo.image.width}
               height={promo.image.height}
-              sizes="(max-width: 1023px) 100vw, 1280px"
-              className="h-auto w-full"
+              sizes="1280px"
+              className="hidden h-auto w-full lg:block"
             />
           </Link>
         </Reveal>
