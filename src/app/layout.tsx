@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
@@ -13,10 +14,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin", "cyrillic"],
-  weight: ["300", "400"],
+const azbuka = localFont({
+  src: "../fonts/Azbuka04.ttf",
+  variable: "--font-azbuka",
   display: "swap",
 });
 
@@ -41,10 +41,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" data-scroll-behavior="smooth">
-      <body
-        className={`${inter.variable} ${cormorant.variable} flex min-h-dvh flex-col`}
-      >
+    <html
+      lang="uk"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${azbuka.variable}`}
+    >
+      <body className="flex min-h-dvh flex-col">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

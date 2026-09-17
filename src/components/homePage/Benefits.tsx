@@ -55,7 +55,7 @@ export default function Benefits() {
           width={356}
           height={301}
           aria-hidden
-          className="pointer-events-none absolute left-[64.2%] top-[13.5%] -z-10 hidden w-[28%] h-auto lg:block"
+          className="pointer-events-none absolute left-[64.2%] top-[3.5%] -z-10 hidden w-[28%] h-auto lg:block"
         />
         <Image
           src="/images/bamboli/decor/heart-olive.svg"
@@ -63,15 +63,15 @@ export default function Benefits() {
           width={128}
           height={119}
           aria-hidden
-          className="pointer-events-none absolute left-[51%] top-[22.4%] -z-10 hidden w-[10%] h-auto lg:block"
+          className="pointer-events-none absolute left-[51%] top-[9%] rotate-[-30deg] -z-10 hidden w-[10%] h-auto rotate-15 lg:block"
         />
         <Image
-          src="/images/bamboli/decor/stitch-line-short.svg"
+          src="/images/bamboli/decor/stitch-line-long.svg"
           alt=""
           width={247}
           height={18}
           aria-hidden
-          className="pointer-events-none absolute left-[68.5%] top-[26.4%] -z-10 hidden w-[19.5%] h-auto lg:block"
+          className="pointer-events-none absolute left-[68.5%] top-[20.4%] -z-10 hidden w-[19.5%] h-auto lg:block"
         />
 
         <div className="relative mb-10 max-w-[560px] lg:mb-14">

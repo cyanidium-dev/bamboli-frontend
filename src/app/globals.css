@@ -13,7 +13,7 @@
   --color-clay: #a8624a;
 
   --font-sans: var(--font-inter);
-  --font-display: var(--font-cormorant);
+  --font-display: var(--font-azbuka);
 }
 
 @layer base {
