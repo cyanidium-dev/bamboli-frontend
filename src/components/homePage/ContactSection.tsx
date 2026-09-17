@@ -31,8 +31,10 @@ export default function ContactSection() {
           width={502}
           height={502}
           aria-hidden
-          className="pointer-events-none absolute left-[-1%] xl:left-[-7.4%] bottom-[-400px] xl:bottom-[-480px] -z-20 hidden w-[38%] xl:w-[43.4%] h-auto lg:block"
+          className="pointer-events-none absolute lg:left-[-1%] xl:left-[-7.4%] bottom-[-400px] xl:bottom-[-480px] -z-20 hidden w-[38%] xl:w-[43.4%] h-auto lg:block"
         />
+
+
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Зворотний зв&apos;язок</p>
@@ -71,7 +73,9 @@ export default function ContactSection() {
             </ul>
           </div>
 
-          <ContactForm />
+          <ContactForm
+          
+          />
         </div>
       </Container>
     </section>

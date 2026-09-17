@@ -26,10 +26,12 @@ export default function ContactForm({
   withTopic = false,
   defaultTopic,
   messagePlaceholder = "Ваше питання: зріст і вік дитини, модель, що цікавить…",
+  submitDecor,
 }: {
   withTopic?: boolean;
   defaultTopic?: string;
   messagePlaceholder?: string;
+  submitDecor?: React.ReactNode;
 }) {
   const pathname = usePathname();
   const [status, setStatus] = useState<Status>("idle");
@@ -209,6 +211,7 @@ export default function ContactForm({
             Не вдалося надіслати. Спробуйте ще раз або напишіть нам у Telegram.
           </p>
         )}
+        {submitDecor}
       </div>
     </form>
   );

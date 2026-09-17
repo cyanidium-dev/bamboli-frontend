@@ -42,7 +42,11 @@ export default function Faq({
   return (
     <section
       id={id}
-      className={id ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28" : "pt-20 lg:pt-28"}
+      className={
+        id
+          ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28"
+          : "pt-20 lg:pt-28"
+      }
     >
       <Container>
         <div className="relative isolate grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
@@ -53,7 +57,7 @@ export default function Faq({
               width={441}
               height={373}
               aria-hidden
-              className="pointer-events-none absolute left-[-23%] top-[35%] -z-10 hidden w-[37%] h-auto lg:block"
+              className="pointer-events-none absolute right-[-41%] xs:right-[-20%] lg:left-[-23%] top-[-30px] lg:top-[35%] -z-10 w-[90%] xs:w-[60%] sm:w-[45%] lg:w-[37%] h-auto lg:block"
             />
           )}
 
@@ -91,7 +95,7 @@ export default function Faq({
                     <PlusIcon
                       className={cn(
                         "size-5 shrink-0 transition-transform duration-300",
-                        isOpen && "rotate-45",
+                        isOpen && "rotate-45"
                       )}
                     />
                   </button>
@@ -103,7 +107,7 @@ export default function Faq({
                     role="region"
                     className={cn(
                       "grid transition-[grid-template-rows] duration-300 ease-out",
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                   >
                     <div className="overflow-hidden">

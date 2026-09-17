@@ -44,7 +44,7 @@ export default function Hero() {
         </ul>
       </div>
 
-      <div className="relative order-1 aspect-4/5 w-full bg-sand sm:aspect-16/11 lg:order-2 lg:aspect-auto lg:h-full">
+      <div className="relative order-1 aspect-4/5 w-full bg-sand lg:order-2 lg:aspect-auto lg:h-full">
         <div className="absolute -inset-px overflow-hidden">
           <Image
             src={hero.image.src}
