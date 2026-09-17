@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { benefits, BenefitIcon } from "@/data/home";
@@ -46,8 +47,34 @@ const iconPaths: Record<BenefitIcon, React.ReactNode> = {
 export default function Benefits() {
   return (
     <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24">
-      <Container>
-        <div className="mb-10 max-w-[560px] lg:mb-14">
+      <Container className="relative isolate">
+        {/* Decorative accents from the Figma design — hidden on small screens where the grid stacks over them. */}
+        <Image
+          src="/images/bamboli/decor/heart-white.svg"
+          alt=""
+          width={356}
+          height={301}
+          aria-hidden
+          className="pointer-events-none absolute left-[64.2%] top-[13.5%] -z-10 hidden w-[28%] h-auto lg:block"
+        />
+        <Image
+          src="/images/bamboli/decor/heart-olive.svg"
+          alt=""
+          width={128}
+          height={119}
+          aria-hidden
+          className="pointer-events-none absolute left-[51%] top-[22.4%] -z-10 hidden w-[10%] h-auto lg:block"
+        />
+        <Image
+          src="/images/bamboli/decor/stitch-line-short.svg"
+          alt=""
+          width={247}
+          height={18}
+          aria-hidden
+          className="pointer-events-none absolute left-[68.5%] top-[26.4%] -z-10 hidden w-[19.5%] h-auto lg:block"
+        />
+
+        <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Чому Bamboli</p>
           <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
             Кожен стібок, кожна деталь — з любов&apos;ю

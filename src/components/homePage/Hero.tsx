@@ -63,7 +63,7 @@ export default function Hero() {
           width={31}
           height={31}
           aria-hidden
-          className="pointer-events-none absolute size-[5.2%] max-w-10 min-w-4 left-[-2.7%] top-[74.6%]"
+          className="pointer-events-none absolute left-0 top-[74.6%] size-[5.2%] max-w-10 min-w-4 -translate-x-1/2"
         />
         <Image
           src="/images/bamboli/decor/hero-heart.svg"
@@ -71,7 +71,7 @@ export default function Hero() {
           width={187}
           height={161}
           aria-hidden
-          className="pointer-events-none absolute w-[28.8%] max-w-[173px] min-w-[70px] h-auto left-[-14.3%] top-[81.25%]"
+          className="pointer-events-none absolute left-0 top-[81.25%] h-auto w-[28.8%] max-w-[173px] min-w-[70px] -translate-x-1/2"
         />
       </div>
     </section>

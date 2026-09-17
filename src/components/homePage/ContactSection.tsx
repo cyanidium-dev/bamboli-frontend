@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Container from "@/components/shared/ui/Container";
 import ContactForm from "@/components/shared/contactForm/ContactForm";
 import { siteInfo } from "@/data/siteInfo";
@@ -6,8 +7,30 @@ import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 export default function ContactSection() {
   return (
     <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24">
-      <Container>
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
+      <Container className="relative isolate">
+        {/* Decorative accents from the Figma design — hidden on small screens where the two-column layout collapses. */}
+        <Image
+          src="/images/bamboli/decor/heart-white.svg"
+          alt=""
+          width={139}
+          height={117}
+          aria-hidden
+          className="pointer-events-none absolute left-[30%] top-[87.8%] -z-10 hidden w-[11%] h-auto lg:block"
+        />
+        <Image
+          src="/images/bamboli/decor/stitch-line-long.svg"
+          alt=""
+          width={549}
+          height={15}
+          aria-hidden
+          className="pointer-events-none absolute left-[53.4%] top-[78.7%] -z-10 hidden w-[43.4%] h-auto lg:block"
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-[-3.2%] top-[55%] -z-10 hidden aspect-square w-[39.7%] rounded-full bg-surface lg:block"
+        />
+
+        <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Зворотний зв&apos;язок</p>
             <h2 className="u-display text-[30px] leading-[1.1] lg:text-[42px]">
