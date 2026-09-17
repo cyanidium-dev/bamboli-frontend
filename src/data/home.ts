@@ -26,16 +26,14 @@ export const hero = {
 };
 
 export const promo = {
-  label: "Осінь 26",
-  title: "Нова колекція: тепло, м'яко й затишно",
-  text: "Ромпери, комбінезони, куртки з вельветовим коміром і тренчі — речі, в яких приємно гуляти осіннім Львовом і солодко спати.",
-  cta: { label: "Нова колекція", href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
+  cta: { href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
   image: {
-    src: site("autumn-collection-teaser.jpg"),
-    alt: "Малюк у коричневому ромпері й шапочці спить у кошику під мобілем з ведмедиками",
+    // TODO: замінити на зображення з Sanity, коли банер переїде в CMS.
+    src: site("nova-kolektsiya-banner.png"),
+    alt: "Нова колекція: тепло, м'яко й затишно",
+    width: 2370,
+    height: 708,
   },
-  /** Drop an mp4 into /public and set the path — it autoplays muted in view. */
-  video: undefined as string | undefined,
 };
 
 export const vyshyvanka = {
