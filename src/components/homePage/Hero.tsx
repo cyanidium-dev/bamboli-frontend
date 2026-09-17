@@ -44,8 +44,8 @@ export default function Hero() {
         </ul>
       </div>
 
-      <div className="relative order-1 aspect-4/5 w-full overflow-hidden bg-sand sm:aspect-16/11 lg:order-2 lg:aspect-auto lg:h-full">
-        <div className="absolute -inset-px">
+      <div className="relative order-1 aspect-4/5 w-full bg-sand sm:aspect-16/11 lg:order-2 lg:aspect-auto lg:h-full">
+        <div className="absolute -inset-px overflow-hidden">
           <Image
             src={hero.image.src}
             alt={hero.image.alt}
@@ -55,6 +55,24 @@ export default function Hero() {
             className="object-cover object-[50%_40%]"
           />
         </div>
+
+        {/* Decorative accents from the Figma design — anchored to the photo's left edge. */}
+        <Image
+          src="/images/bamboli/decor/hero-dot.svg"
+          alt=""
+          width={31}
+          height={31}
+          aria-hidden
+          className="pointer-events-none absolute size-[5.2%] max-w-10 min-w-4 left-[-2.7%] top-[74.6%]"
+        />
+        <Image
+          src="/images/bamboli/decor/hero-heart.svg"
+          alt=""
+          width={187}
+          height={161}
+          aria-hidden
+          className="pointer-events-none absolute w-[28.8%] max-w-[173px] min-w-[70px] h-auto left-[-14.3%] top-[81.25%]"
+        />
       </div>
     </section>
   );
