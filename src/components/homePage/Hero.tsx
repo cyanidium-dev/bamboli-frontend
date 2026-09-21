@@ -1,79 +1,138 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { hero } from "@/data/home";
-import { CheckIcon } from "@/components/shared/ui/Icons";
+import { heroSlides } from "@/data/home";
+import type { HeroSlide } from "@/types/hero";
+import { cn } from "@/lib/utils";
+
+const INTERVAL_MS = 6000;
 
 /**
- * Split hero: the copy sits on a sand panel, the photography keeps its own
- * portrait crop instead of being stretched into a letterbox.
+ * Full-bleed autoplay slider: text sits over the photo (left or right on
+ * desktop, per slide). Pagination is a row of thin lines with a progress fill.
  */
-export default function Hero() {
+export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const count = slides.length;
+
+  const next = useCallback(() => setActive((i) => (i + 1) % count), [count]);
+
+  useEffect(() => {
+    if (paused || count < 2) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const timer = setTimeout(next, INTERVAL_MS);
+    return () => clearTimeout(timer);
+  }, [active, paused, count, next]);
+
   return (
-    <section className="grid lg:h-[min(720px,calc(100svh-74px))] lg:grid-cols-[1.05fr_0.95fr]">
-      <div className="order-2 flex flex-col justify-center overflow-y-auto bg-sand py-12 pr-5 pl-[max(20px,calc((100vw-1280px)/2+20px))] lg:order-1 lg:py-10 lg:pr-14 lg:pl-[max(40px,calc((100vw-1280px)/2+40px))] xl:pr-20">
-        <p className="u-label mb-6 text-muted">{hero.label}</p>
-        <h1 className="u-display max-w-[600px] text-[40px] leading-[1.04] uppercase sm:text-[52px] lg:text-[48px] xl:text-[56px]">
-          {hero.title}
-        </h1>
-        <p className="mt-7 max-w-[440px] text-[13px] leading-relaxed text-muted">
-          {hero.text}
-        </p>
-
-        <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-8">
-          <Link
-            href={hero.primaryCta.href}
-            className="u-label border border-ink bg-ink px-7 py-4 text-bg transition duration-300 hover:bg-transparent hover:text-ink"
+    <section
+      aria-roledescription="carousel"
+      aria-label="Головний слайдер"
+      className="relative h-[min(680px,calc(100svh-74px))] min-h-[460px] w-full overflow-hidden bg-sand lg:h-[min(760px,calc(100svh-74px))]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {slides.map((slide, i) => {
+        const isActive = i === active;
+        const Heading = i === 0 ? "h1" : "h2";
+        return (
+          <div
+            key={slide.id}
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${i + 1} з ${count}`}
+            aria-hidden={!isActive}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-700",
+              isActive ? "opacity-100" : "pointer-events-none opacity-0",
+            )}
           >
-            {hero.primaryCta.label}
-          </Link>
-          <Link
-            href={hero.secondaryCta.href}
-            className="u-label border border-ink/25 px-7 py-4 transition duration-300 hover:border-ink"
-          >
-            {hero.secondaryCta.label}
-          </Link>
-        </div>
+            <Image
+              src={slide.image.src}
+              alt={slide.image.alt}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className="object-cover object-[50%_35%]"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent lg:bg-none" />
+            <div
+              className={cn(
+                "absolute inset-0 hidden from-black/40 to-transparent lg:block",
+                slide.textPosition === "left" ? "bg-linear-to-r" : "bg-linear-to-l",
+              )}
+            />
 
-        <ul className="mt-9 grid max-w-[480px] grid-cols-2 gap-x-6 gap-y-3 border-t border-ink/10 pt-6 lg:mt-10">
-          {hero.perks.map((perk) => (
-            <li key={perk} className="flex items-center gap-2 text-[12px]">
-              <CheckIcon className="size-4 shrink-0 text-clay" />
-              {perk}
-            </li>
+            <div
+              className={cn(
+                "relative mx-auto flex h-full max-w-[1280px] flex-col justify-end px-5 pb-20 text-white lg:justify-center lg:px-10 lg:pb-10",
+                slide.textPosition === "right" && "lg:items-end lg:text-right",
+              )}
+            >
+              <div className="flex max-w-[520px] flex-col items-start lg:max-w-[560px]">
+                <p
+                  className={cn(
+                    "u-label mb-4 text-white/90",
+                    slide.textPosition === "right" && "lg:self-end",
+                  )}
+                >
+                  {slide.eyebrow}
+                </p>
+                <Heading
+                  className={cn(
+                    "u-display text-[36px] leading-[1.05] uppercase sm:text-[48px] xl:text-[56px]",
+                    slide.textPosition === "right" && "lg:self-end",
+                  )}
+                >
+                  {slide.title}
+                </Heading>
+                <Link
+                  href={slide.cta.href}
+                  tabIndex={isActive ? 0 : -1}
+                  className={cn(
+                    "u-label mt-7 border border-white bg-white px-7 py-4 text-ink transition duration-300 hover:bg-transparent hover:text-white",
+                    slide.textPosition === "right" && "lg:self-end",
+                  )}
+                >
+                  {slide.cta.label}
+                </Link>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+
+      {count > 1 && (
+        <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center gap-2 px-5">
+          {slides.map((slide, i) => (
+            <button
+              key={slide.id}
+              type="button"
+              aria-label={`Слайд ${i + 1}`}
+              aria-current={i === active}
+              onClick={() => setActive(i)}
+              className="group flex h-6 w-10 items-center sm:w-14"
+            >
+              <span className="relative block h-px w-full bg-white/50 group-hover:bg-white/80">
+                {i === active && (
+                  <span
+                    key={active}
+                    className="hero-progress absolute inset-y-[-0.5px] left-0 block h-[2px] bg-white"
+                    style={{
+                      animationDuration: `${INTERVAL_MS}ms`,
+                      animationPlayState: paused ? "paused" : "running",
+                    }}
+                  />
+                )}
+              </span>
+            </button>
           ))}
-        </ul>
-      </div>
-
-      <div className="relative order-1 aspect-4/5 w-full bg-sand lg:order-2 lg:aspect-auto lg:h-full">
-        <div className="absolute -inset-px overflow-hidden">
-          <Image
-            src={hero.image.src}
-            alt={hero.image.alt}
-            fill
-            priority
-            sizes="(max-width: 1023px) 100vw, 52vw"
-            className="object-cover object-[50%_40%]"
-          />
         </div>
-
-        {/* Decorative accents from the Figma design — anchored to the photo's left edge. */}
-        <Image
-          src="/images/bamboli/decor/hero-dot.svg"
-          alt=""
-          width={31}
-          height={31}
-          aria-hidden
-          className="pointer-events-none absolute left-0 top-[74.6%] size-[5.2%] max-w-10 min-w-4 -translate-x-1/2"
-        />
-        <Image
-          src="/images/bamboli/decor/hero-heart.svg"
-          alt=""
-          width={187}
-          height={161}
-          aria-hidden
-          className="pointer-events-none absolute left-0 top-[81.25%] h-auto w-[28.8%] max-w-[173px] min-w-[70px] -translate-x-1/2"
-        />
-      </div>
+      )}
     </section>
   );
 }

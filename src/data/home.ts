@@ -3,27 +3,48 @@
  * Structure follows docs/spec/marketing-structure.md § 3.1.
  */
 
+import type { HeroSlide } from "@/types/hero";
+
 const site = (file: string) => `/images/bamboli/site/${file}`;
 const photo = (file: string) => `/images/bamboli/products/${file}`;
 const land = (file: string) => `/images/bamboli/land/${file}`;
 
-export const hero = {
-  label: "Власне виробництво · Львів",
-  title: "Базовий дитячий одяг як у дорослих",
-  text: "Шиємо самі — з льону, мусліну, велюру й трикотажу double face. Стриманий крій, у якому дитині зручно щодня, а родинні фото виходять теплими.",
-  primaryCta: { label: "Дивитись каталог", href: "/catalog" },
-  secondaryCta: { label: "Вишиванки", href: "/catalog/odyag/vyshyvanky" },
-  perks: [
-    "Власне виробництво",
-    "Натуральні тканини",
-    "Розміри 56–164 см",
-    "Шоурум у Львові",
-  ],
-  image: {
-    src: site("lifestyle-street-boutique.jpg"),
-    alt: "Дівчинка в куртці з вельветовим коміром і коричневому костюмі Bamboli на сходах бутіка",
+export const heroSlides: HeroSlide[] = [
+  {
+    id: "basic-wardrobe",
+    image: {
+      src: site("lifestyle-street-boutique.jpg"),
+      alt: "Дівчинка в куртці з вельветовим коміром і коричневому костюмі Bamboli на сходах бутіка",
+    },
+    eyebrow: "Власне виробництво · Львів",
+    title: "Базовий дитячий одяг як у дорослих",
+    cta: { label: "Дивитись каталог", href: "/catalog" },
+    textPosition: "left",
   },
-};
+  {
+    id: "vyshyvanky",
+    image: {
+      // TODO: замінити на окремі банери з Sanity.
+      src: land("Dc4FTSwjRvh_1.jpg"),
+      alt: "Дитячі вишиванки Bamboli",
+    },
+    eyebrow: "Натуральні тканини",
+    title: "Вишиванки для найменших",
+    cta: { label: "Вишиванки", href: "/catalog/odyag/vyshyvanky" },
+    textPosition: "right",
+  },
+  {
+    id: "new-collection",
+    image: {
+      src: land("Dc8IIn_DbnS_1.jpg"),
+      alt: "Нова колекція дитячого одягу Bamboli",
+    },
+    eyebrow: "Нова колекція",
+    title: "Тепло, м'яко й затишно",
+    cta: { label: "До колекції", href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
+    textPosition: "left",
+  },
+];
 
 export const promo = {
   cta: { href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
