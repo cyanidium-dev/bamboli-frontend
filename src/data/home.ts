@@ -22,6 +22,17 @@ export const heroSlides: HeroSlide[] = [
     textPosition: "left",
   },
   {
+    id: "new-collection",
+    image: {
+      src: land("Dc8IIn_DbnS_1.jpg"),
+      alt: "Нова колекція дитячого одягу Bamboli",
+    },
+    eyebrow: "Нова колекція",
+    title: "Тепло, м'яко й затишно",
+    cta: { label: "До колекції", href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
+    textPosition: "right",
+  },
+  {
     id: "vyshyvanky",
     image: {
       // TODO: замінити на окремі банери з Sanity.
@@ -31,17 +42,6 @@ export const heroSlides: HeroSlide[] = [
     eyebrow: "Натуральні тканини",
     title: "Вишиванки для найменших",
     cta: { label: "Вишиванки", href: "/catalog/odyag/vyshyvanky" },
-    textPosition: "right",
-  },
-  {
-    id: "new-collection",
-    image: {
-      src: land("Dc8IIn_DbnS_1.jpg"),
-      alt: "Нова колекція дитячого одягу Bamboli",
-    },
-    eyebrow: "Нова колекція",
-    title: "Тепло, м'яко й затишно",
-    cta: { label: "До колекції", href: "/catalog/odyag/kolektsiyi/nova-kolektsiya" },
     textPosition: "left",
   },
 ];
@@ -102,13 +102,13 @@ export const categoryTiles: CategoryTile[] = [
   {
     slug: "odyag",
     title: "Одяг",
-    caption: "Сукні, костюми, верхній одяг — для дівчаток, хлопчиків і малюків.",
+    caption: "Сукні, костюми, верхній одяг — для дівчат, хлопчиків і немовлят.",
     image: photo("DdTpZ6sgAxN_1.jpg"),
     href: "/catalog/odyag",
   },
   {
     slug: "divchatka",
-    title: "Дівчатка",
+    title: "Дівчата",
     caption: "Сукні, костюми й верхній одяг для дівчаток.",
     image: photo("DbQlNzOjF-w_1.jpg"),
     href: "/catalog/odyag/divchatka",
@@ -122,7 +122,7 @@ export const categoryTiles: CategoryTile[] = [
   },
   {
     slug: "malyuky",
-    title: "Малюки",
+    title: "Немовлята",
     caption: "М'які натуральні тканини від 56 см.",
     image: photo("DcyHUZyAG5o_1.jpg"),
     href: "/catalog/odyag/malyuky",
@@ -258,6 +258,12 @@ export const benefits: { icon: BenefitIcon; title: string; text: string }[] = [
     text: "Вишиванка, плед і ведмедик в одному замовленні — готовий подарунок на виписку чи день народження.",
   },
 ];
+
+export const newCollection = {
+  label: "Новинки",
+  title: "Наша нова колекція",
+  href: "/catalog/new",
+};
 
 export const saleCollection = {
   label: "Знижки",

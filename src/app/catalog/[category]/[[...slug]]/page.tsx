@@ -8,6 +8,7 @@ import {
   getAksesuaryProducts,
   getCategoryBySlug,
   getIgrashkyProducts,
+  getNewProducts,
   getOdyagProducts,
   getSaleProducts,
 } from "@/lib/api";
@@ -25,6 +26,12 @@ import { Product } from "@/types/product";
 const SALE = {
   title: "Знижки",
   caption: "Улюблені моделі за вигідною ціною — поки є розміри.",
+};
+
+/** /catalog/new is a filter on the «Новинка» flag, not a real category. */
+const NEW = {
+  title: "Новинки",
+  caption: "Свіжі надходження — щойно з пошиття.",
 };
 
 interface Crumb {
@@ -48,6 +55,17 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
       caption: SALE.caption,
       breadcrumbs: [{ label: SALE.title }],
       products: await getSaleProducts(),
+      chips: [],
+    };
+  }
+
+  if (category === "new") {
+    if (slug.length > 0) return null;
+    return {
+      title: NEW.title,
+      caption: NEW.caption,
+      breadcrumbs: [{ label: NEW.title }],
+      products: await getNewProducts(),
       chips: [],
     };
   }
@@ -208,6 +226,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
 export async function generateStaticParams() {
   const params: { category: string; slug?: string[] }[] = [
     { category: "sale" },
+    { category: "new" },
     { category: "odyag" },
     { category: "igrashky" },
     { category: "aksesuary" },
@@ -283,7 +302,7 @@ export default async function CategoryPage({
 
       <CatalogView
         products={resolved.products}
-        filterBy={category === "sale" ? "category" : "size"}
+        filterBy={category === "sale" || category === "new" ? "category" : "size"}
       />
     </Container>
   );

@@ -12,9 +12,10 @@ import Benefits from "@/components/homePage/Benefits";
 import InstagramReels from "@/components/homePage/InstagramReels";
 import Reviews from "@/components/homePage/Reviews";
 import ContactSection from "@/components/homePage/ContactSection";
-import { babyCollection, categoryTiles, saleCollection } from "@/data/home";
+import { babyCollection, categoryTiles, newCollection, saleCollection } from "@/data/home";
 import { faq } from "@/data/faq";
 import {
+  getNewProducts,
   getOdyagProducts,
   getProductsByCategory,
   getSaleProducts,
@@ -25,6 +26,10 @@ import {
 /** Block order: docs/spec/marketing-structure.md § 3.1. */
 export default async function HomePage() {
   const [
+    novelties,
+    noveltiesGirls,
+    noveltiesBoys,
+    noveltiesBabies,
     top,
     topGirls,
     topBoys,
@@ -40,6 +45,10 @@ export default async function HomePage() {
     saleBoys,
     saleBabies,
   ] = await Promise.all([
+    getNewProducts(10),
+    getNewProducts(10, "divchatka"),
+    getNewProducts(10, "khlopchyky"),
+    getNewProducts(10, "malyuky"),
     getTopProducts(8),
     getTopProducts(8, "divchatka"),
     getTopProducts(8, "khlopchyky"),
@@ -59,6 +68,26 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+
+      {novelties.length > 0 && (
+        <section className="pt-20 lg:pt-28">
+          <Container>
+            <SectionHeading
+              label={newCollection.label}
+              title={newCollection.title}
+              href={newCollection.href}
+            />
+            <ProductCarouselTabs
+              all={novelties}
+              girls={noveltiesGirls}
+              boys={noveltiesBoys}
+              babies={noveltiesBabies}
+              label={newCollection.label}
+              tabOrder={["all", "malyuky", "divchatka", "khlopchyky"]}
+            />
+          </Container>
+        </section>
+      )}
 
       <section className="pt-20 lg:pt-28">
         <Container>

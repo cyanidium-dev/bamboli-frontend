@@ -51,7 +51,7 @@ export const odyagGroups: OdyagGroupDef[] = [
   },
   {
     slug: "divchatka",
-    title: "Дівчатка",
+    title: "Дівчата",
     caption: "Сукні, костюми й верхній одяг для дівчаток.",
     filterKind: "audience",
     audience: "divchatka",
@@ -82,7 +82,7 @@ export const odyagGroups: OdyagGroupDef[] = [
   },
   {
     slug: "malyuky",
-    title: "Малюки",
+    title: "Немовлята",
     caption: "М'які натуральні тканини від 56 см.",
     filterKind: "audience",
     audience: "malyuky",
@@ -111,9 +111,9 @@ export const odyagGroups: OdyagGroupDef[] = [
     caption: "Власного пошиття, з яворівською вишивкою.",
     filterKind: "vyshyvanky",
     subcategories: [
-      { slug: "divchatka", title: "Дівчатка" },
+      { slug: "divchatka", title: "Дівчата" },
       { slug: "khlopchyky", title: "Хлопчики" },
-      { slug: "malyuky", title: "Малюки" },
+      { slug: "malyuky", title: "Немовлята" },
     ],
   },
 ];

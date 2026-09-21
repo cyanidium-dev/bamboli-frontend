@@ -60,6 +60,14 @@ export async function getTopProducts(limit = 8, audience?: Audience): Promise<Pr
     .slice(0, limit);
 }
 
+/** Sanity flag «Новинка»; `audience` narrows to the home page gender tabs. */
+export async function getNewProducts(limit?: number, audience?: Audience): Promise<Product[]> {
+  return products
+    .filter((product) => product.badges.includes("new"))
+    .filter((product) => !audience || product.audience?.includes(audience))
+    .slice(0, limit);
+}
+
 /** Sanity flag «Знижка»; `audience` narrows to the home page gender tabs. */
 export async function getSaleProducts(limit?: number, audience?: Audience): Promise<Product[]> {
   return products
