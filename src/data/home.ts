@@ -121,16 +121,16 @@ export const categoryTiles: CategoryTile[] = [
   {
     slug: "igrashky",
     title: "Іграшки",
-    caption: "Done by Deer, Jollein та інші — для гри, прикорму й сну.",
+    caption: "Іграшки для гри, розвитку й подарунка — з безпечних матеріалів.",
     image: land("Dc-966pt_PG_1.jpg"),
     href: "/catalog/igrashky",
   },
 ];
 
 export const toysCollection = {
-  label: "Іграшки, посуд і сон",
-  title: "Для гри, прикорму, сну й подарунка",
-  text: "Преміальні бренди Done by Deer, Jollein та інші — у тому ж кошику, що й одяг. Безпечні матеріали, спокійні кольори.",
+  label: "Іграшки",
+  title: "Для гри й подарунка",
+  text: "Іграшки з безпечних матеріалів і у спокійних кольорах — у тому ж кошику, що й одяг.",
   href: "/catalog/igrashky",
   image: {
     src: land("Dc-966pt_PG_1.jpg"),

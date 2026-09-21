@@ -18,7 +18,7 @@ export const categories: Category[] = [
   {
     slug: "igrashky",
     title: "Іграшки",
-    caption: "Done by Deer, Jollein та інші — для гри, прикорму й сну.",
+    caption: "Іграшки для гри, розвитку й подарунка — з безпечних матеріалів.",
     image: img("land/Dc5XiPZDfmj_1.jpg"),
   },
   {

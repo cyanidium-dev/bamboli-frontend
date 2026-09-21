@@ -50,6 +50,20 @@ export const odyagGroups: OdyagGroupDef[] = [
     ],
   },
   {
+    slug: "malyuky",
+    title: "Немовлята",
+    caption: "М'які натуральні тканини для найменших.",
+    filterKind: "audience",
+    audience: "malyuky",
+    subcategories: [
+      { slug: "bodi", title: "Боді" },
+      { slug: "cholovichky", title: "Чоловічки" },
+      { slug: "komplekty", title: "Комплекти" },
+      { slug: "kombinezony", title: "Комбінезони" },
+      { slug: "odyag", title: "Одяг" },
+    ],
+  },
+  {
     slug: "divchatka",
     title: "Дівчата",
     caption: "Сукні, костюми й верхній одяг для дівчаток.",
@@ -78,20 +92,6 @@ export const odyagGroups: OdyagGroupDef[] = [
       { slug: "shorty", title: "Шорти" },
       { slug: "kostyumy", title: "Костюми" },
       { slug: "verkhniy-odyag", title: "Верхній одяг" },
-    ],
-  },
-  {
-    slug: "malyuky",
-    title: "Немовлята",
-    caption: "М'які натуральні тканини для найменших.",
-    filterKind: "audience",
-    audience: "malyuky",
-    subcategories: [
-      { slug: "bodi", title: "Боді" },
-      { slug: "cholovichky", title: "Чоловічки" },
-      { slug: "komplekty", title: "Комплекти" },
-      { slug: "kombinezony", title: "Комбінезони" },
-      { slug: "odyag", title: "Одяг" },
     ],
   },
   {

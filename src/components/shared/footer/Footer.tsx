@@ -3,14 +3,8 @@ import Container from "@/components/shared/ui/Container";
 import Logo from "@/components/shared/ui/Logo";
 import TagIcon from "@/components/shared/icons/TagIcon";
 import { categories } from "@/data/categories";
+import { footerInfoLinks } from "@/data/navigation";
 import { siteInfo } from "@/data/siteInfo";
-
-const buyers = [
-  { href: "/delivery", label: "Доставка та оплата" },
-  { href: "/delivery#returns", label: "Обмін і повернення" },
-  { href: "/size-guide", label: "Таблиця розмірів" },
-  { href: "/blog", label: "Блог" },
-];
 
 const socials = [
   { href: siteInfo.instagram.url, label: "Instagram" },
@@ -67,9 +61,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="u-label mb-4 text-muted">Покупцям</p>
+            <p className="u-label mb-4 text-muted">Інформація</p>
             <ul className="space-y-2.5">
-              {buyers.map((link) => (
+              {footerInfoLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="u-underline text-[13px]">
                     {link.label}
