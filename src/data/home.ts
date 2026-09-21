@@ -79,7 +79,7 @@ export const vyshyvanka = {
 
 export const babyCollection = {
   label: "Для малюків 0–2",
-  title: "М'які натуральні тканини від 56 см",
+  title: "М'які натуральні тканини для найменших",
   href: "/catalog/odyag/malyuky",
 };
 
@@ -100,7 +100,7 @@ export const categoryTiles: CategoryTile[] = [
   {
     slug: "malyuky",
     title: "Немовлята",
-    caption: "М'які натуральні тканини від 56 см.",
+    caption: "М'які натуральні тканини для найменших.",
     image: photo("DcyHUZyAG5o_1.jpg"),
     href: "/catalog/odyag/malyuky",
   },

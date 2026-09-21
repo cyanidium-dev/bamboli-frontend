@@ -12,7 +12,6 @@ export default function ProductCarouselTabs({
   babies,
   label,
   perView,
-  tabOrder,
   className,
 }: {
   all: Product[];
@@ -21,7 +20,6 @@ export default function ProductCarouselTabs({
   babies: Product[];
   label: string;
   perView?: 3 | 4;
-  tabOrder?: AudienceTab[];
   className?: string;
 }) {
   const [tab, setTab] = useState<AudienceTab>("all");
@@ -36,7 +34,7 @@ export default function ProductCarouselTabs({
 
   return (
     <div>
-      <AudienceTabs active={tab} onChange={setTab} order={tabOrder} />
+      <AudienceTabs active={tab} onChange={setTab} />
       <ProductCarousel
         products={products}
         label={label}

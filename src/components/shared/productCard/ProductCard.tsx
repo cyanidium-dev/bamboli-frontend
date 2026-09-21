@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Badge, Product } from "@/types/product";
-import { cn, discountPercent, formatPrice, hasPriceRange } from "@/lib/utils";
+import { Badge, ColorVariant, Product } from "@/types/product";
+import { cn, discountPercent, formatPrice } from "@/lib/utils";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
 import { useCartStore } from "@/store/cartStore";
 import { PlusIcon, CloseIcon } from "@/components/shared/ui/Icons";
@@ -18,6 +18,9 @@ const badgeLabel: Record<Badge, string> = {
   sale: "Знижка",
 };
 
+const firstSize = (color: ColorVariant) =>
+  (color.sizes.find((item) => item.inStock) ?? color.sizes[0])?.label ?? null;
+
 export default function ProductCard({
   product,
   priority = false,
@@ -27,7 +30,11 @@ export default function ProductCard({
 }) {
   const [colorIndex, setColorIndex] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  // First colour and its first in-stock size are preselected, so the card
+  // always shows a concrete price instead of a «від» range.
+  const [selectedSize, setSelectedSize] = useState<string | null>(() =>
+    firstSize(product.colors[0]),
+  );
   const imageRef = useRef<HTMLDivElement>(null);
 
   const addToCart = useAddToCart();
@@ -39,6 +46,10 @@ export default function ProductCard({
 
   const canAdd = !hasSizes || selectedSize !== null;
 
+  const size = color.sizes.find((item) => item.label === selectedSize);
+  const price = size?.price ?? product.price;
+  const oldPrice = size ? size.oldPrice : product.oldPrice;
+
   const handleAdd = () => {
     if (!canAdd) return;
     addToCart({
@@ -48,14 +59,13 @@ export default function ProductCard({
       origin: imageRef.current,
     });
     setPanelOpen(false);
-    setSelectedSize(null);
     window.setTimeout(openCart, 900);
   };
 
   const handleColorChange = (index: number) => {
     setColorIndex(index);
     // Sizes and stock differ per colour, so a previous pick may not exist.
-    setSelectedSize(null);
+    setSelectedSize(firstSize(product.colors[index]));
   };
 
   return (
@@ -76,6 +86,7 @@ export default function ProductCard({
               exactly the 1px hairline you see while hovering. */}
           <div className="absolute -inset-px transform-gpu transition-transform duration-[800ms] ease-out lg:group-hover/card:scale-[1.025]">
             <Image
+              key={`${color.id}-front`}
               src={front}
               alt={product.title}
               fill
@@ -84,6 +95,7 @@ export default function ProductCard({
               className="object-cover transition-opacity duration-[550ms] ease-out lg:group-hover/card:opacity-0"
             />
             <Image
+              key={`${color.id}-back`}
               src={back}
               alt=""
               fill
@@ -104,8 +116,8 @@ export default function ProductCard({
                   badge === "sale" && "bg-clay text-bg",
                 )}
               >
-                {badge === "sale" && discountPercent(product.price, product.oldPrice)
-                  ? `−${discountPercent(product.price, product.oldPrice)}%`
+                {badge === "sale" && discountPercent(price, oldPrice)
+                  ? `−${discountPercent(price, oldPrice)}%`
                   : badgeLabel[badge]}
               </span>
             ))}
@@ -167,7 +179,7 @@ export default function ProductCard({
                       type="button"
                       disabled={!size.inStock}
                       aria-pressed={selected}
-                      onClick={() => setSelectedSize(selected ? null : size.label)}
+                      onClick={() => setSelectedSize(size.label)}
                       className={cn(
                         "min-w-9 border px-2 py-1.5 text-[11px] leading-none transition",
                         selected
@@ -204,18 +216,20 @@ export default function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col pt-3">
-        {product.colors.length > 1 && (
-          <ColorSwatches
-            colors={product.colors}
-            activeIndex={colorIndex}
-            onChange={handleColorChange}
-            className="mb-2.5"
-          />
-        )}
+        {/* Fixed-height row even without a colour choice, so titles start at
+            the same y on every card in a grid/carousel. */}
+        <div className="mb-2.5 flex h-3.5 items-center">
+          {product.colors.length > 1 && (
+            <ColorSwatches
+              colors={product.colors}
+              activeIndex={colorIndex}
+              onChange={handleColorChange}
+            />
+          )}
+        </div>
 
         <Link href={`/product/${product.slug}`} className="block">
-          <h3 className="u-label mb-1.5">{product.title}</h3>
-          <p className="mb-2 text-[11px] text-muted">{product.subtitle}</p>
+          <h3 className="u-label mb-1.5 line-clamp-2">{product.title}</h3>
         </Link>
 
         <div className="mt-auto flex items-baseline gap-2">
@@ -225,16 +239,15 @@ export default function ProductCard({
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
             className={cn(
-              "text-[13px] tabular-nums",
-              product.oldPrice && "text-clay",
+              "text-[12px] tabular-nums",
+              oldPrice && "text-clay",
             )}
           >
-            {hasPriceRange(product) && "від "}
-            {formatPrice(product.price)}
+            {formatPrice(price)}
           </motion.span>
-          {product.oldPrice && (
-            <span className="text-[12px] text-muted line-through tabular-nums">
-              {formatPrice(product.oldPrice)}
+          {oldPrice && (
+            <span className="text-[11px] text-muted line-through tabular-nums">
+              {formatPrice(oldPrice)}
             </span>
           )}
         </div>
