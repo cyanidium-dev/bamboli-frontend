@@ -7,11 +7,11 @@
  *
  * Category tree — docs/spec/marketing-structure.md §2.1: three main
  * categories (Одяг / Іграшки / Аксесуари), each with its own subcategories.
- * Clothing additionally carries `audience` (дівчатка/хлопчики/малюки — a
+ * Clothing additionally carries `audience` (дівчата/хлопчики/немовлята — a
  * product can hold several, unisex items hold none) and `collections`
  * (льон/нова колекція/сезонні колекції/вишиванки — tags layered on top of
  * the type, not a separate tree) so one product never has to be duplicated
- * across "Дівчатка → сукні", "Колекції → льон" and "Вишиванки → дівчатка".
+ * across "Дівчата → сукні", "Колекції → льон" and "Вишиванки → дівчата".
  */
 
 export type MainCategorySlug = "odyag" | "igrashky" | "aksesuary";
@@ -52,7 +52,7 @@ export type Subcategory =
 
 export type ProductKind = "apparel" | "toy";
 
-/** "top" — Sanity-прапорець «Топ», "sale" — «Знижка». */
+/** "new" — Sanity-прапорець «Новинка», "top" — «Топ», "sale" — «Знижка». */
 export type Badge = "new" | "top" | "sale";
 
 /** «За ким носять» — товар одягу може мати кілька значень (унісекс = жодного). */

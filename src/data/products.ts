@@ -82,7 +82,7 @@ function build(seed: Seed): Product {
 }
 
 const seeds: Seed[] = [
-  /* ——— Для малюків (Одяг → Малюки) ——— */
+  /* ——— Для малюків (Одяг → Немовлята) ——— */
   {
     id: "b-001",
     slug: "romper-z-vushkamy",
@@ -229,7 +229,7 @@ const seeds: Seed[] = [
     details: [{ label: "Оздоблення", value: "Вишивка" }, OWN_PRODUCTION],
   },
 
-  /* ——— Костюми (Одяг → Для всіх / Дівчатка / Хлопчики) ——— */
+  /* ——— Костюми (Одяг → Для всіх / Дівчата / Хлопчики) ——— */
   {
     id: "b-010",
     slug: "lyanyi-kostyum",
@@ -575,7 +575,7 @@ const seeds: Seed[] = [
     details: [{ label: "Тканина штанів", value: "Вельвет" }, OWN_PRODUCTION],
   },
 
-  /* ——— Сукні (Одяг → Дівчатка) ——— */
+  /* ——— Сукні (Одяг → Дівчата) ——— */
   {
     id: "b-040",
     slug: "suknya-v-klitynku-z-komirtsem",
