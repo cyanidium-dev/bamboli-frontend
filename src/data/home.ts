@@ -196,51 +196,40 @@ export interface Reel {
   id: string;
   poster: string;
   caption: string;
-  /** Link to the reel; falls back to the profile when the shortcode is unknown. */
-  href: string;
   /** Muted mp4 in /public — plays while the tile is visible. */
   video?: string;
 }
-
-const reel = (code: string) => `https://www.instagram.com/reel/${code}/`;
-const PROFILE = "https://www.instagram.com/bamboli.ua/";
 
 export const reels: Reel[] = [
   {
     id: "autumn",
     poster: site("autumn-collection-teaser.jpg"),
     caption: "Тизер осінньої колекції",
-    href: PROFILE,
   },
   {
     id: "vyshyvanka",
     poster: site("brand-emotion-vyshyvanka.jpg"),
     caption: "Перша вишиванка",
-    href: PROFILE,
   },
   {
     id: "store",
     poster: site("store-interior-1.jpg"),
     caption: "Запрошуємо в шоурум",
-    href: PROFILE,
   },
   {
     id: "Db-hXnSM1K6",
     poster: photo("Db-hXnSM1K6_frame.jpg"),
     caption: "Сукня з яворівською вишивкою",
-    href: reel("Db-hXnSM1K6"),
   },
   {
     id: "DcD9LV_Mjs8",
     poster: photo("DcD9LV_Mjs8_frame.jpg"),
     caption: "Вишиванка для хлопчика",
-    href: reel("DcD9LV_Mjs8"),
   },
   {
     id: "DdOY5H9AFNP",
     poster: photo("DdOY5H9AFNP_frame.jpg"),
     caption: "Комбінезон на замочок",
-    href: reel("DdOY5H9AFNP"),
   },
 ];
 
