@@ -83,17 +83,18 @@ export default async function HomePage() {
               boys={noveltiesBoys}
               babies={noveltiesBabies}
               label={newCollection.label}
-              tabOrder={["all", "malyuky", "divchatka", "khlopchyky"]}
             />
           </Container>
         </section>
       )}
 
+      <CategoryStrip categories={categoryTiles} />
+
       <section className="pt-20 lg:pt-28">
         <Container>
           <SectionHeading
             label="Топ товарів"
-            title="Найулюбленіше мамами"
+            title="Найпопулярніше для ваших малюків"
             href="/catalog"
           />
           <ProductCarouselTabs
@@ -106,7 +107,6 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <CategoryStrip categories={categoryTiles} />
       <PromoBanner />
       <VyshyvankaSpotlight
         all={vyshyvankaAll}

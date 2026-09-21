@@ -6,26 +6,20 @@ export type AudienceTab = "all" | "divchatka" | "khlopchyky" | "malyuky";
 
 const tabs: { key: AudienceTab; label: string }[] = [
   { key: "all", label: "Всі" },
+  { key: "malyuky", label: "Немовлята" },
   { key: "divchatka", label: "Дівчата" },
   { key: "khlopchyky", label: "Хлопчики" },
-  { key: "malyuky", label: "Немовлята" },
 ];
 
 export default function AudienceTabs({
   active,
   onChange,
-  order,
   className,
 }: {
   active: AudienceTab;
   onChange: (tab: AudienceTab) => void;
-  /** Custom tab order; defaults to Всі, Дівчата, Хлопчики, Немовлята. */
-  order?: AudienceTab[];
   className?: string;
 }) {
-  const visible = order
-    ? order.map((key) => tabs.find((tab) => tab.key === key)!)
-    : tabs;
   return (
     <div
       role="tablist"
@@ -35,7 +29,7 @@ export default function AudienceTabs({
         className,
       )}
     >
-      {visible.map((tab) => (
+      {tabs.map((tab) => (
         <button
           key={tab.key}
           type="button"

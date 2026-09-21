@@ -11,7 +11,7 @@ const priceFormatter = new Intl.NumberFormat("uk-UA", {
 });
 
 export function formatPrice(value: number) {
-  return `${priceFormatter.format(value)} ₴`;
+  return `${priceFormatter.format(value)} грн`;
 }
 
 /** Price of the chosen size group; product-level price when nothing is chosen. */

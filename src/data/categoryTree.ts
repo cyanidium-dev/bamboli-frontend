@@ -83,7 +83,7 @@ export const odyagGroups: OdyagGroupDef[] = [
   {
     slug: "malyuky",
     title: "Немовлята",
-    caption: "М'які натуральні тканини від 56 см.",
+    caption: "М'які натуральні тканини для найменших.",
     filterKind: "audience",
     audience: "malyuky",
     subcategories: [
@@ -111,9 +111,9 @@ export const odyagGroups: OdyagGroupDef[] = [
     caption: "Власного пошиття, з яворівською вишивкою.",
     filterKind: "vyshyvanky",
     subcategories: [
+      { slug: "malyuky", title: "Немовлята" },
       { slug: "divchatka", title: "Дівчата" },
       { slug: "khlopchyky", title: "Хлопчики" },
-      { slug: "malyuky", title: "Немовлята" },
     ],
   },
 ];

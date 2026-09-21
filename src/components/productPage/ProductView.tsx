@@ -174,7 +174,7 @@ export default function ProductView({ product }: { product: Product }) {
         </button>
 
         <p className="mt-3 text-center text-[11px] text-muted">
-          Безкоштовна доставка від 2 500 ₴
+          Безкоштовна доставка від 2 500 грн
         </p>
 
         <div className="mt-10 border-t border-line">
