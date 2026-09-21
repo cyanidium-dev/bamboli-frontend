@@ -3,11 +3,7 @@ import Container from "@/components/shared/ui/Container";
 import InViewVideo from "@/components/shared/ui/InViewVideo";
 import { reels } from "@/data/home";
 import { siteInfo } from "@/data/siteInfo";
-import {
-  InstagramIcon,
-  PlayIcon,
-  TelegramIcon,
-} from "@/components/shared/ui/Icons";
+import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 
 export default function InstagramReels() {
   return (
@@ -53,13 +49,7 @@ export default function InstagramReels() {
               key={reel.id}
               className="w-[42vw] shrink-0 snap-start sm:w-[30vw] lg:w-auto"
             >
-              <a
-                href={reel.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${reel.caption} — дивитись в Instagram`}
-                className="group/reel relative block aspect-9/16 overflow-hidden bg-sand"
-              >
+              <div className="relative aspect-9/16 overflow-hidden bg-sand">
                 {reel.video ? (
                   <InViewVideo
                     src={reel.video}
@@ -72,16 +62,13 @@ export default function InstagramReels() {
                     alt=""
                     fill
                     sizes="(max-width: 639px) 42vw, (max-width: 1023px) 30vw, 16vw"
-                    className="object-cover transition-transform duration-[900ms] ease-out group-hover/reel:scale-[1.04]"
+                    className="object-cover"
                   />
                 )}
-                <span className="absolute left-1/2 top-1/2 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-bg/85 text-ink backdrop-blur-[2px] transition duration-300 group-hover/reel:scale-110">
-                  <PlayIcon className="ml-0.5 size-4" />
-                </span>
                 <span className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/60 to-transparent px-3 pb-3 pt-12 text-[11px] leading-snug text-bg">
                   {reel.caption}
                 </span>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
