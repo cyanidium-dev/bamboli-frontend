@@ -89,6 +89,8 @@ export default async function HomePage() {
         </section>
       )}
 
+      <CategoryStrip categories={categoryTiles} />
+
       <section className="pt-20 lg:pt-28">
         <Container>
           <SectionHeading
@@ -106,7 +108,6 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <CategoryStrip categories={categoryTiles} />
       <PromoBanner />
       <VyshyvankaSpotlight
         all={vyshyvankaAll}

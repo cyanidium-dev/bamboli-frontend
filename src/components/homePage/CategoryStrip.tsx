@@ -2,10 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
-import ScrollRow from "@/components/shared/ui/ScrollRow";
 import { CategoryTile } from "@/data/home";
 
-/** A slider, same pattern as the product carousels elsewhere on the page. */
+/** 2×2 grid on mobile, a single row from `lg` up. */
 export default function CategoryStrip({
   categories,
 }: {
@@ -16,15 +15,12 @@ export default function CategoryStrip({
       <Container>
         <SectionHeading
           label="Категорії"
-          title="Усе для дитини в одному стилі"
+          title="Одяг та іграшки для маленьких мрійників"
           href="/catalog"
           hrefLabel="Каталог"
         />
 
-        <ScrollRow
-          label="Категорії"
-          itemClassName="w-[40vw] sm:w-[28vw] lg:w-[190px]"
-        >
+        <div className="grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4 lg:gap-x-5">
           {categories.map((category, index) => (
             <Link key={category.slug} href={category.href} className="group/tile block">
               <div className="relative aspect-3/4 w-full overflow-hidden bg-sand">
@@ -34,7 +30,7 @@ export default function CategoryStrip({
                     alt={category.title}
                     fill
                     priority={index < 2}
-                    sizes="(max-width: 639px) 40vw, (max-width: 1023px) 28vw, 190px"
+                    sizes="(max-width: 1023px) 50vw, 25vw"
                     className="object-cover"
                   />
                 </div>
@@ -48,7 +44,7 @@ export default function CategoryStrip({
               </p>
             </Link>
           ))}
-        </ScrollRow>
+        </div>
       </Container>
     </section>
   );
