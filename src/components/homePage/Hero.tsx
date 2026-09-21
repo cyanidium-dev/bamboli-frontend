@@ -15,26 +15,23 @@ const INTERVAL_MS = 4000;
  */
 export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
   const count = slides.length;
 
   const next = useCallback(() => setActive((i) => (i + 1) % count), [count]);
 
   useEffect(() => {
-    if (paused || count < 2) return;
+    if (count < 2) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     const timer = setTimeout(next, INTERVAL_MS);
     return () => clearTimeout(timer);
-  }, [active, paused, count, next]);
+  }, [active, count, next]);
 
   return (
     <section
       aria-roledescription="carousel"
       aria-label="Головний слайдер"
       className="relative h-[min(540px,calc(100svh-74px))] min-h-[420px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       {slides.map((slide, i) => {
         const isActive = i === active;
@@ -124,10 +121,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                   <span
                     key={active}
                     className="hero-progress absolute inset-y-0 left-0 block bg-white"
-                    style={{
-                      animationDuration: `${INTERVAL_MS}ms`,
-                      animationPlayState: paused ? "paused" : "running",
-                    }}
+                    style={{ animationDuration: `${INTERVAL_MS}ms` }}
                   />
                 )}
               </span>
