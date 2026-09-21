@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ScrollTabs from "@/components/shared/ui/ScrollTabs";
 import Container from "@/components/shared/ui/Container";
 import CatalogView from "@/components/catalogPage/CatalogView";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
@@ -45,7 +46,54 @@ interface Resolved {
   breadcrumbs: Crumb[];
   products: Product[];
   chips: { label: string; href: string; active: boolean }[];
+  /** Optional second row of chips shown below `chips`. */
+  subChips?: { label: string; href: string; active: boolean }[];
+  /** Caption shown before the second row, e.g. «Бренд». */
+  subChipsLabel?: string;
 }
+
+const odyagGroupChips = (activeSlug: string) =>
+  odyagGroups.map((group) => ({
+    label: group.title,
+    href: `/catalog/odyag/${group.slug}`,
+    active: group.slug === activeSlug,
+  }));
+
+const odyagSubChips = (group: (typeof odyagGroups)[number], activeSub?: string) => [
+  { label: "Всі", href: `/catalog/odyag/${group.slug}`, active: !activeSub },
+  ...group.subcategories.map((sub) => ({
+    label: sub.title,
+    href: `/catalog/odyag/${group.slug}/${sub.slug}`,
+    active: sub.slug === activeSub,
+  })),
+];
+
+/** Toys: subcategory tabs on top, brands as a separate row below. */
+const toyRows = (activeSub?: string, activeBrand?: string) => ({
+  chips: [
+    { label: "Всі", href: "/catalog/igrashky", active: !activeSub && !activeBrand },
+    ...toySubcategories.map((sub) => ({
+      label: sub.title,
+      href: `/catalog/igrashky/${sub.slug}`,
+      active: sub.slug === activeSub,
+    })),
+  ],
+  subChipsLabel: "Бренд",
+  subChips: toyBrands.map((brand) => ({
+    label: brand.name,
+    href: `/catalog/igrashky/brend/${brand.slug}`,
+    active: brand.slug === activeBrand,
+  })),
+});
+
+const aksesuaryChips = (activeSub?: string) => [
+  { label: "Всі", href: "/catalog/aksesuary", active: !activeSub },
+  ...accessorySubcategories.map((sub) => ({
+    label: sub.title,
+    href: `/catalog/aksesuary/${sub.slug}`,
+    active: sub.slug === activeSub,
+  })),
+];
 
 async function resolve(category: string, slug: string[]): Promise<Resolved | null> {
   if (category === "sale") {
@@ -83,11 +131,13 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         caption: main.caption,
         breadcrumbs: [{ label: main.title }],
         products: await getOdyagProducts(),
-        chips: odyagGroups.map((group) => ({
+        chips: odyagGroups.map((group, index) => ({
           label: group.title,
           href: `/catalog/odyag/${group.slug}`,
-          active: false,
+          // «Для всіх» (first) is the default — it shows the same full range.
+          active: index === 0,
         })),
+        subChips: odyagSubChips(odyagGroups[0]),
       };
     }
 
@@ -103,11 +153,8 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
           { label: group.title },
         ],
         products: await getOdyagProducts(groupSlug),
-        chips: group.subcategories.map((sub) => ({
-          label: sub.title,
-          href: `/catalog/odyag/${group.slug}/${sub.slug}`,
-          active: false,
-        })),
+        chips: odyagGroupChips(group.slug),
+        subChips: odyagSubChips(group),
       };
     }
 
@@ -123,11 +170,8 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         { label: sub.title },
       ],
       products: await getOdyagProducts(groupSlug, subSlug),
-      chips: group.subcategories.map((item) => ({
-        label: item.title,
-        href: `/catalog/odyag/${group.slug}/${item.slug}`,
-        active: item.slug === subSlug,
-      })),
+      chips: odyagGroupChips(group.slug),
+      subChips: odyagSubChips(group, subSlug),
     };
   }
 
@@ -139,11 +183,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         caption: main.caption,
         breadcrumbs: [{ label: main.title }],
         products: await getIgrashkyProducts(),
-        chips: toySubcategories.map((sub) => ({
-          label: sub.title,
-          href: `/catalog/igrashky/${sub.slug}`,
-          active: false,
-        })),
+        ...toyRows(),
       };
     }
 
@@ -159,11 +199,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
           { label: brand.name },
         ],
         products: await getIgrashkyProducts(undefined, brandSlug),
-        chips: toyBrands.map((item) => ({
-          label: item.name,
-          href: `/catalog/igrashky/brend/${item.slug}`,
-          active: item.slug === brandSlug,
-        })),
+        ...toyRows(undefined, brandSlug),
       };
     }
 
@@ -178,11 +214,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         { label: sub.title },
       ],
       products: await getIgrashkyProducts(sub.slug),
-      chips: toySubcategories.map((item) => ({
-        label: item.title,
-        href: `/catalog/igrashky/${item.slug}`,
-        active: item.slug === sub.slug,
-      })),
+      ...toyRows(sub.slug),
     };
   }
 
@@ -194,11 +226,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         caption: main.caption,
         breadcrumbs: [{ label: main.title }],
         products: await getAksesuaryProducts(),
-        chips: accessorySubcategories.map((sub) => ({
-          label: sub.title,
-          href: `/catalog/aksesuary/${sub.slug}`,
-          active: false,
-        })),
+        chips: aksesuaryChips(),
       };
     }
 
@@ -212,11 +240,7 @@ async function resolve(category: string, slug: string[]): Promise<Resolved | nul
         { label: sub.title },
       ],
       products: await getAksesuaryProducts(sub.slug),
-      chips: accessorySubcategories.map((item) => ({
-        label: item.title,
-        href: `/catalog/aksesuary/${item.slug}`,
-        active: item.slug === sub.slug,
-      })),
+      chips: aksesuaryChips(sub.slug),
     };
   }
 
@@ -273,36 +297,89 @@ export default async function CategoryPage({
   const resolved = await resolve(category, slug);
   if (!resolved) notFound();
 
+  // Every main category ends its top row with a link to the sale listing.
+  const topChips =
+    category === "sale" || category === "new"
+      ? resolved.chips
+      : [...resolved.chips, { label: "SALE", href: "/catalog/sale", active: false }];
+
   return (
     <Container className="pb-10 pt-10 lg:pt-14">
       <CatalogHeader
         title={resolved.title}
         caption={resolved.caption}
-        breadcrumbs={resolved.breadcrumbs}
+        breadcrumbs={[{ label: "Каталог", href: "/catalog" }, ...resolved.breadcrumbs]}
       />
 
-      {resolved.chips.length > 0 && (
-        <div className="no-scrollbar -mx-1 mb-8 flex max-w-full items-center gap-1.5 overflow-x-auto px-1 lg:mb-12 lg:flex-wrap">
-          {resolved.chips.map((chip) => (
-            <Link
-              key={chip.href}
-              href={chip.href}
+      {[topChips, resolved.subChips ?? []].map((row, rowIndex) => {
+        // Two rows read as two levels: main tabs (underline) over
+        // subcategory pills. Without a second row the single row stays pills.
+        const isTabs =
+          rowIndex === 0 && (resolved.subChips !== undefined || category === "aksesuary");
+        return (
+          row.length > 0 && (
+            <ScrollTabs
+              key={rowIndex}
               className={cn(
-                "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
-                chip.active
-                  ? "border-ink bg-ink text-bg"
-                  : "border-line hover:border-ink",
+                "-mx-1 flex max-w-full items-center px-1",
+                isTabs
+                  ? cn(
+                      "gap-6 border-b border-line",
+                      resolved.subChips ? "mb-5" : "mb-0",
+                    )
+                  : resolved.subChips !== undefined
+                    ? "mb-5 gap-1.5"
+                    : "mb-8 gap-1.5 lg:mb-12",
               )}
             >
-              {chip.label}
-            </Link>
-          ))}
-        </div>
-      )}
+              {!isTabs && resolved.subChipsLabel && (
+                <span className="u-label mr-1.5 shrink-0 text-muted">
+                  {resolved.subChipsLabel}
+                </span>
+              )}
+              {row.map((chip) =>
+                isTabs ? (
+                  <Link
+                    key={chip.href}
+                    href={chip.href}
+                    className={cn(
+                      "u-label -mb-px shrink-0 border-b-2 py-3 transition",
+                      chip.active
+                        ? "border-ink text-ink"
+                        : chip.href === "/catalog/sale"
+                          ? "border-transparent text-clay hover:opacity-70"
+                          : "border-transparent text-muted hover:text-ink",
+                    )}
+                  >
+                    {chip.label}
+                  </Link>
+                ) : (
+                  <Link
+                    key={chip.href}
+                    href={chip.href}
+                    className={cn(
+                      "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
+                      chip.active
+                        ? "border-ink bg-ink text-bg"
+                        : chip.href === "/catalog/sale"
+                          ? "border-line text-clay hover:border-clay"
+                          : "border-line hover:border-ink",
+                    )}
+                  >
+                    {chip.label}
+                  </Link>
+                ),
+              )}
+            </ScrollTabs>
+          )
+        );
+      })}
 
       <CatalogView
         products={resolved.products}
         filterBy={category === "sale" || category === "new" ? "category" : "size"}
+        localCategoryFilter={category === "sale" || category === "new"}
+        tabsAbove={category === "aksesuary" && !resolved.subChips}
       />
     </Container>
   );

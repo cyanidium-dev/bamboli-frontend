@@ -23,8 +23,6 @@ import { useSearchStore } from "@/store/searchStore";
 import { siteInfo } from "@/data/siteInfo";
 import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
 
-const mobileExtra = [{ href: "/size-guide", label: "Таблиця розмірів" }];
-
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -97,6 +95,13 @@ export default function Header() {
 
         <nav className="hidden flex-1 items-center justify-center gap-4 xl:flex 2xl:gap-6">
           {headerMegaMenus.map((menu) => {
+            if (menu.columns.length === 0) {
+              return (
+                <Link key={menu.label} href={menu.href} className={linkClass(menu.href)}>
+                  {menu.label}
+                </Link>
+              );
+            }
             const isOpen = openDesktopMenu === menu.label;
             return (
               <div
@@ -128,35 +133,24 @@ export default function Header() {
                         <div key={column.title} className="min-w-[150px] flex-1">
                           <Link
                             href={column.href}
-                            className="u-label mb-3 block text-[12px] text-ink transition hover:opacity-60"
+                            className="u-label block text-[12px] text-ink transition hover:opacity-60"
                             onClick={() => setOpenDesktopMenu(null)}
                           >
                             {column.title}
                           </Link>
-                          <ul className="flex flex-col gap-2">
-                            {column.links.map((link) => (
-                              <li key={link.href}>
-                                <Link
-                                  href={link.href}
-                                  className="block text-[13px] text-muted transition hover:text-ink"
-                                  onClick={() => setOpenDesktopMenu(null)}
-                                >
-                                  {link.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
                         </div>
                       ))}
                     </div>
                     <div className="flex w-[150px] shrink-0 flex-col gap-3 border-l border-line pl-7">
-                      <Link
-                        href={menu.href}
-                        className="u-underline self-start text-[13px] text-ink transition hover:opacity-60"
-                        onClick={() => setOpenDesktopMenu(null)}
-                      >
-                        {menu.allLabel}
-                      </Link>
+                      {menu.allLabel && (
+                        <Link
+                          href={menu.href}
+                          className="u-underline self-start text-[13px] text-ink transition hover:opacity-60"
+                          onClick={() => setOpenDesktopMenu(null)}
+                        >
+                          {menu.allLabel}
+                        </Link>
+                      )}
                       <Link
                         href="/catalog/sale"
                         className="u-underline self-start text-[13px] text-clay transition hover:opacity-70"
@@ -252,7 +246,16 @@ export default function Header() {
             className="max-h-[calc(100dvh-62px)] overflow-y-auto border-t border-line bg-bg xl:hidden"
           >
             <Container className="flex flex-col py-2">
-              {headerMegaMenus.map((menu) => (
+              {headerMegaMenus.map((menu) =>
+                menu.columns.length === 0 ? (
+                  <Link
+                    key={menu.label}
+                    href={menu.href}
+                    className="u-label block border-b border-line/70 py-4"
+                  >
+                    {menu.label}
+                  </Link>
+                ) : (
                 <MobileMegaMenu
                   key={menu.label}
                   menu={menu}
@@ -265,7 +268,8 @@ export default function Header() {
                     setOpenMobileGroup((current) => (current === title ? null : title))
                   }
                 />
-              ))}
+                ),
+              )}
               {headerSimpleLinks.map((item) => (
                 <Link
                   key={item.href}
@@ -274,15 +278,6 @@ export default function Header() {
                     "u-label block border-b border-line/70 py-4",
                     item.href === "/catalog/sale" && "text-clay",
                   )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              {mobileExtra.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="border-b border-line/70 py-3.5 text-[13px] text-muted"
                 >
                   {item.label}
                 </Link>
@@ -349,45 +344,19 @@ function MobileMegaMenu({
             className="overflow-hidden"
           >
             <div className="flex flex-col gap-1 pb-4">
-              <Link href={menu.href} className="py-2 text-[13px] text-ink">
-                {menu.allLabel}
-              </Link>
+              {menu.allLabel && (
+                <Link href={menu.href} className="py-2 text-[13px] text-ink">
+                  {menu.allLabel}
+                </Link>
+              )}
               {menu.columns.map((column) => (
-                <div key={column.title} className="border-t border-line/50 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => onToggleGroup(column.title)}
-                    aria-expanded={openGroup === column.title}
-                    className="flex w-full items-center justify-between py-2 text-[13px] text-ink"
-                  >
-                    {column.title}
-                    <ChevronIcon
-                      className={cn(
-                        "size-3 transition-transform duration-300",
-                        openGroup === column.title && "rotate-180",
-                      )}
-                    />
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {openGroup === column.title && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <div className="flex flex-wrap gap-x-5 gap-y-2 py-2 pl-3">
-                          {column.links.map((link) => (
-                            <Link key={link.href} href={link.href} className="text-[13px] text-muted">
-                              {link.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                <Link
+                  key={column.title}
+                  href={column.href}
+                  className="border-t border-line/50 py-2 text-[13px] text-ink"
+                >
+                  {column.title}
+                </Link>
               ))}
               <Link href="/catalog/sale" className="pt-2 text-[13px] text-clay">
                 SALE

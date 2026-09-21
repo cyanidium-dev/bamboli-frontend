@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import ScrollTabs from "@/components/shared/ui/ScrollTabs";
+import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
@@ -17,6 +19,9 @@ const sortOptions: { key: SortKey; label: string }[] = [
   { key: "price-desc", label: "Ціна: спадання" },
 ];
 
+/** Section tab order; the in-place filter shows all of them even when empty. */
+const sectionOrder = ["odyag", "igrashky", "aksesuary"];
+
 const categoryLabels: Record<string, string> = Object.fromEntries(
   categories.map((category) => [category.slug, category.title]),
 );
@@ -30,10 +35,16 @@ export default function CatalogView({
   products,
   filterBy = "size",
   initialSort = "featured",
+  tabsAbove = false,
+  localCategoryFilter = false,
 }: {
   products: Product[];
   filterBy?: "size" | "category";
   initialSort?: SortKey;
+  /** A tab row sits right above the toolbar and already draws its top line. */
+  tabsAbove?: boolean;
+  /** Section tabs filter this list in place instead of leaving for /catalog/<section>. */
+  localCategoryFilter?: boolean;
 }) {
   const [sort, setSort] = useState<SortKey>(initialSort);
   const [sortOpen, setSortOpen] = useState(false);
@@ -64,7 +75,9 @@ export default function CatalogView({
   const allCategories = useMemo(() => {
     const set = new Set<string>();
     products.forEach((product) => set.add(product.category));
-    return Array.from(set);
+    return Array.from(set).sort(
+      (a, b) => sectionOrder.indexOf(a) - sectionOrder.indexOf(b),
+    );
   }, [products]);
 
   const allSizes = useMemo(() => {
@@ -105,13 +118,15 @@ export default function CatalogView({
     return sorted;
   }, [products, size, sort, category, filterBy]);
 
-  const chips =
-    filterBy === "category"
-      ? allCategories.map((item) => ({
+  const chips = [
+    { value: "", label: "Усі" },
+    ...(filterBy === "category"
+      ? (localCategoryFilter ? sectionOrder : allCategories).map((item) => ({
           value: item,
           label: categoryLabels[item] ?? item,
-        }))
-      : allSizes.map((item) => ({ value: item, label: item }));
+        })).concat(localCategoryFilter ? [] : [{ value: "sale", label: "SALE" }])
+      : allSizes.map((item) => ({ value: item, label: item }))),
+  ];
 
   const activeChip = filterBy === "category" ? category : size;
   const setChip = (value: string | null) =>
@@ -119,47 +134,75 @@ export default function CatalogView({
 
   return (
     <>
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-line py-3.5 lg:mb-12">
-        <div className="no-scrollbar -mx-1 flex max-w-full items-center gap-1.5 overflow-x-auto px-1">
-          {chips.length > 0 && (
-            <>
-              <span className="u-label mr-1.5 shrink-0 text-muted">
-                {filterBy === "category" ? "Розділ" : "Розмір"}
-              </span>
+      {filterBy === "category" && chips.length > 1 && (
+        <ScrollTabs className="-mx-1 flex max-w-full items-center gap-6 border-b border-line px-1">
+          {chips.map((chip, index) => {
+            const isAll = index === 0;
+            const active = isAll ? activeChip === null : chip.value === activeChip;
+            const className = cn(
+              "u-label -mb-px shrink-0 border-b-2 py-3 transition",
+              active
+                ? "border-ink text-ink"
+                : chip.value === "sale"
+                  ? "border-transparent text-clay hover:opacity-70"
+                  : "border-transparent text-muted hover:text-ink",
+            );
+            return localCategoryFilter ? (
               <button
+                key={chip.value}
                 type="button"
-                onClick={() => setChip(null)}
-                className={cn(
-                  "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
-                  activeChip === null
-                    ? "border-ink bg-ink text-bg"
-                    : "border-line hover:border-ink",
-                )}
+                onClick={() => setChip(isAll ? null : chip.value)}
+                className={className}
               >
-                Усі
+                {chip.label}
               </button>
-              {chips.map((chip) => (
-                <button
-                  key={chip.value}
-                  type="button"
-                  onClick={() =>
-                    setChip(chip.value === activeChip ? null : chip.value)
-                  }
-                  className={cn(
-                    "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
-                    chip.value === activeChip
-                      ? "border-ink bg-ink text-bg"
-                      : "border-line hover:border-ink",
-                  )}
-                >
-                  {chip.label}
-                </button>
-              ))}
+            ) : (
+              <Link
+                key={chip.value}
+                href={isAll ? "/catalog" : `/catalog/${chip.value}`}
+                className={className}
+              >
+                {chip.label}
+              </Link>
+            );
+          })}
+        </ScrollTabs>
+      )}
+
+      <div
+        className={cn(
+          "mb-8 flex flex-wrap items-center justify-between gap-4 border-line py-3.5 lg:mb-12",
+          filterBy === "category" || tabsAbove ? "border-b" : "border-y",
+        )}
+      >
+        <ScrollTabs className="-mx-1 flex max-w-full items-center gap-1.5 px-1">
+          {filterBy === "size" && chips.length > 1 && (
+            <>
+              <span className="u-label mr-1.5 shrink-0 text-muted">Розмір</span>
+              {chips.map((chip, index) => {
+                const isAll = index === 0;
+                const active = isAll ? activeChip === null : chip.value === activeChip;
+                return (
+                  <button
+                    key={chip.value}
+                    type="button"
+                    onClick={() => setChip(isAll || chip.value === activeChip ? null : chip.value)}
+                    className={cn(
+                      "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
+                      active
+                        ? "border-ink bg-ink text-bg"
+                        : "border-line hover:border-ink",
+                    )}
+                  >
+                    {chip.label}
+                  </button>
+                );
+              })}
             </>
           )}
-        </div>
+        </ScrollTabs>
 
-        <div ref={sortRef} className="relative shrink-0">
+        <div ref={sortRef} className="relative ml-auto shrink-0">
           <button
             type="button"
             onClick={() => setSortOpen((open) => !open)}
