@@ -31,7 +31,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
     <section
       aria-roledescription="carousel"
       aria-label="Головний слайдер"
-      className="relative h-[min(540px,calc(100svh-74px))] min-h-[420px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
+      className="relative h-[min(600px,calc(100svh-74px))] min-h-[460px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
     >
       {slides.map((slide, i) => {
         const isActive = i === active;
