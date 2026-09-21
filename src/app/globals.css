@@ -163,3 +163,22 @@
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.hero-zoom {
+  animation: hero-zoom 2.5s ease-in-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom {
+    animation: none;
+  }
+}

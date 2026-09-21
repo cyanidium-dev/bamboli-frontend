@@ -25,8 +25,8 @@ export const heroSlides: HeroSlide[] = [
     id: "vyshyvanky",
     image: {
       // TODO: замінити на окремі банери з Sanity.
-      src: land("Dc4FTSwjRvh_1.jpg"),
-      alt: "Дитячі вишиванки Bamboli",
+      src: photo("Db8XNlgDKsj_1.jpg"),
+      alt: "Вишита жилетка з велюру Bamboli",
     },
     eyebrow: "Натуральні тканини",
     title: "Вишиванки для найменших",

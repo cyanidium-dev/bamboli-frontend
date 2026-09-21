@@ -7,7 +7,7 @@ import { heroSlides } from "@/data/home";
 import type { HeroSlide } from "@/types/hero";
 import { cn } from "@/lib/utils";
 
-const INTERVAL_MS = 6000;
+const INTERVAL_MS = 4000;
 
 /**
  * Full-bleed autoplay slider: text sits over the photo (left or right on
@@ -32,7 +32,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
     <section
       aria-roledescription="carousel"
       aria-label="Головний слайдер"
-      className="relative h-[min(680px,calc(100svh-74px))] min-h-[460px] w-full overflow-hidden bg-sand lg:h-[min(760px,calc(100svh-74px))]"
+      className="relative h-[min(540px,calc(100svh-74px))] min-h-[420px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -57,7 +57,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               fill
               priority={i === 0}
               sizes="100vw"
-              className="object-cover object-[50%_35%]"
+              className={cn("object-cover object-[50%_35%]", isActive && "hero-zoom")}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent lg:bg-none" />
             <div
@@ -69,15 +69,19 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
 
             <div
               className={cn(
-                "relative mx-auto flex h-full max-w-[1280px] flex-col justify-end px-5 pb-20 text-white lg:justify-center lg:px-10 lg:pb-10",
+                "relative mx-auto flex h-full max-w-[1280px] flex-col items-center justify-end px-5 pb-20 text-white lg:items-start lg:px-10 lg:pb-24",
                 slide.textPosition === "right" && "lg:items-end lg:text-right",
               )}
             >
-              <div className="flex max-w-[520px] flex-col items-start lg:max-w-[560px]">
+              <div
+                className={cn(
+                  "flex max-w-[520px] flex-col items-center text-center lg:max-w-[560px] lg:items-start lg:text-left",
+                  slide.textPosition === "right" && "lg:items-end lg:text-right",
+                )}
+              >
                 <p
                   className={cn(
                     "u-label mb-4 text-white/90",
-                    slide.textPosition === "right" && "lg:self-end",
                   )}
                 >
                   {slide.eyebrow}
@@ -85,7 +89,6 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                 <Heading
                   className={cn(
                     "u-display text-[36px] leading-[1.05] uppercase sm:text-[48px] xl:text-[56px]",
-                    slide.textPosition === "right" && "lg:self-end",
                   )}
                 >
                   {slide.title}
@@ -95,7 +98,6 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                   tabIndex={isActive ? 0 : -1}
                   className={cn(
                     "u-label mt-7 border border-white bg-white px-7 py-4 text-ink transition duration-300 hover:bg-transparent hover:text-white",
-                    slide.textPosition === "right" && "lg:self-end",
                   )}
                 >
                   {slide.cta.label}
@@ -117,11 +119,11 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               onClick={() => setActive(i)}
               className="group flex h-6 w-10 items-center sm:w-14"
             >
-              <span className="relative block h-px w-full bg-white/50 group-hover:bg-white/80">
+              <span className="relative block h-[3px] w-full bg-white/50 group-hover:bg-white/80">
                 {i === active && (
                   <span
                     key={active}
-                    className="hero-progress absolute inset-y-[-0.5px] left-0 block h-[2px] bg-white"
+                    className="hero-progress absolute inset-y-0 left-0 block bg-white"
                     style={{
                       animationDuration: `${INTERVAL_MS}ms`,
                       animationPlayState: paused ? "paused" : "running",
