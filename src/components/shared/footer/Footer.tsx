@@ -58,16 +58,22 @@ export default function Footer() {
                   SALE
                 </Link>
               </li>
-              <li>
-                <FooterCatalogMenu />
-              </li>
             </ul>
           </div>
 
           <div>
             <p className="u-label mb-4 text-muted">Інформація</p>
             <ul className="space-y-2.5">
-              {footerInfoLinks.map((link) => (
+              {/* footerInfoLinks[0] is «Про нас» — the catalog menu sits right after it. */}
+              <li>
+                <Link href={footerInfoLinks[0].href} className="u-underline text-[13px]">
+                  {footerInfoLinks[0].label}
+                </Link>
+              </li>
+              <li>
+                <FooterCatalogMenu />
+              </li>
+              {footerInfoLinks.slice(1).map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="u-underline text-[13px]">
                     {link.label}

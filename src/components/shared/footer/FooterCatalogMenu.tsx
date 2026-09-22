@@ -33,7 +33,7 @@ export default function FooterCatalogMenu() {
         aria-expanded={open}
         className="flex items-center gap-1.5 text-[13px]"
       >
-        <span className="u-underline">Інформація</span>
+        <span className="u-underline">Каталог</span>
         <ChevronIcon
           className={cn("size-3 transition-transform duration-300", open && "rotate-180")}
         />
