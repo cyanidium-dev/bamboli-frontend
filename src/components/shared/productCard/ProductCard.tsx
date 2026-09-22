@@ -69,7 +69,7 @@ export default function ProductCard({
   };
 
   return (
-    <article className="group/card relative flex flex-col">
+    <article className="group/card relative flex h-full flex-col">
       <div
         ref={imageRef}
         className="relative aspect-3/4 w-full overflow-hidden bg-sand"
