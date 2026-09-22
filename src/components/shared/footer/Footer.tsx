@@ -5,6 +5,7 @@ import TagIcon from "@/components/shared/icons/TagIcon";
 import { categories } from "@/data/categories";
 import { footerInfoLinks } from "@/data/navigation";
 import { siteInfo } from "@/data/siteInfo";
+import FooterCatalogMenu from "@/components/shared/footer/FooterCatalogMenu";
 
 const socials = [
   { href: siteInfo.instagram.url, label: "Instagram" },
@@ -54,8 +55,11 @@ export default function Footer() {
               ))}
               <li>
                 <Link href="/catalog/sale" className="u-underline text-[13px] text-clay">
-                  Знижки
+                  SALE
                 </Link>
+              </li>
+              <li>
+                <FooterCatalogMenu />
               </li>
             </ul>
           </div>
