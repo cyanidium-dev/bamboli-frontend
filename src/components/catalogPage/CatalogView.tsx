@@ -119,7 +119,7 @@ export default function CatalogView({
   }, [products, size, sort, category, filterBy]);
 
   const chips = [
-    { value: "", label: "Усі" },
+    { value: "", label: filterBy === "size" ? "Всі" : "Усі" },
     ...(filterBy === "category"
       ? (localCategoryFilter ? sectionOrder : allCategories).map((item) => ({
           value: item,
