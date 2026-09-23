@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Product } from "@/types/product";
+import type { ColorVariant, Product } from "@/types/product";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,14 +25,12 @@ export function priceForSize(product: Product, size: string | null) {
   };
 }
 
-/** True when size groups are priced differently — the card then says «від». */
-export function hasPriceRange(product: Product) {
-  const prices = new Set(
-    product.colors.flatMap((color) =>
-      color.sizes.map((size) => size.price ?? product.price),
-    ),
-  );
-  return prices.size > 1;
+/**
+ * Size preselected for a colour: the smallest one in stock (sizes are listed
+ * smallest first), so a concrete price shows instead of a «від» range.
+ */
+export function defaultSize(color: ColorVariant) {
+  return (color.sizes.find((item) => item.inStock) ?? color.sizes[0])?.label ?? null;
 }
 
 export function discountPercent(price: number, oldPrice?: number) {

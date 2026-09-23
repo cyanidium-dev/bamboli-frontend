@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Badge, ColorVariant, Product } from "@/types/product";
-import { cn, discountPercent, formatPrice } from "@/lib/utils";
+import { Badge, Product } from "@/types/product";
+import { cn, defaultSize, discountPercent, formatPrice } from "@/lib/utils";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
 import { useCartStore } from "@/store/cartStore";
 import { PlusIcon, CloseIcon } from "@/components/shared/ui/Icons";
@@ -17,9 +17,6 @@ const badgeLabel: Record<Badge, string> = {
   top: "Топ",
   sale: "Знижка",
 };
-
-const firstSize = (color: ColorVariant) =>
-  (color.sizes.find((item) => item.inStock) ?? color.sizes[0])?.label ?? null;
 
 export default function ProductCard({
   product,
@@ -33,7 +30,7 @@ export default function ProductCard({
   // First colour and its first in-stock size are preselected, so the card
   // always shows a concrete price instead of a «від» range.
   const [selectedSize, setSelectedSize] = useState<string | null>(() =>
-    firstSize(product.colors[0]),
+    defaultSize(product.colors[0]),
   );
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -65,7 +62,7 @@ export default function ProductCard({
   const handleColorChange = (index: number) => {
     setColorIndex(index);
     // Sizes and stock differ per colour, so a previous pick may not exist.
-    setSelectedSize(firstSize(product.colors[index]));
+    setSelectedSize(defaultSize(product.colors[index]));
   };
 
   return (
