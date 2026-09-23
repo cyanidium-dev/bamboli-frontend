@@ -49,13 +49,17 @@ export const aksesuaryMenu: NavMenu = {
 
 export const headerMegaMenus: NavMenu[] = [odyagMenu, igrashkyMenu, aksesuaryMenu];
 
-export const headerSimpleLinks: NavLink[] = [
-  { label: "SALE", href: "/catalog/sale" },
+export const saleLink: NavLink = { label: "SALE", href: "/catalog/sale" };
+
+/** Service pages — inline on desktop, folded under «Інформація» on mobile. */
+export const headerInfoLinks: NavLink[] = [
   { label: "Доставка та оплата", href: "/delivery" },
   { label: "Про нас", href: "/about" },
   { label: "Контакти", href: "/contacts" },
   { label: "Блог", href: "/blog" },
 ];
+
+export const headerSimpleLinks: NavLink[] = [saleLink, ...headerInfoLinks];
 
 /** Secondary pages — shown in the footer's «Інформація» column. */
 export const footerInfoLinks: NavLink[] = [

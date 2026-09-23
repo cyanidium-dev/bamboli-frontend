@@ -21,7 +21,14 @@ import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import { useSearchStore } from "@/store/searchStore";
 import { siteInfo } from "@/data/siteInfo";
-import { headerMegaMenus, headerSimpleLinks, type NavMenu } from "@/data/navigation";
+import {
+  headerInfoLinks,
+  headerMegaMenus,
+  headerSimpleLinks,
+  saleLink,
+  type NavLink,
+  type NavMenu,
+} from "@/data/navigation";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -270,18 +277,20 @@ export default function Header() {
                 />
                 ),
               )}
-              {headerSimpleLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "u-label block border-b border-line/70 py-4",
-                    item.href === "/catalog/sale" && "text-clay",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <Link
+                href={saleLink.href}
+                className="u-label block border-b border-line/70 py-4 text-clay"
+              >
+                {saleLink.label}
+              </Link>
+              <MobileLinkGroup
+                label="Інформація"
+                links={headerInfoLinks}
+                open={openMobileMenu === "Інформація"}
+                onToggle={() =>
+                  setOpenMobileMenu((current) => (current === "Інформація" ? null : "Інформація"))
+                }
+              />
 
               <div className="flex flex-wrap items-center gap-5 py-5 text-[13px]">
                 <a href={siteInfo.phoneHref}>{siteInfo.phone}</a>
@@ -361,6 +370,58 @@ function MobileMegaMenu({
               <Link href="/catalog/sale" className="pt-2 text-[13px] text-clay">
                 SALE
               </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function MobileLinkGroup({
+  label,
+  links,
+  open,
+  onToggle,
+}: {
+  label: string;
+  links: NavLink[];
+  open: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="border-b border-line/70">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="u-label flex w-full items-center gap-2 py-4"
+      >
+        {label}
+        <ChevronIcon className={cn("size-3.5 transition-transform duration-300", open && "rotate-180")} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col pb-4">
+              {links.map((link, index) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "py-2 text-[13px] text-ink",
+                    index > 0 && "border-t border-line/50",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}
