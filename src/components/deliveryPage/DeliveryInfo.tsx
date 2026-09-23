@@ -20,7 +20,7 @@ export default function DeliveryInfo() {
                 <p className="u-label mb-3 text-clay">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="u-display text-[18px] leading-[1.2]">
+                <h3 className="u-subheading text-[18px] leading-[1.2]">
                   {item.title}
                 </h3>
                 <p className="mt-2 text-[13px] leading-relaxed text-muted">
@@ -35,7 +35,7 @@ export default function DeliveryInfo() {
           {deliveryMethods.map((method, index) => (
             <li key={method.title} className="bg-surface">
               <Reveal delay={index * 0.05} className="h-full p-7">
-                <h3 className="u-label mb-3">{method.title}</h3>
+                <h3 className="u-label u-subheading mb-3">{method.title}</h3>
                 <p className="max-w-[420px] text-[13px] leading-relaxed text-muted">
                   {method.text}
                 </p>

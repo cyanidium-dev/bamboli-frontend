@@ -5,7 +5,7 @@ import { siteInfo } from "@/data/siteInfo";
 
 export default function ContactsSummary() {
   return (
-    <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24">
+    <section className="pt-20 pb-16 lg:pt-28 lg:pb-24">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>

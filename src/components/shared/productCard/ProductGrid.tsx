@@ -4,7 +4,8 @@ import ProductCard from "./ProductCard";
 
 /**
  * Two columns on phones (the brief), three on tablets, four on desktop.
- * Hairline gaps keep the grid reading as one sheet of imagery.
+ * Hairline gaps keep the grid reading as one sheet of imagery. On phones the
+ * grid bleeds out of the 20px Container gutter to a 5px one.
  */
 export default function ProductGrid({
   products,
@@ -18,7 +19,7 @@ export default function ProductGrid({
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-x-3 gap-y-10 md:grid-cols-3 md:gap-x-5 lg:gap-y-14 xl:grid-cols-4 xl:gap-x-6",
+        "-mx-[15px] grid grid-cols-2 gap-x-[5px] gap-y-10 md:mx-0 md:grid-cols-3 md:gap-x-5 lg:gap-y-14 xl:grid-cols-4 xl:gap-x-6",
         className,
       )}
     >

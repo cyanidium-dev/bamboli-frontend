@@ -46,7 +46,7 @@ const iconPaths: Record<BenefitIcon, React.ReactNode> = {
 
 export default function Benefits() {
   return (
-    <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24">
+    <section className="mt-20 bg-mist py-16 lg:mt-28 lg:py-24">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the grid stacks over them. */}
         <Image
@@ -83,7 +83,7 @@ export default function Benefits() {
 
         <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
-            <li key={benefit.title} className="bg-sand">
+            <li key={benefit.title} className="bg-mist">
               <Reveal delay={index * 0.05} className="h-full p-7 lg:p-9">
                 <svg
                   viewBox="0 0 32 32"
@@ -97,7 +97,7 @@ export default function Benefits() {
                 >
                   {iconPaths[benefit.icon]}
                 </svg>
-                <h3 className="u-label mb-3">{benefit.title}</h3>
+                <h3 className="u-label u-subheading mb-3">{benefit.title}</h3>
                 <p className="max-w-[340px] text-[13px] leading-relaxed text-muted">
                   {benefit.text}
                 </p>

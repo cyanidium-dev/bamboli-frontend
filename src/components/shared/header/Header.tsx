@@ -68,8 +68,8 @@ export default function Header() {
       className={cn(
         "sticky top-0 z-[80] transition-colors duration-500",
         scrolled
-          ? "border-b border-line bg-bg/85 backdrop-blur-md"
-          : "border-b border-transparent bg-bg",
+          ? "border-b border-line bg-mist/85 backdrop-blur-md"
+          : "border-b border-transparent bg-mist",
       )}
     >
       <Container className="flex h-[62px] items-center justify-between gap-4 lg:h-[74px]">
@@ -243,7 +243,7 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="max-h-[calc(100dvh-62px)] overflow-y-auto border-t border-line bg-bg xl:hidden"
+            className="max-h-[calc(100dvh-62px)] overflow-y-auto border-t border-line bg-mist xl:hidden"
           >
             <Container className="flex flex-col py-2">
               {headerMegaMenus.map((menu) =>

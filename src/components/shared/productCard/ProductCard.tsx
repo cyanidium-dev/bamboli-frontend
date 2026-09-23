@@ -215,10 +215,10 @@ export default function ProductCard({
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col pt-3">
+      <div className="flex flex-1 flex-col pt-3 text-center">
         {/* Fixed-height row even without a colour choice, so titles start at
             the same y on every card in a grid/carousel. */}
-        <div className="mb-2.5 flex h-3.5 items-center">
+        <div className="mb-2.5 flex h-3.5 items-center justify-center">
           {product.colors.length > 1 && (
             <ColorSwatches
               colors={product.colors}
@@ -229,10 +229,10 @@ export default function ProductCard({
         </div>
 
         <Link href={`/product/${product.slug}`} className="block">
-          <h3 className="u-label mb-1.5 line-clamp-2">{product.title}</h3>
+          <h3 className="u-label mb-1.5 line-clamp-2 font-display font-bold">{product.title}</h3>
         </Link>
 
-        <div className="mt-auto flex items-baseline gap-2">
+        <div className="mt-auto flex items-baseline justify-center gap-2">
           <motion.span
             key={color.id}
             initial={{ opacity: 0.4 }}

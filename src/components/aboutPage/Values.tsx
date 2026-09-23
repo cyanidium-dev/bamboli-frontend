@@ -10,7 +10,7 @@ export default function Values() {
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <span
             aria-hidden
-            className="u-display pointer-events-none absolute -top-8 right-0 hidden select-none text-[140px] leading-none text-line lg:block"
+            className="u-display pointer-events-none absolute -top-8 left-[calc(100%-40px)] hidden select-none text-[140px] leading-none text-line lg:block"
           >
             03
           </span>
@@ -47,7 +47,7 @@ export default function Values() {
                   <p className="u-label mb-3 text-clay">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="u-label mb-2">{value.title}</h3>
+                  <h3 className="u-label u-subheading mb-2">{value.title}</h3>
                   <p className="text-[13px] leading-relaxed text-muted">
                     {value.text}
                   </p>

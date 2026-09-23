@@ -27,11 +27,11 @@ export default function ColorSwatches({
           aria-pressed={index === activeIndex}
           title={color.name}
           className={cn(
-            "relative rounded-full border transition duration-300",
+            "relative rounded-full border bg-surface transition duration-300",
             size === "sm" ? "size-3.5" : "size-5",
             index === activeIndex
               ? "border-ink"
-              : "border-line hover:border-muted",
+              : "border-muted/50 hover:border-muted",
           )}
         >
           <span

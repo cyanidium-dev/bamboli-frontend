@@ -15,7 +15,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-line bg-bg">
+    <footer className="border-t border-line bg-mist">
       <Container className="py-14 lg:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8">
           <div>
@@ -107,11 +107,6 @@ export default function Footer() {
                 </a>
               </li>
               <li className="text-muted">{siteInfo.hours}</li>
-              <li className="pt-2">
-                <Link href="/contacts" className="u-label border-b border-ink pb-1">
-                  Усі контакти
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

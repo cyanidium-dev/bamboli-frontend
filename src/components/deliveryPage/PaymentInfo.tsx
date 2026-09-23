@@ -6,7 +6,7 @@ export default function PaymentInfo() {
   return (
     <section
       id="payment"
-      className="scroll-mt-[90px] mt-16 bg-sand py-16 lg:mt-24 lg:scroll-mt-[100px] lg:py-24"
+      className="scroll-mt-[90px] mt-16 bg-mist py-16 lg:mt-24 lg:scroll-mt-[100px] lg:py-24"
     >
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">
@@ -18,9 +18,9 @@ export default function PaymentInfo() {
 
         <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
           {paymentMethods.map((method, index) => (
-            <li key={method.title} className="bg-sand">
+            <li key={method.title} className="bg-mist">
               <Reveal delay={index * 0.05} className="h-full p-7">
-                <h3 className="u-label mb-3">{method.title}</h3>
+                <h3 className="u-label u-subheading mb-3">{method.title}</h3>
                 <p className="text-[13px] leading-relaxed text-muted">
                   {method.text}
                 </p>

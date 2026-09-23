@@ -20,7 +20,7 @@ export default function ReturnsInfo() {
                 <p className="u-label mb-3 text-clay">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="u-display text-[18px] leading-[1.2]">
+                <h3 className="u-subheading text-[18px] leading-[1.2]">
                   {step.title}
                 </h3>
                 <p className="mt-2 text-[13px] leading-relaxed text-muted">

@@ -4,12 +4,14 @@ import { contactsHero } from "@/data/contacts";
 
 export default function ContactsHero() {
   return (
-    <Container className="pb-0 pt-10 lg:pt-14">
-      <CatalogHeader
-        title={contactsHero.title}
-        caption={contactsHero.text}
-        breadcrumbs={[{ label: "Контакти" }]}
-      />
-    </Container>
+    <div className="flow-root bg-mist">
+      <Container className="pb-0 pt-10 lg:pt-14">
+        <CatalogHeader
+          title={contactsHero.title}
+          caption={contactsHero.text}
+          breadcrumbs={[{ label: "Контакти" }]}
+        />
+      </Container>
+    </div>
   );
 }

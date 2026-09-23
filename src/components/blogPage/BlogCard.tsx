@@ -37,7 +37,7 @@ export default function BlogCard({
         </div>
 
         <Link href={`/blog/${post.slug}`} className="block">
-          <h3 className="u-display mb-2 line-clamp-2 text-[19px] leading-[1.25] transition-colors group-hover/card:text-clay lg:text-[21px]">
+          <h3 className="u-subheading mb-2 line-clamp-2 text-[19px] leading-[1.25] transition-colors group-hover/card:text-clay lg:text-[21px]">
             {post.title}
           </h3>
         </Link>
