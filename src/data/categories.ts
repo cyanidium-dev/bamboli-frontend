@@ -5,8 +5,7 @@ const img = (file: string) => `/images/bamboli/${file}`;
 /**
  * The three main catalog categories — docs/spec/marketing-structure.md §2.1.
  * Subcategories live in `src/data/categoryTree.ts`; this list only backs the
- * category roots (`/catalog/odyag` etc.), the footer's «Каталог» column and
- * product breadcrumbs.
+ * category roots (`/catalog/odyag` etc.) and product breadcrumbs.
  */
 export const categories: Category[] = [
   {

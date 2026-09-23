@@ -2,7 +2,6 @@ import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import Logo from "@/components/shared/ui/Logo";
 import TagIcon from "@/components/shared/icons/TagIcon";
-import { categories } from "@/data/categories";
 import { footerInfoLinks } from "@/data/navigation";
 import { siteInfo } from "@/data/siteInfo";
 import FooterCatalogMenu from "@/components/shared/footer/FooterCatalogMenu";
@@ -43,16 +42,7 @@ export default function Footer() {
           <div>
             <p className="u-label mb-4 text-muted">Каталог</p>
             <ul className="space-y-2.5">
-              {categories.map((category) => (
-                <li key={category.slug}>
-                  <Link
-                    href={`/catalog/${category.slug}`}
-                    className="u-underline text-[13px]"
-                  >
-                    {category.title}
-                  </Link>
-                </li>
-              ))}
+              <FooterCatalogMenu />
               <li>
                 <Link href="/catalog/sale" className="u-underline text-[13px] text-clay">
                   SALE
@@ -64,16 +54,7 @@ export default function Footer() {
           <div>
             <p className="u-label mb-4 text-muted">Інформація</p>
             <ul className="space-y-2.5">
-              {/* footerInfoLinks[0] is «Про нас» — the catalog menu sits right after it. */}
-              <li>
-                <Link href={footerInfoLinks[0].href} className="u-underline text-[13px]">
-                  {footerInfoLinks[0].label}
-                </Link>
-              </li>
-              <li>
-                <FooterCatalogMenu />
-              </li>
-              {footerInfoLinks.slice(1).map((link) => (
+              {footerInfoLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="u-underline text-[13px]">
                     {link.label}
