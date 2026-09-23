@@ -16,7 +16,7 @@ export default function SizeGuideChoose() {
               <p className="u-label mb-3 text-clay">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h3 className="u-display text-[17px] leading-[1.2]">
+              <h3 className="u-subheading text-[17px] leading-[1.2]">
                 {item.title}
               </h3>
               <p className="mt-2 text-[13px] leading-relaxed text-muted">

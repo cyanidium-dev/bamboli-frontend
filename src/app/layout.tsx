@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/shared/header/Header";
 import Footer from "@/components/shared/footer/Footer";
@@ -8,15 +7,9 @@ import CartDrawer from "@/components/shared/cart/CartDrawer";
 import FlyToCartLayer from "@/components/shared/addToCart/FlyToCartLayer";
 import SearchProvider from "@/components/shared/search/SearchProvider";
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin", "cyrillic"],
-  display: "swap",
-});
-
-const azbuka = localFont({
-  src: "../fonts/Azbuka04.ttf",
-  variable: "--font-azbuka",
   display: "swap",
 });
 
@@ -44,7 +37,7 @@ export default function RootLayout({
     <html
       lang="uk"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${azbuka.variable}`}
+      className={montserrat.variable}
     >
       <body className="flex min-h-dvh flex-col">
         <Header />

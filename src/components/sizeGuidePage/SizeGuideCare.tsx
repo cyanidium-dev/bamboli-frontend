@@ -13,7 +13,7 @@ export default function SizeGuideCare() {
         {careTips.map((tip, index) => (
           <li key={tip.title} className="bg-surface">
             <Reveal delay={index * 0.05} className="h-full p-7">
-              <h3 className="u-label mb-3">{tip.title}</h3>
+              <h3 className="u-label u-subheading mb-3">{tip.title}</h3>
               <p className="max-w-[420px] text-[13px] leading-relaxed text-muted">
                 {tip.text}
               </p>

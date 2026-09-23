@@ -12,8 +12,8 @@
   --color-muted: #8c877f;
   --color-clay: #a8624a;
 
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-azbuka);
+  --font-sans: var(--font-montserrat);
+  --font-display: var(--font-montserrat);
 }
 
 @layer base {
@@ -99,10 +99,18 @@
     line-height: 1.2;
   }
 
+  /* Headings: Montserrat 700. */
   .u-display {
-    font-family: var(--font-display), Georgia, serif;
-    font-weight: 300;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 700;
     letter-spacing: -0.01em;
+  }
+
+  /* Subheadings: Montserrat 500. Sets no size or tracking, so it composes
+     with .u-label as well as with explicit text sizes. */
+  .u-subheading {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 500;
   }
 
   /* Understated link with a rule that grows from the left on hover. */

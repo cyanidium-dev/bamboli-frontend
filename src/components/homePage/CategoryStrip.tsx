@@ -36,7 +36,7 @@ export default function CategoryStrip({
                 </div>
                 <div className="absolute inset-0 bg-ink/5 transition-opacity duration-700 group-hover/tile:opacity-0" />
               </div>
-              <h3 className="u-label mt-3 transition-colors group-hover/tile:text-clay">
+              <h3 className="u-label mt-3 font-display font-bold transition-colors group-hover/tile:text-clay">
                 {category.title}
               </h3>
               <p className="mt-1.5 line-clamp-2 text-[11px] text-muted">
