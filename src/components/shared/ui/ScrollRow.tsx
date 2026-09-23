@@ -11,11 +11,14 @@ import { ArrowIcon } from "@/components/shared/ui/Icons";
 export default function ScrollRow({
   children,
   itemClassName,
+  trackClassName,
   label,
   arrowTop = "50%",
 }: {
   children: React.ReactNode;
   itemClassName?: string;
+  /** Overrides for the track, e.g. its gap or edge padding. */
+  trackClassName?: string;
   label: string;
   arrowTop?: string;
 }) {
@@ -54,7 +57,10 @@ export default function ScrollRow({
         onScroll={update}
         role="region"
         aria-label={label}
-        className="no-scrollbar -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 md:gap-5 lg:mx-0 lg:scroll-px-0 lg:px-0"
+        className={cn(
+          "no-scrollbar -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto px-5 md:gap-5 lg:mx-0 lg:scroll-px-0 lg:px-0",
+          trackClassName,
+        )}
       >
         {Children.map(children, (child) => (
           <div className={cn("shrink-0 snap-start", itemClassName)}>{child}</div>

@@ -21,7 +21,11 @@ export default function ProductCarousel({
 }) {
   return (
     <div className={cn(className)}>
-      <ScrollRow label={label} itemClassName={widths[perView]}>
+      <ScrollRow
+        label={label}
+        itemClassName={widths[perView]}
+        trackClassName="gap-[5px] scroll-px-[5px] px-[5px] md:gap-5 md:scroll-px-5 md:px-5"
+      >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
