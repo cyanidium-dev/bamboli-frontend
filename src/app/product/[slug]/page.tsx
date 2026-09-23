@@ -41,37 +41,41 @@ export default async function ProductPage({
   const category = categories.find((item) => item.slug === product.category);
 
   return (
-    <Container className="pt-6 lg:pt-10">
-      <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
-        <Link href="/" className="transition hover:text-ink">
-          Головна
-        </Link>
-        <span className="px-2">/</span>
-        <Link href="/catalog" className="transition hover:text-ink">
-          Каталог
-        </Link>
-        {category && (
-          <>
-            <span className="px-2">/</span>
-            <Link
-              href={`/catalog/${category.slug}`}
-              className="transition hover:text-ink"
-            >
-              {category.title}
-            </Link>
-          </>
-        )}
-      </nav>
+    <>
+      <Container className="pt-6 lg:pt-10">
+        <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
+          <Link href="/" className="transition hover:text-ink">
+            Головна
+          </Link>
+          <span className="px-2">/</span>
+          <Link href="/catalog" className="transition hover:text-ink">
+            Каталог
+          </Link>
+          {category && (
+            <>
+              <span className="px-2">/</span>
+              <Link
+                href={`/catalog/${category.slug}`}
+                className="transition hover:text-ink"
+              >
+                {category.title}
+              </Link>
+            </>
+          )}
+        </nav>
 
-      <ProductView product={product} />
+        <ProductView product={product} />
+      </Container>
 
-      <section className="pt-24 pb-16 lg:pt-32 lg:pb-24">
-        <SectionHeading
-          label="Вам також сподобається"
-          title="Батьки часто обирають це"
-        />
-        <ProductGrid products={related} priorityCount={0} />
+      <section className="mt-24 bg-sand py-16 lg:mt-32 lg:py-24">
+        <Container>
+          <SectionHeading
+            label="Вам також сподобається"
+            title="Батьки часто обирають це"
+          />
+          <ProductGrid products={related} priorityCount={0} />
+        </Container>
       </section>
-    </Container>
+    </>
   );
 }

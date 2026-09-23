@@ -70,7 +70,7 @@ export default async function HomePage() {
       <Hero />
 
       {novelties.length > 0 && (
-        <section className="pt-20 lg:pt-28">
+        <section className="bg-sand py-16 lg:py-24">
           <Container>
             <SectionHeading
               label={newCollection.label}
