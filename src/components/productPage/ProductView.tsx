@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Product } from "@/types/product";
-import { cn, formatPrice, hasPriceRange, priceForSize } from "@/lib/utils";
+import { cn, defaultSize, formatPrice, priceForSize } from "@/lib/utils";
 import ColorSwatches from "@/components/shared/productCard/ColorSwatches";
 import FavoriteButton from "@/components/shared/productCard/FavoriteButton";
 import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
@@ -14,7 +14,9 @@ import ProductGallery from "@/components/productPage/ProductGallery";
 
 export default function ProductView({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
-  const [size, setSize] = useState<string | null>(null);
+  // Same as the card: the smallest in-stock size is preselected, so the price
+  // shown is always the one for a concrete size.
+  const [size, setSize] = useState<string | null>(() => defaultSize(product.colors[0]));
   const [error, setError] = useState(false);
   const [openDetail, setOpenDetail] = useState<string | null>("Опис");
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -30,7 +32,8 @@ export default function ProductView({ product }: { product: Product }) {
 
   const handleColorChange = (index: number) => {
     setColorIndex(index);
-    setSize(null);
+    // Sizes and stock differ per colour, so a previous pick may not exist.
+    setSize(defaultSize(product.colors[index]));
     setError(false);
   };
 
@@ -87,7 +90,6 @@ export default function ProductView({ product }: { product: Product }) {
           <span
             className={cn("text-[18px] tabular-nums", oldPrice && "text-clay")}
           >
-            {!size && hasPriceRange(product) && "від "}
             {formatPrice(price)}
           </span>
           {oldPrice && (
