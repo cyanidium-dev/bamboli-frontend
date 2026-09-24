@@ -5,7 +5,7 @@ export default function SizeGuideCare() {
   return (
     <div className="border-t border-line pt-10 lg:pt-14">
       <p className="u-label mb-3 text-muted">Окремі поради</p>
-      <h2 className="u-display text-[26px] leading-[1.1] lg:text-[36px]">
+      <h2 className="u-display text-[20px] leading-[1.1] sm:text-[26px] lg:text-[36px]">
         Верхній одяг і вишиванки
       </h2>
 

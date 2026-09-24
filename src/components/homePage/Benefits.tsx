@@ -76,7 +76,7 @@ export default function Benefits() {
 
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Чому Bamboli</p>
-          <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
             Кожен стібок, кожна деталь — з любов&apos;ю
           </h2>
         </div>

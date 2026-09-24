@@ -10,7 +10,7 @@ export default function ContactsSummary() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Контакти</p>
-            <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
               Завжди на зв&apos;язку
             </h2>
             <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

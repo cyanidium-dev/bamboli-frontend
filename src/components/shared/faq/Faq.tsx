@@ -63,7 +63,7 @@ export default function Faq({
 
           <div className="relative lg:sticky lg:top-[110px] lg:self-start">
             <p className="u-label mb-3 text-muted">{label}</p>
-            <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
               {title}
             </h2>
             <p className="mt-5 max-w-[340px] text-[13px] leading-relaxed text-muted">

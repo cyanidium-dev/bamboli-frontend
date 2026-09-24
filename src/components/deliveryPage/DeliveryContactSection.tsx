@@ -40,7 +40,7 @@ export default function DeliveryContactSection() {
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Залишились питання?</p>
-            <h2 className="u-display text-[30px] leading-[1.1] lg:text-[42px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[42px]">
               Допоможемо з доставкою й оплатою
             </h2>
             <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

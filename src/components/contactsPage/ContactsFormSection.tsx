@@ -30,7 +30,7 @@ export default function ContactsFormSection() {
           <div className="flex flex-col gap-10">
             <div>
               <p className="u-label mb-3 text-muted">Напишіть нам</p>
-              <h2 className="u-display text-[30px] leading-[1.1] lg:text-[42px]">
+              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[42px]">
                 Форма зворотного зв&apos;язку
               </h2>
               <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

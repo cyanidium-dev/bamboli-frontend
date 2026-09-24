@@ -10,7 +10,7 @@ export default function Reviews() {
       <Container>
         <div className="mb-8 lg:mb-12">
           <p className="u-label mb-3 text-muted">Відгуки</p>
-          <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
             Що кажуть родини
           </h2>
         </div>
