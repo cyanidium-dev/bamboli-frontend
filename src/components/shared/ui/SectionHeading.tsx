@@ -12,10 +12,11 @@ export default function SectionHeading({
   hrefLabel?: string;
 }) {
   return (
-    // Zero basis lets the title shrink to its longest word, so the link only
-    // wraps under it when even that doesn't fit beside the link.
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 lg:mb-12">
-      <div className="grow basis-0">
+    // On mobile the link always sits under the title, right-aligned. From sm
+    // up, zero basis lets the title shrink to its longest word, so the link
+    // only wraps under it when even that doesn't fit beside the link.
+    <div className="mb-8 flex flex-col gap-y-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-6 lg:mb-12">
+      <div className="sm:grow sm:basis-0">
         {label && <p className="u-label mb-3 text-muted">{label}</p>}
         <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
           {title}
@@ -24,7 +25,7 @@ export default function SectionHeading({
       {href && (
         <Link
           href={href}
-          className="u-label ml-auto shrink-0 border-b border-ink pb-1 transition hover:opacity-60"
+          className="u-label shrink-0 self-end border-b border-ink pb-1 transition hover:opacity-60 sm:ml-auto"
         >
           {hrefLabel}
         </Link>
