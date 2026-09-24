@@ -22,7 +22,7 @@ export default function ContactsShowroom() {
 
             <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 lg:py-20">
               <p className="u-label mb-5 text-bg/60">{contactsShowroom.label}</p>
-              <h2 className="u-display max-w-[420px] text-[30px] leading-[1.12] lg:text-[42px]">
+              <h2 className="u-display max-w-[420px] text-[20px] leading-[1.12] sm:text-[30px] lg:text-[42px]">
                 {contactsShowroom.title}
               </h2>
 

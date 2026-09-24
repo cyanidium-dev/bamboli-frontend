@@ -33,7 +33,7 @@ export default function Story() {
 
             <div className="relative flex h-full flex-col justify-center">
               <p className="u-label mb-3 text-clay">{story.label}</p>
-              <h2 className="u-display text-[28px] leading-[1.1] lg:text-[38px]">
+              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[38px]">
                 {story.title}
               </h2>
               <div className="mt-6 space-y-4 text-[13px] leading-relaxed text-muted">

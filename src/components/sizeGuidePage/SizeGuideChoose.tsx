@@ -5,7 +5,7 @@ export default function SizeGuideChoose() {
   return (
     <div className="mb-14 lg:mb-20">
       <p className="u-label mb-3 text-muted">Як обрати розмір</p>
-      <h2 className="u-display text-[26px] leading-[1.1] lg:text-[36px]">
+      <h2 className="u-display text-[20px] leading-[1.1] sm:text-[26px] lg:text-[36px]">
         Три кроки до правильного розміру
       </h2>
 

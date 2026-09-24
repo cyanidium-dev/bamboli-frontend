@@ -15,7 +15,7 @@ export default function Values() {
             03
           </span>
           <p className="u-label mb-3 text-muted">Наші цінності</p>
-          <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
             Що для нас важливо
           </h2>
         </div>

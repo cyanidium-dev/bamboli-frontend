@@ -12,7 +12,7 @@ export default function ToysSection() {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <p className="u-label mb-3 text-muted">{toysSection.label}</p>
-            <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
               {toysSection.title}
             </h2>
             <p className="mt-5 max-w-[440px] text-[13px] leading-relaxed text-muted">

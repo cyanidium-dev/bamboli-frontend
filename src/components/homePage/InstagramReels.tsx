@@ -12,7 +12,7 @@ export default function InstagramReels() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 lg:mb-12">
           <div>
             <p className="u-label mb-3 text-muted">Ми в Instagram</p>
-            <h2 className="u-display text-[28px] leading-[1.1] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
               {siteInfo.instagram.handle}
             </h2>
             <p className="mt-3 text-[13px] text-muted">

@@ -19,7 +19,7 @@ export default function RelatedArticles({
   return (
     <aside className={cn("mt-16 lg:mt-0", className)}>
       <p className="u-label mb-6 text-muted">Ще на цю тему</p>
-      <h2 className="u-display mb-6 text-[24px] leading-[1.15] lg:text-[26px]">
+      <h2 className="u-display mb-6 text-[20px] leading-[1.15] sm:text-[24px] lg:text-[26px]">
         Читайте також
       </h2>
 

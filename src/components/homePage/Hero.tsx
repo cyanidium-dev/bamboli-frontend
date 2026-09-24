@@ -85,7 +85,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                 </p>
                 <Heading
                   className={cn(
-                    "u-display text-[36px] leading-[1.05] uppercase sm:text-[48px] xl:text-[56px]",
+                    "u-display text-[36px] leading-[1.05] sm:text-[48px] xl:text-[56px]",
                   )}
                 >
                   {slide.title}

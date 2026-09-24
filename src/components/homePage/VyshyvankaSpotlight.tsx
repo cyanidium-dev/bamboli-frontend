@@ -53,7 +53,7 @@ export default function VyshyvankaSpotlight({
 
           <div>
             <p className="u-label mb-3 text-muted">{vyshyvanka.label}</p>
-            <h2 className="u-display text-[30px] leading-[1.1] lg:text-[44px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[44px]">
               {vyshyvanka.title}
             </h2>
             <p className="mt-5 max-w-[480px] text-[13px] leading-relaxed text-muted">
