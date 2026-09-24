@@ -606,6 +606,8 @@ const seeds: Seed[] = [
     category: "odyag",
     subcategory: "sukni",
     audience: ["divchatka"],
+    collections: ["nova-kolektsiya"],
+    badges: ["new"],
     sizes: [
       ["80–104", 1650],
       ["110–134", 1850],
