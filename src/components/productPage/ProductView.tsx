@@ -219,7 +219,11 @@ export default function ProductView({ product }: { product: Product }) {
         </div>
       </div>
 
-      <SizeGuideModal isOpen={sizeGuideOpen} onClose={closeSizeGuide} />
+      <SizeGuideModal
+        isOpen={sizeGuideOpen}
+        onClose={closeSizeGuide}
+        chart={product.sizeChart}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {
   MainCategorySlug,
   Product,
   ProductKind,
+  SizeChartData,
   SizeOption,
   Subcategory,
 } from "@/types/product";
@@ -44,6 +45,7 @@ interface Seed {
   colors?: { id: string; name: string; hex: string; images?: string[] }[];
   description: string;
   details: { label: string; value: string }[];
+  sizeChart?: SizeChartData;
 }
 
 const photo = (file: string) => `/images/bamboli/products/${file}`;
@@ -76,6 +78,7 @@ function build(seed: Seed): Product {
     brand: seed.brand,
     description: seed.description,
     details: seed.details,
+    sizeChart: seed.sizeChart,
     colors: (seed.colors ?? [{ id: "c-main", name: "Як на фото", hex: "#E8DFD2" }]).map(
       (color) => ({
         ...color,
