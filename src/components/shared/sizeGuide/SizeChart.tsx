@@ -2,50 +2,48 @@ import type { SizeChartData } from "@/types/product";
 import { HOW_TO_MEASURE } from "./sizeChartData";
 
 /**
- * Measuring notes, plus the product's own table when it has one. Charts differ
- * per product, so there is no general table: without `chart` only the notes show.
+ * Measuring notes, plus a table when `chart` is given. Without it only the
+ * notes show (used on /size-guide, where there is no general table).
  */
 export default function SizeChart({ chart }: { chart?: SizeChartData }) {
   return (
     <>
       {chart && (
-        <div>
-          <table className="w-full border-collapse text-center text-[11px] tabular-nums sm:text-[12px]">
-            <thead>
-              <tr className="border-b border-ink">
+      <div>
+        <table className="w-full border-collapse text-center text-[11px] tabular-nums sm:text-[12px]">
+          <thead>
+            <tr className="border-b border-ink">
+              {chart.columns.map((column) => (
+                <th
+                  key={column.key}
+                  scope="col"
+                  className="u-label py-2.5 px-1 align-bottom font-normal text-muted sm:px-2"
+                >
+                  {column.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {chart.rows.map((row, index) => (
+              <tr key={index} className="border-b border-line">
                 {chart.columns.map((column) => (
-                  <th
+                  <td
                     key={column.key}
-                    scope="col"
-                    className="u-label py-2.5 px-1 align-bottom font-normal text-muted sm:px-2"
+                    className="px-1 py-2.5 first:text-ink sm:px-2"
                   >
-                    {column.label}
-                  </th>
+                    {row[column.key] ?? "—"}
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {chart.rows.map((row, index) => (
-                <tr key={index} className="border-b border-line">
-                  {chart.columns.map((column) => (
-                    <td
-                      key={column.key}
-                      className="px-1 py-2.5 first:text-ink sm:px-2"
-                    >
-                      {row[column.key] ?? "—"}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
       )}
 
       {chart?.note && (
-        <p className="mt-4 text-[12px] leading-relaxed text-muted">
-          {chart.note}
-        </p>
+        <p className="mt-4 text-[12px] leading-relaxed text-muted">{chart.note}</p>
       )}
 
       <div className="mt-6 space-y-2 text-[12px] leading-relaxed text-muted">
