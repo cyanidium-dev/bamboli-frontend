@@ -81,7 +81,7 @@ export default function ProductGallery({
                 go(-1);
               }}
               aria-label="Попереднє фото"
-              className="absolute left-1 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
+              className="absolute -left-3 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
             >
               <ChevronIcon className="size-10 rotate-90" />
             </button>
@@ -92,7 +92,7 @@ export default function ProductGallery({
                 go(1);
               }}
               aria-label="Наступне фото"
-              className="absolute right-1 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
+              className="absolute -right-3 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
             >
               <ChevronIcon className="size-10 -rotate-90" />
             </button>
