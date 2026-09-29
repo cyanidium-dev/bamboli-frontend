@@ -11,7 +11,7 @@ export default function CategoryStrip({
   categories: CategoryTile[];
 }) {
   return (
-    <section className="bg-mist py-12 md:py-14 lg:py-20">
+    <section className="bg-mist pb-12 md:pb-14 lg:pb-20">
       <Container>
         <SectionHeading
           label="Категорії"
