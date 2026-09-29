@@ -289,7 +289,7 @@ export default function CheckoutView() {
                 {shipping === 0 ? "Безкоштовно" : formatPrice(shipping)}
               </dd>
             </div>
-            <div className="flex justify-between border-t border-line pt-3 text-[15px]">
+            <div className="flex justify-between border-t border-line pt-3 text-[15px] font-semibold">
               <dt>Разом</dt>
               <dd className="tabular-nums">{formatPrice(subtotal + shipping)}</dd>
             </div>
