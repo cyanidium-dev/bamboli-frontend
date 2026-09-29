@@ -252,14 +252,14 @@ export default function CheckoutView() {
         </form>
 
         <aside className="order-first lg:sticky lg:top-[110px] lg:order-none lg:self-start">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between lg:mb-6">
             <p className="u-label text-ink">Замовлення</p>
             {/* Below lg the summary sits above the form; the list folds away. */}
             <button
               type="button"
               onClick={() => setItemsOpen((open) => !open)}
               aria-expanded={itemsOpen}
-              className="u-label flex items-center gap-1.5 py-1 lg:hidden"
+              className="flex items-center gap-1.5 py-1 text-[12px] lg:hidden"
             >
               {itemsOpen ? "Сховати товари" : "Показати товари"}
               <ChevronIcon
@@ -270,39 +270,44 @@ export default function CheckoutView() {
               />
             </button>
           </div>
-          <ul
+          {/* Below lg the list slides open/closed (0fr → 1fr); at lg it is always open. */}
+          <div
             className={cn(
-              "divide-y divide-line border-y border-line",
-              !itemsOpen && "hidden lg:block",
+              "grid transition-[grid-template-rows,opacity] duration-300 ease-out lg:grid-rows-[1fr] lg:opacity-100",
+              itemsOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
             )}
           >
-            {mounted &&
-              items.map((item) => (
-                <li key={item.key} className="flex gap-4 py-4">
-                  <div className="relative aspect-3/4 w-[64px] shrink-0 overflow-hidden bg-sand">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      sizes="64px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="flex min-w-0 flex-1 flex-col">
-                    <p className="u-label">{item.title}</p>
-                    <p className="mt-1.5 text-[11px] text-muted">
-                      {item.colorName}
-                      {item.size ? ` · ${item.size}` : ""} · {item.quantity} шт
-                    </p>
-                    <span className="mt-auto text-[13px] tabular-nums">
-                      {formatPrice(item.price * item.quantity)}
-                    </span>
-                  </div>
-                </li>
-              ))}
-          </ul>
+            <div className="min-h-0 overflow-hidden">
+              <ul className="mb-5 divide-y divide-line border-y border-line">
+                {mounted &&
+                  items.map((item) => (
+                    <li key={item.key} className="flex gap-4 py-4">
+                      <div className="relative aspect-3/4 w-[64px] shrink-0 overflow-hidden bg-sand">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex min-w-0 flex-1 flex-col">
+                        <p className="u-label">{item.title}</p>
+                        <p className="mt-1.5 text-[11px] text-muted">
+                          {item.colorName}
+                          {item.size ? ` · ${item.size}` : ""} · {item.quantity} шт
+                        </p>
+                        <span className="mt-auto text-[13px] tabular-nums">
+                          {formatPrice(item.price * item.quantity)}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
 
-          <dl className={cn("space-y-2 text-[12px] lg:mt-5", itemsOpen && "mt-5")}>
+          <dl className="space-y-2 text-[12px]">
             <div className="flex justify-between">
               <dt>Сума</dt>
               <dd className="tabular-nums">{formatPrice(subtotal)}</dd>
