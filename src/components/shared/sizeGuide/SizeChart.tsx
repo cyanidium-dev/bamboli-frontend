@@ -9,15 +9,15 @@ export default function SizeChart({
 }) {
   return (
     <>
-      <div className="-mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0">
-        <table className="w-full min-w-[440px] border-collapse text-left text-[12px] tabular-nums">
+      <div>
+        <table className="w-full border-collapse text-left text-[11px] tabular-nums sm:text-[12px]">
           <thead>
             <tr className="border-b border-ink">
               {chart.columns.map((column) => (
                 <th
                   key={column.key}
                   scope="col"
-                  className="u-label py-2.5 pr-3 font-normal text-muted last:pr-0"
+                  className="u-label py-2.5 pr-2 align-bottom font-normal text-muted last:pr-0 sm:pr-3"
                 >
                   {column.label}
                 </th>
@@ -30,7 +30,7 @@ export default function SizeChart({
                 {chart.columns.map((column) => (
                   <td
                     key={column.key}
-                    className="py-2.5 pr-3 last:pr-0 first:text-ink"
+                    className="py-2.5 pr-2 last:pr-0 first:text-ink sm:pr-3"
                   >
                     {row[column.key] ?? "—"}
                   </td>
