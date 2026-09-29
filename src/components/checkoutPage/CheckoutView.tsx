@@ -253,7 +253,7 @@ export default function CheckoutView() {
 
         <aside className="order-first lg:sticky lg:top-[110px] lg:order-none lg:self-start">
           <div className="mb-4 flex items-center justify-between lg:mb-6">
-            <p className="u-label text-ink">Замовлення</p>
+            <p className="u-label text-ink">Ваше замовлення</p>
             {/* Below lg the summary sits above the form; the list folds away. */}
             <button
               type="button"
