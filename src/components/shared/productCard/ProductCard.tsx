@@ -1,14 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { Badge, Product } from "@/types/product";
 import { cn, defaultSize, discountPercent, formatPrice } from "@/lib/utils";
-import { useAddToCart } from "@/components/shared/addToCart/useAddToCart";
-import { useCartStore } from "@/store/cartStore";
-import { PlusIcon, CloseIcon } from "@/components/shared/ui/Icons";
 import FavoriteButton from "./FavoriteButton";
 import ColorSwatches from "./ColorSwatches";
 
@@ -26,51 +23,19 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   const [colorIndex, setColorIndex] = useState(0);
-  const [panelOpen, setPanelOpen] = useState(false);
-  // First colour and its first in-stock size are preselected, so the card
-  // always shows a concrete price instead of a «від» range.
-  const [selectedSize, setSelectedSize] = useState<string | null>(() =>
-    defaultSize(product.colors[0]),
-  );
-  const imageRef = useRef<HTMLDivElement>(null);
-
-  const addToCart = useAddToCart();
-  const openCart = useCartStore((state) => state.open);
 
   const color = product.colors[colorIndex];
   const [front, back = front] = color.images;
-  const hasSizes = color.sizes.length > 0;
 
-  const canAdd = !hasSizes || selectedSize !== null;
-
-  const size = color.sizes.find((item) => item.label === selectedSize);
+  // The first in-stock size decides the price shown, so the card always has a
+  // concrete price instead of a «від» range.
+  const size = color.sizes.find((item) => item.label === defaultSize(color));
   const price = size?.price ?? product.price;
   const oldPrice = size ? size.oldPrice : product.oldPrice;
 
-  const handleAdd = () => {
-    if (!canAdd) return;
-    addToCart({
-      product,
-      colorId: color.id,
-      size: selectedSize,
-      origin: imageRef.current,
-    });
-    setPanelOpen(false);
-    window.setTimeout(openCart, 900);
-  };
-
-  const handleColorChange = (index: number) => {
-    setColorIndex(index);
-    // Sizes and stock differ per colour, so a previous pick may not exist.
-    setSelectedSize(defaultSize(product.colors[index]));
-  };
-
   return (
     <article className="group/card relative flex h-full flex-col">
-      <div
-        ref={imageRef}
-        className="relative aspect-3/4 w-full overflow-hidden bg-sand"
-      >
+      <div className="relative aspect-3/4 w-full overflow-hidden bg-sand">
         <Link
           href={`/product/${product.slug}`}
           className="absolute inset-0 z-10"
@@ -125,91 +90,6 @@ export default function ProductCard({
           slug={product.slug}
           className="absolute right-3 top-3 z-20"
         />
-
-        {/* Mobile trigger: hover has no equivalent on touch. Hidden once the
-            panel is open — closing happens via the button inside the panel,
-            so this one doesn't sit on top of the panel's own content. */}
-        <button
-          type="button"
-          onClick={() => setPanelOpen(true)}
-          aria-label="Швидке додавання"
-          aria-hidden={panelOpen}
-          tabIndex={panelOpen ? -1 : 0}
-          className={cn(
-            "absolute bottom-3 right-3 z-20 flex size-9 items-center justify-center rounded-full bg-bg/95 text-ink shadow-[0_1px_8px_rgba(23,22,20,0.08)] transition active:scale-95 lg:hidden",
-            panelOpen && "pointer-events-none opacity-0",
-          )}
-        >
-          <PlusIcon className="size-4" />
-        </button>
-
-        {/* Quick add — revealed on hover (desktop) or by the + button (mobile). */}
-        <div
-          className={cn(
-            // -inset-x-px: the panel overshoots by a pixel on each side so
-            // subpixel rounding can't leave a hairline of photo showing.
-            "absolute -inset-x-px -bottom-px z-20 translate-y-[102%] bg-bg px-3 py-3 transition-transform duration-[450ms] ease-out lg:px-4",
-            "lg:group-hover/card:translate-y-0 lg:group-focus-within/card:translate-y-0",
-            panelOpen && "translate-y-0",
-          )}
-        >
-          {/* Closes the mobile panel; the corner trigger is hidden while it's
-              open so the two don't overlap. Free corner next to "Розмір". */}
-          <button
-            type="button"
-            onClick={() => setPanelOpen(false)}
-            aria-label="Закрити вибір"
-            className="absolute right-2 top-2 flex size-7 items-center justify-center rounded-full text-muted transition hover:text-ink lg:hidden"
-          >
-            <CloseIcon className="size-3.5" />
-          </button>
-
-          {hasSizes && (
-            <>
-              <p className="u-label mb-2 text-muted">Розмір</p>
-              <div className="mb-3 flex flex-wrap gap-1.5">
-                {color.sizes.map((size) => {
-                  const selected = selectedSize === size.label;
-                  return (
-                    <button
-                      key={size.label}
-                      type="button"
-                      disabled={!size.inStock}
-                      aria-pressed={selected}
-                      onClick={() => setSelectedSize(size.label)}
-                      className={cn(
-                        "min-w-9 border px-2 py-1.5 text-[11px] leading-none transition",
-                        selected
-                          ? "border-ink bg-ink text-bg"
-                          : "border-line",
-                        size.inStock
-                          ? !selected && "hover:border-ink"
-                          : "cursor-not-allowed text-muted/50 line-through",
-                      )}
-                    >
-                      {size.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </>
-          )}
-          {canAdd ? (
-            <button
-              type="button"
-              onClick={handleAdd}
-              className="u-label w-full border border-ink bg-ink px-3 py-2.5 text-bg transition hover:bg-transparent hover:text-ink"
-            >
-              Додати в кошик
-            </button>
-          ) : (
-            // Same box as the button (border-transparent keeps the height),
-            // so the panel doesn't jump once a size is picked.
-            <p className="u-label w-full truncate border border-transparent py-2.5 text-muted">
-              Оберіть розмір
-            </p>
-          )}
-        </div>
       </div>
 
       <div className="flex flex-1 flex-col pt-3 text-center">
@@ -220,7 +100,7 @@ export default function ProductCard({
             <ColorSwatches
               colors={product.colors}
               activeIndex={colorIndex}
-              onChange={handleColorChange}
+              onChange={setColorIndex}
             />
           )}
         </div>

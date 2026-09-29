@@ -33,7 +33,7 @@ export default function VyshyvankaSpotlight({
           : babies;
 
   return (
-    <section className="mt-20 bg-mist py-16 lg:mt-28 lg:py-24">
+    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <Reveal className="lg:sticky lg:top-[110px] lg:self-start">

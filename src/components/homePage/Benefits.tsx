@@ -46,7 +46,7 @@ const iconPaths: Record<BenefitIcon, React.ReactNode> = {
 
 export default function Benefits() {
   return (
-    <section className="mt-20 bg-mist py-16 lg:mt-28 lg:py-24">
+    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the grid stacks over them. */}
         <Image
