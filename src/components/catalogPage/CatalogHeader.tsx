@@ -15,7 +15,7 @@ export default function CatalogHeader({
   breadcrumbs: Crumb[];
 }) {
   return (
-    <div className="mb-8 lg:mb-12">
+    <div className="mb-6 lg:mb-10">
       <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
         <Link href="/" className="transition hover:text-ink">
           Головна
@@ -34,7 +34,7 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[52px]">
+      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[44px]">
         {title}
       </h1>
       {caption && (

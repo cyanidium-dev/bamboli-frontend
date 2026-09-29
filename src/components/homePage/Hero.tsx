@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { heroSlides } from "@/data/home";
 import type { HeroSlide } from "@/types/hero";
+import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
 
 const INTERVAL_MS = 4000;
@@ -18,6 +19,25 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
   const count = slides.length;
 
   const next = useCallback(() => setActive((i) => (i + 1) % count), [count]);
+  const prev = useCallback(() => setActive((i) => (i - 1 + count) % count), [count]);
+
+  // Touch swipe: a mostly-horizontal drag past the threshold flips the slide.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start || count < 2) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) next();
+    else prev();
+  };
 
   useEffect(() => {
     if (count < 2) return;
@@ -31,7 +51,9 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
     <section
       aria-roledescription="carousel"
       aria-label="Головний слайдер"
-      className="relative h-[min(600px,calc(100svh-74px))] min-h-[460px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      className="group/hero relative touch-pan-y h-[min(600px,calc(100svh-74px))] min-h-[460px] sm:h-[min(600px,calc(100svh-74px))] w-full overflow-hidden bg-sand lg:h-[min(720px,calc(100svh-74px))]"
     >
       {slides.map((slide, i) => {
         const isActive = i === active;
@@ -64,9 +86,17 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               )}
             />
 
+            {/* Whole slide is a link; the CTA below stays as the visible button. */}
+            <Link
+              href={slide.cta.href}
+              aria-hidden
+              tabIndex={-1}
+              className="absolute inset-0 z-[1]"
+            />
+
             <div
               className={cn(
-                "relative mx-auto flex h-full max-w-[1280px] flex-col items-center justify-end px-5 pb-20 text-white lg:items-start lg:px-10 lg:pb-24",
+                "pointer-events-none relative mx-auto flex h-full max-w-[1280px] flex-col items-center justify-end px-5 pb-20 text-white lg:items-start lg:px-10 lg:pb-24",
                 slide.textPosition === "right" && "lg:items-end lg:text-right",
               )}
             >
@@ -85,7 +115,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                 </p>
                 <Heading
                   className={cn(
-                    "u-display text-[36px] leading-[1.05] sm:text-[48px] xl:text-[56px]",
+                    "u-display text-[36px] leading-[1.05] sm:text-[48px] xl:text-[48px]",
                   )}
                 >
                   {slide.title}
@@ -94,7 +124,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                   href={slide.cta.href}
                   tabIndex={isActive ? 0 : -1}
                   className={cn(
-                    "u-label mt-7 border border-white bg-white px-7 py-4 text-ink transition duration-300 hover:bg-transparent hover:text-white",
+                    "u-label pointer-events-auto relative z-[2] mt-7 border border-white bg-white px-7 py-4 text-ink transition duration-300 hover:bg-transparent hover:text-white",
                   )}
                 >
                   {slide.cta.label}
@@ -104,6 +134,27 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
           </div>
         );
       })}
+
+      {count > 1 && (
+        <>
+          <button
+            type="button"
+            aria-label="Попередній слайд"
+            onClick={prev}
+            className="absolute left-6 top-1/2 z-10 hidden size-14 -translate-y-1/2 items-center justify-center text-white transition duration-300 hover:opacity-70 lg:flex"
+          >
+            <ChevronIcon className="size-10 rotate-90" />
+          </button>
+          <button
+            type="button"
+            aria-label="Наступний слайд"
+            onClick={next}
+            className="absolute right-6 top-1/2 z-10 hidden size-14 -translate-y-1/2 items-center justify-center text-white transition duration-300 hover:opacity-70 lg:flex"
+          >
+            <ChevronIcon className="size-10 -rotate-90" />
+          </button>
+        </>
+      )}
 
       {count > 1 && (
         <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center gap-2 px-5">

@@ -6,7 +6,7 @@ import { siteInfo } from "@/data/siteInfo";
 
 export default function ContactsShowroom() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <Reveal>
           <div className="grid overflow-hidden bg-ink text-bg md:grid-cols-2">
@@ -22,7 +22,7 @@ export default function ContactsShowroom() {
 
             <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 lg:py-20">
               <p className="u-label mb-5 text-bg/60">{contactsShowroom.label}</p>
-              <h2 className="u-display max-w-[420px] text-[20px] leading-[1.12] sm:text-[30px] lg:text-[42px]">
+              <h2 className="u-display max-w-[420px] text-[20px] leading-[1.12] sm:text-[30px] lg:text-[36px]">
                 {contactsShowroom.title}
               </h2>
 

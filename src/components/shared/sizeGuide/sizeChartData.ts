@@ -1,3 +1,5 @@
+import type { SizeChartData } from "@/types/product";
+
 /** Shared by SizeGuideModal (product page) and /size-guide page. */
 export const SIZE_ROWS = [
   { height: "50–56", age: "0–1 міс", chest: "40–42", waist: "40–42", length: "32" },
@@ -21,6 +23,12 @@ export const SIZE_COLUMNS = [
   { key: "waist", label: "Талія" },
   { key: "length", label: "Довжина" },
 ] as const;
+
+/** General chart — used on /size-guide and as the fallback for products without their own. */
+export const DEFAULT_SIZE_CHART: SizeChartData = {
+  columns: SIZE_COLUMNS.map(({ key, label }) => ({ key, label })),
+  rows: SIZE_ROWS,
+};
 
 export const HOW_TO_MEASURE = [
   {

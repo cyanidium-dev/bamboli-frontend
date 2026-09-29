@@ -46,7 +46,7 @@ const iconPaths: Record<BenefitIcon, React.ReactNode> = {
 
 export default function Benefits() {
   return (
-    <section className="mt-20 bg-mist py-16 lg:mt-28 lg:py-24">
+    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the grid stacks over them. */}
         <Image
@@ -76,7 +76,7 @@ export default function Benefits() {
 
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Чому Bamboli</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
             Кожен стібок, кожна деталь — з любов&apos;ю
           </h2>
         </div>

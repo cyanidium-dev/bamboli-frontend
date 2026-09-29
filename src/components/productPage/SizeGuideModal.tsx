@@ -5,13 +5,18 @@ import Link from "next/link";
 import Backdrop from "@/components/shared/ui/Backdrop";
 import { CloseIcon } from "@/components/shared/ui/Icons";
 import SizeChart from "@/components/shared/sizeGuide/SizeChart";
+import { DEFAULT_SIZE_CHART } from "@/components/shared/sizeGuide/sizeChartData";
+import type { SizeChartData } from "@/types/product";
 
 export default function SizeGuideModal({
   isOpen,
   onClose,
+  chart,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  /** The product's own chart; omitted = general chart. */
+  chart?: SizeChartData;
 }) {
   return (
     <>
@@ -50,7 +55,7 @@ export default function SizeGuideModal({
                   сантиметрах.
                 </p>
 
-                <SizeChart />
+                <SizeChart chart={chart ?? DEFAULT_SIZE_CHART} />
 
                 <Link
                   href="/size-guide"

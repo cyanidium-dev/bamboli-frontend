@@ -5,7 +5,6 @@ import Hero from "@/components/homePage/Hero";
 import ProductCarousel from "@/components/homePage/ProductCarousel";
 import ProductCarouselTabs from "@/components/homePage/ProductCarouselTabs";
 import CategoryStrip from "@/components/homePage/CategoryStrip";
-import PromoBanner from "@/components/homePage/PromoBanner";
 import VyshyvankaSpotlight from "@/components/homePage/VyshyvankaSpotlight";
 import ToysCollection from "@/components/homePage/ToysCollection";
 import Benefits from "@/components/homePage/Benefits";
@@ -70,7 +69,7 @@ export default async function HomePage() {
       <Hero />
 
       {novelties.length > 0 && (
-        <section className="bg-mist py-16 lg:py-24">
+        <section className="bg-mist py-12 md:py-14 lg:py-20">
           <Container>
             <SectionHeading
               label={newCollection.label}
@@ -90,7 +89,7 @@ export default async function HomePage() {
 
       <CategoryStrip categories={categoryTiles} />
 
-      <section className="pt-20 lg:pt-28">
+      <section className="pt-14 md:pt-16 lg:pt-20">
         <Container>
           <SectionHeading
             label="Топ товарів"
@@ -107,7 +106,6 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <PromoBanner />
       <VyshyvankaSpotlight
         all={vyshyvankaAll}
         girls={girls}
@@ -115,7 +113,7 @@ export default async function HomePage() {
         babies={vyshyvankaBabies}
       />
 
-      <section className="pt-20 lg:pt-28">
+      <section className="pt-14 md:pt-16 lg:pt-20">
         <Container>
           <SectionHeading
             label={babyCollection.label}
@@ -130,7 +128,7 @@ export default async function HomePage() {
       <Benefits />
 
       {sale.length > 0 && (
-        <section className="pt-20 lg:pt-28">
+        <section className="pt-14 md:pt-16 lg:pt-20">
           <Container>
             <SectionHeading
               label={saleCollection.label}

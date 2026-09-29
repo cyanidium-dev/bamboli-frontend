@@ -7,12 +7,12 @@ import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 
 export default function InstagramReels() {
   return (
-    <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24">
+    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
       <Container>
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 lg:mb-12">
           <div>
             <p className="u-label mb-3 text-muted">Ми в Instagram</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
               {siteInfo.instagram.handle}
             </h2>
             <p className="mt-3 text-[13px] text-muted">

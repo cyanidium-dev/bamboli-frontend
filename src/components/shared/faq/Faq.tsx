@@ -44,8 +44,8 @@ export default function Faq({
       id={id}
       className={
         id
-          ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28"
-          : "pt-20 lg:pt-28"
+          ? "scroll-mt-[90px] pt-14 md:pt-16 lg:scroll-mt-[100px] lg:pt-20"
+          : "pt-14 md:pt-16 lg:pt-20"
       }
     >
       <Container>
@@ -63,7 +63,7 @@ export default function Faq({
 
           <div className="relative lg:sticky lg:top-[110px] lg:self-start">
             <p className="u-label mb-3 text-muted">{label}</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
               {title}
             </h2>
             <p className="mt-5 max-w-[340px] text-[13px] leading-relaxed text-muted">

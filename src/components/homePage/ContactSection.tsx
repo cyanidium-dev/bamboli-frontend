@@ -6,7 +6,7 @@ import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 
 export default function ContactSection() {
   return (
-    <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24 overflow-hidden">
+    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20 overflow-hidden">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the two-column layout collapses. */}
         <Image
@@ -37,7 +37,7 @@ export default function ContactSection() {
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Зворотний зв&apos;язок</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[42px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
               Залишились питання?
             </h2>
             <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

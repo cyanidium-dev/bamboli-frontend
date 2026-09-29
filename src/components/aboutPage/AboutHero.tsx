@@ -6,7 +6,7 @@ import { aboutHero } from "@/data/about";
 
 export default function AboutHero() {
   return (
-    <Container className="pb-16 pt-10 lg:pb-24 lg:pt-14">
+    <Container className="pb-12 pt-10 md:pb-14 lg:pb-20 lg:pt-14">
       <nav aria-label="Навігація" className="u-label mb-10 text-muted lg:mb-16">
         <Link href="/" className="transition hover:text-ink">
           Головна
@@ -26,7 +26,7 @@ export default function AboutHero() {
 
           <div className="relative flex h-full flex-col justify-center">
             <p className="u-label mb-4 text-clay">Bamboli</p>
-            <h1 className="u-display text-[40px] leading-[0.98] lg:text-[60px]">
+            <h1 className="u-display text-[40px] leading-[0.98] lg:text-[50px]">
               {aboutHero.title}
             </h1>
 

@@ -7,12 +7,12 @@ import { toysSection } from "@/data/about";
 
 export default function ToysSection() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <p className="u-label mb-3 text-muted">{toysSection.label}</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
               {toysSection.title}
             </h2>
             <p className="mt-5 max-w-[440px] text-[13px] leading-relaxed text-muted">

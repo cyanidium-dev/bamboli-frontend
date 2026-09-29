@@ -4,9 +4,9 @@ import { sizeGroups } from "@/data/sizeGuide";
 export default function SizeGuideTable() {
   return (
     <div className="mb-14 border-t border-line pt-10 lg:mb-20 lg:pt-14">
-      <p className="u-label mb-3 text-muted">Таблиця розмірів</p>
-      <h2 className="u-display text-[20px] leading-[1.1] sm:text-[26px] lg:text-[36px]">
-        Зріст, вік і мірки
+      <p className="u-label mb-3 text-muted">Мірки</p>
+      <h2 className="u-display text-[20px] leading-[1.1] sm:text-[26px] lg:text-[30px]">
+        Як правильно виміряти
       </h2>
 
       <div className="mt-8 max-w-[640px]">

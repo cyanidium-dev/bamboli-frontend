@@ -9,7 +9,7 @@ import ProductCarousel from "./ProductCarousel";
 
 export default function ToysCollection({ products }: { products: Product[] }) {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <SectionHeading
           label={toysCollection.label}

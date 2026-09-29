@@ -70,6 +70,24 @@ export interface SizeOption {
   oldPrice?: number;
 }
 
+/**
+ * Per-product size chart, edited in the admin. Columns are data too, so a
+ * dress can list "Груди / Талія / Довжина" while a hat lists "Обхват голови".
+ * Rows map a column `key` to the cell text. Mirrors a Sanity object with an
+ * array of columns and an array of rows.
+ */
+export interface SizeChartColumn {
+  key: string;
+  label: string;
+}
+
+export interface SizeChartData {
+  columns: SizeChartColumn[];
+  rows: Record<string, string>[];
+  /** Optional line under the table, e.g. "Мірки виробу, не дитини". */
+  note?: string;
+}
+
 export interface ColorVariant {
   id: string;
   name: string;
@@ -102,6 +120,8 @@ export interface Product {
   brand?: string;
   description: string;
   details: { label: string; value: string }[];
+  /** Own size chart. Missing = the modal falls back to the general Bamboli chart. */
+  sizeChart?: SizeChartData;
   colors: ColorVariant[];
 }
 

@@ -23,7 +23,7 @@ export default function ArticleHero({ post }: { post: BlogPost }) {
 
       {category && <p className="u-label mb-4 text-muted lg:mb-6">{category.title}</p>}
 
-      <h1 className="u-display mb-8 max-w-[820px] text-[32px] leading-[1.1] lg:mb-10 lg:text-[52px]">
+      <h1 className="u-display mb-8 max-w-[820px] text-[32px] leading-[1.1] lg:mb-10 lg:text-[44px]">
         {post.title}
       </h1>
 

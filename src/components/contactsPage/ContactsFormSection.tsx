@@ -6,7 +6,7 @@ import { siteInfo } from "@/data/siteInfo";
 
 export default function ContactsFormSection() {
   return (
-    <section className="mt-20 bg-sand py-16 lg:mt-28 lg:py-24 overflow-hidden">
+    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20 overflow-hidden">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the two-column layout collapses. */}
         <Image
@@ -30,7 +30,7 @@ export default function ContactsFormSection() {
           <div className="flex flex-col gap-10">
             <div>
               <p className="u-label mb-3 text-muted">Напишіть нам</p>
-              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[42px]">
+              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
                 Форма зворотного зв&apos;язку
               </h2>
               <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

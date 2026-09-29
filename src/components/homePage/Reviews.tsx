@@ -6,11 +6,11 @@ export default function Reviews() {
   if (!reviews.enabled || reviews.items.length === 0) return null;
 
   return (
-    <section className="bg-mist py-16 lg:py-24">
+    <section className="bg-mist py-12 md:py-14 lg:py-20">
       <Container>
         <div className="mb-8 lg:mb-12">
           <p className="u-label mb-3 text-muted">Відгуки</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
             Що кажуть родини
           </h2>
         </div>

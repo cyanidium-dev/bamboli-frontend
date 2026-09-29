@@ -6,12 +6,12 @@ export default function PaymentInfo() {
   return (
     <section
       id="payment"
-      className="scroll-mt-[90px] mt-16 bg-mist py-16 lg:mt-24 lg:scroll-mt-[100px] lg:py-24"
+      className="scroll-mt-[90px] mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:scroll-mt-[100px] lg:py-20"
     >
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Оплата</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
             Онлайн або при отриманні
           </h2>
         </div>

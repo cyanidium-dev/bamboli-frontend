@@ -5,6 +5,7 @@ import {
   MainCategorySlug,
   Product,
   ProductKind,
+  SizeChartData,
   SizeOption,
   Subcategory,
 } from "@/types/product";
@@ -44,6 +45,7 @@ interface Seed {
   colors?: { id: string; name: string; hex: string; images?: string[] }[];
   description: string;
   details: { label: string; value: string }[];
+  sizeChart?: SizeChartData;
 }
 
 const photo = (file: string) => `/images/bamboli/products/${file}`;
@@ -76,6 +78,7 @@ function build(seed: Seed): Product {
     brand: seed.brand,
     description: seed.description,
     details: seed.details,
+    sizeChart: seed.sizeChart,
     colors: (seed.colors ?? [{ id: "c-main", name: "Як на фото", hex: "#E8DFD2" }]).map(
       (color) => ({
         ...color,
@@ -103,6 +106,13 @@ const seeds: Seed[] = [
       ["80–86", 1080],
     ],
     image: photo("DcyHUZyAG5o_1.jpg"),
+    // TODO: тимчасові фото інших ромперів для перегляду галереї — замінити на реальні.
+    images: [
+      photo("DcyHUZyAG5o_1.jpg"),
+      photo("DdBq1thADEF_1.jpg"),
+      photo("DctTwuVAL0__1.jpg"),
+      photo("DbiFxSIjK2v_1.jpg"),
+    ],
     colors: [
       { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
       { id: "c-beige", name: "Беж", hex: "#D8C3A5" },

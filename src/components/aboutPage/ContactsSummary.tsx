@@ -5,12 +5,12 @@ import { siteInfo } from "@/data/siteInfo";
 
 export default function ContactsSummary() {
   return (
-    <section className="pt-20 pb-16 lg:pt-28 lg:pb-24">
+    <section className="pt-14 pb-12 md:pt-16 md:pb-14 lg:pt-20 lg:pb-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Контакти</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
               Завжди на зв&apos;язку
             </h2>
             <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">

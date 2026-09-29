@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <Container className="flex min-h-[60svh] flex-col items-center justify-center py-24 text-center">
       <p className="u-label mb-5 text-muted">404</p>
-      <h1 className="u-display mb-5 text-[34px] leading-[1.1] lg:text-[46px]">
+      <h1 className="u-display mb-5 text-[34px] leading-[1.1] lg:text-[40px]">
         Сторінку не знайдено
       </h1>
       <p className="mb-9 max-w-[360px] text-[13px] text-muted">

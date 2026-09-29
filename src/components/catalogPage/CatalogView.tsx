@@ -10,6 +10,12 @@ import { categories } from "@/data/categories";
 import { cn, declOfNum } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 
+/** A group of link chips (types, brands) offered inside the «Фільтр» panel. */
+export interface FilterGroup {
+  label: string;
+  chips: { label: string; href: string; active: boolean }[];
+}
+
 export type SortKey = "featured" | "price-asc" | "price-desc" | "new";
 
 const sortOptions: { key: SortKey; label: string }[] = [
@@ -37,6 +43,7 @@ export default function CatalogView({
   initialSort = "featured",
   tabsAbove = false,
   localCategoryFilter = false,
+  filterGroups = [],
 }: {
   products: Product[];
   filterBy?: "size" | "category";
@@ -45,11 +52,14 @@ export default function CatalogView({
   tabsAbove?: boolean;
   /** Section tabs filter this list in place instead of leaving for /catalog/<section>. */
   localCategoryFilter?: boolean;
+  /** Extra groups (subcategories, brands) shown behind the «Фільтр» button next to sizes. */
+  filterGroups?: FilterGroup[];
 }) {
   const [sort, setSort] = useState<SortKey>(initialSort);
   const [sortOpen, setSortOpen] = useState(false);
   const [size, setSize] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
+  const [filterOpen, setFilterOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -128,6 +138,16 @@ export default function CatalogView({
       : allSizes.map((item) => ({ value: item, label: item }))),
   ];
 
+  const showSizes = filterBy === "size" && allSizes.length > 1;
+  const hasFilter = showSizes || filterGroups.length > 0;
+  // «Всі» is the unfiltered state, so it doesn't count as an active filter.
+  const activeFilters =
+    filterGroups.reduce(
+      (sum, group) =>
+        sum + group.chips.filter((chip) => chip.active && chip.label !== "Всі").length,
+      0,
+    ) + (size ? 1 : 0);
+
   const activeChip = filterBy === "category" ? category : size;
   const setChip = (value: string | null) =>
     filterBy === "category" ? setCategory(value) : setSize(value);
@@ -175,32 +195,29 @@ export default function CatalogView({
           filterBy === "category" || tabsAbove ? "border-b" : "border-y",
         )}
       >
-        <ScrollTabs className="-mx-1 flex max-w-full items-center gap-1.5 px-1">
-          {filterBy === "size" && chips.length > 1 && (
-            <>
-              <span className="u-label mr-1.5 shrink-0 text-muted">Розмір</span>
-              {chips.map((chip, index) => {
-                const isAll = index === 0;
-                const active = isAll ? activeChip === null : chip.value === activeChip;
-                return (
-                  <button
-                    key={chip.value}
-                    type="button"
-                    onClick={() => setChip(isAll || chip.value === activeChip ? null : chip.value)}
-                    className={cn(
-                      "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
-                      active
-                        ? "border-ink bg-ink text-bg"
-                        : "border-line hover:border-ink",
-                    )}
-                  >
-                    {chip.label}
-                  </button>
-                );
-              })}
-            </>
-          )}
-        </ScrollTabs>
+        {hasFilter ? (
+          <button
+            type="button"
+            onClick={() => setFilterOpen((open) => !open)}
+            aria-expanded={filterOpen}
+            className="u-label flex items-center gap-2 py-1"
+          >
+            Фільтр
+            {activeFilters > 0 && (
+              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[9px] tracking-normal text-bg">
+                {activeFilters}
+              </span>
+            )}
+            <ChevronIcon
+              className={cn(
+                "size-4 transition-transform duration-300",
+                filterOpen && "rotate-180",
+              )}
+            />
+          </button>
+        ) : (
+          <span />
+        )}
 
         <div ref={sortRef} className="relative ml-auto shrink-0">
           <button
@@ -248,6 +265,66 @@ export default function CatalogView({
             )}
           </AnimatePresence>
         </div>
+
+        <AnimatePresence initial={false}>
+          {hasFilter && filterOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="basis-full overflow-hidden"
+            >
+              <div className="space-y-5 pb-1 pt-3">
+                {filterGroups.map((group) => (
+                  <div key={group.label}>
+                    <p className="u-label mb-2.5 text-muted">{group.label}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.chips.map((chip) => (
+                        <Link
+                          key={chip.href}
+                          href={chip.href}
+                          className={cn(
+                            "border px-2.5 py-1.5 text-[11px] leading-none transition",
+                            chip.active
+                              ? "border-ink bg-ink text-bg"
+                              : "border-line hover:border-ink",
+                          )}
+                        >
+                          {chip.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+
+                {showSizes && (
+                  <div>
+                    <p className="u-label mb-2.5 text-muted">Розмір</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {allSizes.map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          aria-pressed={size === item}
+                          onClick={() => setSize(size === item ? null : item)}
+                          className={cn(
+                            "border px-2.5 py-1.5 text-[11px] leading-none transition",
+                            size === item
+                              ? "border-ink bg-ink text-bg"
+                              : "border-line hover:border-ink",
+                          )}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {visible.length > 0 ? (

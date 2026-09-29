@@ -5,7 +5,7 @@ import { values, valuesImage } from "@/data/about";
 
 export default function Values() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <span
@@ -15,7 +15,7 @@ export default function Values() {
             03
           </span>
           <p className="u-label mb-3 text-muted">Наші цінності</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
             Що для нас важливо
           </h2>
         </div>
