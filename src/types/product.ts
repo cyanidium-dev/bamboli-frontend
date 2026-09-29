@@ -120,7 +120,7 @@ export interface Product {
   brand?: string;
   description: string;
   details: { label: string; value: string }[];
-  /** Own size chart. Missing = the modal falls back to the general Bamboli chart. */
+  /** Own size chart, differs per product. Missing = the modal shows only the measuring notes. */
   sizeChart?: SizeChartData;
   colors: ColorVariant[];
 }

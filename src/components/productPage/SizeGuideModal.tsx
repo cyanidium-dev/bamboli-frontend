@@ -14,7 +14,7 @@ export default function SizeGuideModal({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  /** The product's own chart; omitted = general chart. */
+  /** The product's own chart; omitted = only the measuring notes. */
   chart?: SizeChartData;
 }) {
   return (
