@@ -147,7 +147,7 @@ export default function CheckoutView() {
 
       <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
         <form onSubmit={submit} noValidate>
-          <p className="u-label mb-6 text-muted">Отримувач</p>
+          <p className="u-label mb-6 text-ink">Отримувач</p>
           <div className="grid gap-5 sm:grid-cols-2">
             <Field
               label="Імʼя та прізвище"
@@ -167,7 +167,7 @@ export default function CheckoutView() {
             />
           </div>
 
-          <p className="u-label mb-6 mt-12 text-muted">Доставка</p>
+          <p className="u-label mb-6 mt-12 text-ink">Доставка</p>
           <OptionGroup
             name="delivery"
             legend="Спосіб доставки"
@@ -220,7 +220,7 @@ export default function CheckoutView() {
             )}
           </div>
 
-          <p className="u-label mb-6 mt-12 text-muted">Оплата</p>
+          <p className="u-label mb-6 mt-12 text-ink">Оплата</p>
           <OptionGroup
             name="payment"
             legend="Спосіб оплати"
@@ -230,7 +230,7 @@ export default function CheckoutView() {
           />
 
           <div className="mt-5">
-            <label className="u-label mb-2 block text-muted">
+            <label className="u-label mb-2 block text-ink">
               Коментар до замовлення
             </label>
             <textarea
@@ -319,7 +319,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="u-label mb-2 block text-muted">{label}</label>
+      <label className="u-label mb-2 block text-ink">{label}</label>
       <input
         type="text"
         value={value}
