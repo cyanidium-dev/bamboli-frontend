@@ -5,7 +5,7 @@ import { values, valuesImage } from "@/data/about";
 
 export default function Values() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <span

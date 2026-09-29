@@ -6,7 +6,7 @@ import { siteInfo } from "@/data/siteInfo";
 
 export default function ContactsShowroom() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <Reveal>
           <div className="grid overflow-hidden bg-ink text-bg md:grid-cols-2">

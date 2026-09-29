@@ -6,7 +6,7 @@ import { quickAnswers } from "@/data/contacts";
 
 export default function QuickAnswers() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <Reveal>
           <p className="u-label mb-3 text-muted">Перш ніж писати</p>

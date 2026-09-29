@@ -6,7 +6,7 @@ export default function PaymentInfo() {
   return (
     <section
       id="payment"
-      className="scroll-mt-[90px] mt-16 bg-mist py-16 lg:mt-24 lg:scroll-mt-[100px] lg:py-24"
+      className="scroll-mt-[90px] mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:scroll-mt-[100px] lg:py-20"
     >
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">

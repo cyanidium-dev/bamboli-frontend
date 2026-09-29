@@ -44,8 +44,8 @@ export default function Faq({
       id={id}
       className={
         id
-          ? "scroll-mt-[90px] pt-20 lg:scroll-mt-[100px] lg:pt-28"
-          : "pt-20 lg:pt-28"
+          ? "scroll-mt-[90px] pt-14 md:pt-16 lg:scroll-mt-[100px] lg:pt-20"
+          : "pt-14 md:pt-16 lg:pt-20"
       }
     >
       <Container>

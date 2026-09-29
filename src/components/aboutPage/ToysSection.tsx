@@ -7,7 +7,7 @@ import { toysSection } from "@/data/about";
 
 export default function ToysSection() {
   return (
-    <section className="pt-20 lg:pt-28">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <Reveal>

@@ -19,7 +19,7 @@ const icons: Record<ContactCardKind, (props: { className?: string }) => React.Re
 
 export default function ContactCards() {
   return (
-    <section className="bg-mist pt-4 pb-16 lg:pt-6 lg:pb-24">
+    <section className="bg-mist pt-4 pb-12 md:pb-14 lg:pt-6 lg:pb-20">
       <Container>
         <Reveal>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

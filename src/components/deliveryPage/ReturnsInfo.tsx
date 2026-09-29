@@ -4,7 +4,7 @@ import { returnsSteps } from "@/data/delivery";
 
 export default function ReturnsInfo() {
   return (
-    <section id="returns" className="scroll-mt-[90px] pt-16 lg:scroll-mt-[100px] lg:pt-24">
+    <section id="returns" className="scroll-mt-[90px] pt-14 md:pt-16 lg:scroll-mt-[100px] lg:pt-20">
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Обмін і повернення</p>

@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
 
   return (
-    <Container className="pt-6 pb-20 lg:pt-10 lg:pb-28">
+    <Container className="pt-6 pb-14 lg:pt-10 lg:pb-20">
       <CatalogHeader
         title="Блог"
         caption="Історії про розмір і догляд, вишиванки й традиції, малюків, іграшки та розвиток."

@@ -5,7 +5,7 @@ import { story } from "@/data/about";
 
 export default function Story() {
   return (
-    <section className="pt-24 lg:pt-32">
+    <section className="pt-14 md:pt-16 lg:pt-20">
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-6">
           <Reveal className="lg:col-span-6">

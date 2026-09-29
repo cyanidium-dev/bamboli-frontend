@@ -4,7 +4,7 @@ import { fabrics } from "@/data/about";
 
 export default function Fabrics() {
   return (
-    <section className="mt-20 bg-mist py-16 lg:mt-28 lg:py-24">
+    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Наші тканини</p>
