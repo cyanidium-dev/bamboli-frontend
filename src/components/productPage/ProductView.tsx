@@ -78,7 +78,7 @@ export default function ProductView({ product }: { product: Product }) {
       <div className="lg:sticky lg:top-[110px] lg:self-start">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="u-display text-[28px] leading-[1.12] lg:text-[32px]">
+            <h1 className="u-display text-[22px] leading-[1.12] sm:text-[24px] lg:text-[26px]">
               {product.title}
             </h1>
             <p className="mt-2 text-[12px] text-muted">{product.subtitle}</p>
