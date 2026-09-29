@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { FREE_SHIPPING_FROM, useCartStore } from "@/store/cartStore";
 import { cn, formatPrice } from "@/lib/utils";
+import { ChevronIcon } from "@/components/shared/ui/Icons";
 
 interface Fields {
   name: string;
@@ -70,6 +71,7 @@ export default function CheckoutView() {
   const [fields, setFields] = useState<Fields>(empty);
   const [delivery, setDelivery] = useState<DeliveryMethod>("branch");
   const [payment, setPayment] = useState<PaymentMethod>("online");
+  const [itemsOpen, setItemsOpen] = useState(false);
   const [touched, setTouched] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -145,7 +147,7 @@ export default function CheckoutView() {
         Оформлення
       </h1>
 
-      <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+      <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
         <form onSubmit={submit} noValidate>
           <p className="u-label mb-6 text-ink">Отримувач</p>
           <div className="grid gap-5 sm:grid-cols-2">
@@ -249,9 +251,31 @@ export default function CheckoutView() {
           </button>
         </form>
 
-        <aside className="lg:sticky lg:top-[110px] lg:self-start">
-          <p className="u-label mb-6 text-ink">Замовлення</p>
-          <ul className="divide-y divide-line border-y border-line">
+        <aside className="order-first lg:sticky lg:top-[110px] lg:order-none lg:self-start">
+          <div className="mb-6 flex items-center justify-between">
+            <p className="u-label text-ink">Замовлення</p>
+            {/* Below lg the summary sits above the form; the list folds away. */}
+            <button
+              type="button"
+              onClick={() => setItemsOpen((open) => !open)}
+              aria-expanded={itemsOpen}
+              className="u-label flex items-center gap-1.5 py-1 lg:hidden"
+            >
+              {itemsOpen ? "Сховати товари" : "Показати товари"}
+              <ChevronIcon
+                className={cn(
+                  "size-4 transition-transform duration-300",
+                  itemsOpen && "rotate-180",
+                )}
+              />
+            </button>
+          </div>
+          <ul
+            className={cn(
+              "divide-y divide-line border-y border-line",
+              !itemsOpen && "hidden lg:block",
+            )}
+          >
             {mounted &&
               items.map((item) => (
                 <li key={item.key} className="flex gap-4 py-4">
@@ -278,7 +302,7 @@ export default function CheckoutView() {
               ))}
           </ul>
 
-          <dl className="mt-5 space-y-2 text-[12px]">
+          <dl className={cn("space-y-2 text-[12px] lg:mt-5", itemsOpen && "mt-5")}>
             <div className="flex justify-between">
               <dt>Сума</dt>
               <dd className="tabular-nums">{formatPrice(subtotal)}</dd>
