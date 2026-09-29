@@ -250,7 +250,7 @@ export default function CheckoutView() {
         </form>
 
         <aside className="lg:sticky lg:top-[110px] lg:self-start">
-          <p className="u-label mb-6 text-muted">Замовлення</p>
+          <p className="u-label mb-6 text-ink">Замовлення</p>
           <ul className="divide-y divide-line border-y border-line">
             {mounted &&
               items.map((item) => (
@@ -280,11 +280,11 @@ export default function CheckoutView() {
 
           <dl className="mt-5 space-y-2 text-[12px]">
             <div className="flex justify-between">
-              <dt className="text-muted">Сума</dt>
+              <dt>Сума</dt>
               <dd className="tabular-nums">{formatPrice(subtotal)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted">Доставка</dt>
+              <dt>Доставка</dt>
               <dd className="tabular-nums">
                 {shipping === 0 ? "Безкоштовно" : formatPrice(shipping)}
               </dd>
