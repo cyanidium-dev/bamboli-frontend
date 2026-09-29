@@ -52,7 +52,7 @@ export default function ProductGallery({
         transition={{ duration: 0.4, ease: "easeOut" }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="relative aspect-9/10 w-full touch-pan-y overflow-hidden bg-sand lg:max-w-[560px]"
+        className="relative aspect-3/4 w-full md:aspect-9/10 touch-pan-y overflow-hidden bg-sand lg:max-w-[560px]"
       >
         <button
           type="button"
