@@ -247,10 +247,6 @@ export default function CheckoutView() {
           >
             Підтвердити замовлення
           </button>
-
-          <p className="mt-4 text-[11px] text-muted">
-            Демонстраційний проєкт: оплата та відправка даних не підключені.
-          </p>
         </form>
 
         <aside className="lg:sticky lg:top-[110px] lg:self-start">
