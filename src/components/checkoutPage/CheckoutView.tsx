@@ -252,14 +252,14 @@ export default function CheckoutView() {
         </form>
 
         <aside className="order-first lg:sticky lg:top-[110px] lg:order-none lg:self-start">
-          <div className="mb-4 flex flex-col items-start gap-1 lg:mb-6">
-            <p className="u-label text-ink">Ваше замовлення</p>
+          <div className="mb-4 flex flex-col items-end gap-1 lg:mb-6">
+            <p className="u-label self-start text-ink">Ваше замовлення</p>
             {/* Below lg the summary sits above the form; the list folds away. */}
             <button
               type="button"
               onClick={() => setItemsOpen((open) => !open)}
               aria-expanded={itemsOpen}
-              className="flex items-center gap-1.5 py-1 text-[12px] underline underline-offset-4 lg:hidden"
+              className="flex items-center gap-1.5 py-1 text-[12px] lg:hidden"
             >
               {itemsOpen ? "Сховати товари" : "Показати товари"}
               <ChevronIcon
