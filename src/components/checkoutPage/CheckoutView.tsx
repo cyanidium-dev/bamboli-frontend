@@ -12,10 +12,55 @@ interface Fields {
   phone: string;
   city: string;
   branch: string;
+  street: string;
+  house: string;
+  apartment: string;
   comment: string;
 }
 
-const empty: Fields = { name: "", phone: "", city: "", branch: "", comment: "" };
+const empty: Fields = {
+  name: "",
+  phone: "",
+  city: "",
+  branch: "",
+  street: "",
+  house: "",
+  apartment: "",
+  comment: "",
+};
+
+type DeliveryMethod = "branch" | "courier";
+type PaymentMethod = "online" | "cod";
+
+const deliveryOptions: { value: DeliveryMethod; title: string; text: string }[] = [
+  {
+    value: "branch",
+    title: "Відділення / поштомат",
+    text: "Нова Пошта, забираєте у відділенні або поштоматі",
+  },
+  {
+    value: "courier",
+    title: "Кур'єрська доставка",
+    text: "Нова Пошта привезе за вашою адресою",
+  },
+];
+
+const paymentOptions: { value: PaymentMethod; title: string; text: string }[] = [
+  {
+    value: "online",
+    title: "Оплата на сайті",
+    text: "Карткою онлайн після підтвердження замовлення",
+  },
+  {
+    value: "cod",
+    title: "Накладений платіж",
+    text: "Оплата під час отримання на Новій Пошті",
+  },
+];
+
+/** Inputs sit on white: full-ink text and a mid-strength outline keep them readable. */
+const inputClass =
+  "w-full border bg-transparent px-3.5 py-3 text-[13px] text-ink outline-none transition placeholder:text-muted focus:border-ink";
 
 export default function CheckoutView() {
   const items = useCartStore((state) => state.items);
@@ -23,6 +68,8 @@ export default function CheckoutView() {
 
   const [mounted, setMounted] = useState(false);
   const [fields, setFields] = useState<Fields>(empty);
+  const [delivery, setDelivery] = useState<DeliveryMethod>("branch");
+  const [payment, setPayment] = useState<PaymentMethod>("online");
   const [touched, setTouched] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -38,7 +85,9 @@ export default function CheckoutView() {
     name: fields.name.trim().length < 2,
     phone: fields.phone.replace(/\D/g, "").length < 10,
     city: fields.city.trim().length < 2,
-    branch: fields.branch.trim().length < 1,
+    branch: delivery === "branch" && fields.branch.trim().length < 1,
+    street: delivery === "courier" && fields.street.trim().length < 2,
+    house: delivery === "courier" && fields.house.trim().length < 1,
   };
   const hasErrors = Object.values(invalid).some(Boolean);
 
@@ -119,7 +168,14 @@ export default function CheckoutView() {
           </div>
 
           <p className="u-label mb-6 mt-12 text-muted">Доставка</p>
-          <div className="grid gap-5 sm:grid-cols-2">
+          <OptionGroup
+            name="delivery"
+            legend="Спосіб доставки"
+            options={deliveryOptions}
+            value={delivery}
+            onChange={setDelivery}
+          />
+          <div className="mt-5 grid gap-5 sm:grid-cols-2">
             <Field
               label="Місто"
               value={fields.city}
@@ -127,14 +183,51 @@ export default function CheckoutView() {
               invalid={touched && invalid.city}
               hint="Вкажіть місто"
             />
-            <Field
-              label="Відділення Нової Пошти"
-              value={fields.branch}
-              onChange={set("branch")}
-              invalid={touched && invalid.branch}
-              hint="Вкажіть відділення"
-            />
+            {delivery === "branch" ? (
+              <Field
+                label="Відділення або поштомат"
+                value={fields.branch}
+                onChange={set("branch")}
+                invalid={touched && invalid.branch}
+                hint="Вкажіть відділення або поштомат"
+              />
+            ) : (
+              <Field
+                label="Вулиця"
+                value={fields.street}
+                onChange={set("street")}
+                invalid={touched && invalid.street}
+                hint="Вкажіть вулицю"
+              />
+            )}
+            {delivery === "courier" && (
+              <>
+                <Field
+                  label="Будинок"
+                  value={fields.house}
+                  onChange={set("house")}
+                  invalid={touched && invalid.house}
+                  hint="Вкажіть номер будинку"
+                />
+                <Field
+                  label="Квартира (за наявності)"
+                  value={fields.apartment}
+                  onChange={set("apartment")}
+                  invalid={false}
+                  hint=""
+                />
+              </>
+            )}
           </div>
+
+          <p className="u-label mb-6 mt-12 text-muted">Оплата</p>
+          <OptionGroup
+            name="payment"
+            legend="Спосіб оплати"
+            options={paymentOptions}
+            value={payment}
+            onChange={setPayment}
+          />
 
           <div className="mt-5">
             <label className="u-label mb-2 block text-muted">
@@ -144,7 +237,7 @@ export default function CheckoutView() {
               value={fields.comment}
               onChange={set("comment")}
               rows={3}
-              className="w-full resize-none border border-line bg-transparent px-3.5 py-3 text-[13px] outline-none transition focus:border-ink"
+              className={cn(inputClass, "resize-none border-ink/40")}
             />
           </div>
 
@@ -238,12 +331,67 @@ function Field({
         inputMode={inputMode}
         placeholder={placeholder}
         aria-invalid={invalid}
-        className={cn(
-          "w-full border bg-transparent px-3.5 py-3 text-[13px] outline-none transition placeholder:text-muted/60 focus:border-ink",
-          invalid ? "border-clay" : "border-line",
-        )}
+        className={cn(inputClass, invalid ? "border-clay" : "border-ink/40")}
       />
       {invalid && <p className="mt-1.5 text-[11px] text-clay">{hint}</p>}
     </div>
+  );
+}
+
+function OptionGroup<T extends string>({
+  name,
+  legend,
+  options,
+  value,
+  onChange,
+}: {
+  name: string;
+  legend: string;
+  options: { value: T; title: string; text: string }[];
+  value: T;
+  onChange: (value: T) => void;
+}) {
+  return (
+    <fieldset>
+      <legend className="sr-only">{legend}</legend>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {options.map((option) => {
+          const selected = option.value === value;
+          return (
+            <label
+              key={option.value}
+              className={cn(
+                "flex cursor-pointer gap-3 border p-4 transition focus-within:border-ink",
+                selected ? "border-ink" : "border-ink/40 hover:border-ink",
+              )}
+            >
+              <input
+                type="radio"
+                name={name}
+                value={option.value}
+                checked={selected}
+                onChange={() => onChange(option.value)}
+                className="peer sr-only"
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border",
+                  selected ? "border-ink" : "border-ink/40",
+                )}
+              >
+                {selected && <span className="size-2 rounded-full bg-ink" />}
+              </span>
+              <span className="min-w-0">
+                <span className="u-label block">{option.title}</span>
+                <span className="mt-1.5 block text-[11px] leading-snug text-muted">
+                  {option.text}
+                </span>
+              </span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
   );
 }
