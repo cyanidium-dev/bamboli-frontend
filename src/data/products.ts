@@ -106,18 +106,48 @@ const seeds: Seed[] = [
       ["80–86", 1080],
     ],
     image: photo("DcyHUZyAG5o_1.jpg"),
-    // TODO: тимчасові фото інших ромперів для перегляду галереї — замінити на реальні.
-    images: [
-      photo("DcyHUZyAG5o_1.jpg"),
-      photo("DdBq1thADEF_1.jpg"),
-      photo("DctTwuVAL0__1.jpg"),
-      photo("DbiFxSIjK2v_1.jpg"),
-    ],
+    // TODO: тимчасові фото інших товарів, щоб побачити окремі галереї кольорів — замінити на реальні.
     colors: [
-      { id: "c-milk", name: "Молочний", hex: "#EFE7DA" },
-      { id: "c-beige", name: "Беж", hex: "#D8C3A5" },
-      { id: "c-mocha", name: "Мокко", hex: "#8B6B55" },
-      { id: "c-grey", name: "Сірий", hex: "#B7B3AC" },
+      {
+        id: "c-milk",
+        name: "Молочний",
+        hex: "#EFE7DA",
+        images: [
+          photo("DcyHUZyAG5o_1.jpg"),
+          photo("DdOY5H9AFNP_frame.jpg"),
+          photo("DbJBQU6srKj_frame.jpg"),
+        ],
+      },
+      {
+        id: "c-beige",
+        name: "Беж",
+        hex: "#D8C3A5",
+        images: [
+          photo("DctTwuVAL0__1.jpg"),
+          photo("DaaJHaejOA3_1.jpg"),
+          photo("DbLMqjDDOpx_1.jpg"),
+          photo("DbiFxSIjK2v_1.jpg"),
+        ],
+      },
+      {
+        id: "c-mocha",
+        name: "Мокко",
+        hex: "#8B6B55",
+        images: [
+          photo("Dau5VCljHF6_1.jpg"),
+          photo("DbGVpStDJHT_1.jpg"),
+          photo("Dc3mdRMgKVa_1.jpg"),
+        ],
+      },
+      {
+        id: "c-grey",
+        name: "Сірий",
+        hex: "#B7B3AC",
+        images: [
+          photo("DdBq1thADEF_1.jpg"),
+          photo("DbVVrvsjFDv_1.jpg"),
+        ],
+      },
     ],
     description:
       "Наш бестселер: м'який ромпер із вушками на капюшоні та заклепками по всій довжині — легко вдягати навіть сонного малюка. Є в 9 кольорах.",
