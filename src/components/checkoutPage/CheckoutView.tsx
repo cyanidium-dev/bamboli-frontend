@@ -318,7 +318,7 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <div>
+    <div className="relative">
       <label className="u-label mb-2 block text-ink">{label}</label>
       <input
         type="text"
@@ -329,7 +329,12 @@ function Field({
         aria-invalid={invalid}
         className={cn(inputClass, invalid ? "border-clay" : "border-ink/40")}
       />
-      {invalid && <p className="mt-1.5 text-[11px] text-clay">{hint}</p>}
+      {/* Out of flow, so showing an error never shifts the fields below. */}
+      {invalid && (
+        <p className="absolute left-0 top-full mt-1 text-[11px] leading-none text-clay">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }
