@@ -68,7 +68,7 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
               return (
                 <h2
                   key={index}
-                  className="u-display pt-2 text-[24px] leading-[1.2] lg:text-[28px]"
+                  className="u-display pt-2 text-[24px] leading-[1.2] lg:text-[24px]"
                 >
                   {block.text}
                 </h2>

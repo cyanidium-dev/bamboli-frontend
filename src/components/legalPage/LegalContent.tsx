@@ -5,7 +5,7 @@ export default function LegalContent({ sections }: { sections: LegalSection[] })
     <div className="max-w-[720px] space-y-8 text-[15px] leading-relaxed text-ink lg:space-y-10">
       {sections.map((section) => (
         <section key={section.heading}>
-          <h2 className="u-display mb-4 text-[20px] leading-[1.2] lg:text-[24px]">
+          <h2 className="u-display mb-4 text-[20px] leading-[1.2] lg:text-[20px]">
             {section.heading}
           </h2>
 

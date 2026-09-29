@@ -26,7 +26,7 @@ export default function AboutHero() {
 
           <div className="relative flex h-full flex-col justify-center">
             <p className="u-label mb-4 text-clay">Bamboli</p>
-            <h1 className="u-display text-[40px] leading-[0.98] lg:text-[60px]">
+            <h1 className="u-display text-[40px] leading-[0.98] lg:text-[50px]">
               {aboutHero.title}
             </h1>
 

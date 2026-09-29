@@ -92,7 +92,7 @@ export default function CheckoutView() {
 
   return (
     <>
-      <h1 className="u-display mb-10 text-[34px] leading-[1.08] lg:mb-14 lg:text-[48px]">
+      <h1 className="u-display mb-10 text-[34px] leading-[1.08] lg:mb-14 lg:text-[40px]">
         Оформлення
       </h1>
 

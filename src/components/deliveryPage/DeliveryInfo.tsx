@@ -8,7 +8,7 @@ export default function DeliveryInfo() {
       <Container>
         <div className="mb-10 max-w-[560px] lg:mb-14">
           <p className="u-label mb-3 text-muted">Доставка</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
             Новою Поштою по всій Україні
           </h2>
         </div>

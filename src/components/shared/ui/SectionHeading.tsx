@@ -17,7 +17,7 @@ export default function SectionHeading({
     <div className="mb-8 flex items-end justify-between gap-x-6 lg:mb-12">
       <div className="min-w-0 grow">
         {label && <p className="u-label mb-3 text-muted">{label}</p>}
-        <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[40px]">
+        <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
           {title}
         </h2>
       </div>

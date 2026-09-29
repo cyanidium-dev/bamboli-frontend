@@ -34,7 +34,7 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[52px]">
+      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[44px]">
         {title}
       </h1>
       {caption && (
