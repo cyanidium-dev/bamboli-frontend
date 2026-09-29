@@ -307,11 +307,10 @@ export default async function CategoryPage({
     <Container className="pb-10 pt-10 lg:pt-14">
       <CatalogHeader
         title={resolved.title}
-        caption={resolved.caption}
         breadcrumbs={[{ label: "Каталог", href: "/catalog" }, ...resolved.breadcrumbs]}
       />
 
-      {[topChips, resolved.subChips ?? []].map((row, rowIndex) => {
+      {[topChips].map((row, rowIndex) => {
         // Two rows read as two levels: main tabs (underline) over
         // subcategory pills. Without a second row the single row stays pills.
         const isTabs =
@@ -323,13 +322,8 @@ export default async function CategoryPage({
               className={cn(
                 "-mx-1 flex max-w-full items-center px-1",
                 isTabs
-                  ? cn(
-                      "gap-6 border-b border-line",
-                      resolved.subChips ? "mb-5" : "mb-0",
-                    )
-                  : resolved.subChips !== undefined
-                    ? "mb-5 gap-1.5"
-                    : "mb-8 gap-1.5 lg:mb-12",
+                  ? "gap-6 border-b border-line"
+                  : "mb-8 gap-1.5 lg:mb-12",
               )}
             >
               {!isTabs && resolved.subChipsLabel && (
@@ -379,7 +373,12 @@ export default async function CategoryPage({
         products={resolved.products}
         filterBy={category === "sale" || category === "new" ? "category" : "size"}
         localCategoryFilter={category === "sale" || category === "new"}
-        tabsAbove={category === "aksesuary" && !resolved.subChips}
+        tabsAbove={topChips.length > 0 && (resolved.subChips !== undefined || category === "aksesuary")}
+        filterGroups={
+          resolved.subChips
+            ? [{ label: resolved.subChipsLabel ?? "Тип", chips: resolved.subChips }]
+            : []
+        }
       />
     </Container>
   );
