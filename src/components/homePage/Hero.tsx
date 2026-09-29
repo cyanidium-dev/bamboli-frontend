@@ -141,17 +141,17 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
             type="button"
             aria-label="Попередній слайд"
             onClick={prev}
-            className="absolute left-6 top-1/2 z-10 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm transition duration-300 hover:bg-white hover:text-ink lg:flex"
+            className="absolute left-6 top-1/2 z-10 hidden size-14 -translate-y-1/2 items-center justify-center text-white transition duration-300 hover:opacity-70 lg:flex"
           >
-            <ChevronIcon className="size-5 rotate-90" />
+            <ChevronIcon className="size-10 rotate-90" />
           </button>
           <button
             type="button"
             aria-label="Наступний слайд"
             onClick={next}
-            className="absolute right-6 top-1/2 z-10 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm transition duration-300 hover:bg-white hover:text-ink lg:flex"
+            className="absolute right-6 top-1/2 z-10 hidden size-14 -translate-y-1/2 items-center justify-center text-white transition duration-300 hover:opacity-70 lg:flex"
           >
-            <ChevronIcon className="size-5 -rotate-90" />
+            <ChevronIcon className="size-10 -rotate-90" />
           </button>
         </>
       )}
