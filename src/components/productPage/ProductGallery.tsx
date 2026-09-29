@@ -81,9 +81,9 @@ export default function ProductGallery({
                 go(-1);
               }}
               aria-label="Попереднє фото"
-              className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 size-9 items-center justify-center rounded-full lg:flex bg-bg/90 text-ink transition hover:bg-bg"
+              className="absolute left-1 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
             >
-              <ChevronIcon className="size-4 rotate-90" />
+              <ChevronIcon className="size-10 rotate-90" />
             </button>
             <button
               type="button"
@@ -92,41 +92,19 @@ export default function ProductGallery({
                 go(1);
               }}
               aria-label="Наступне фото"
-              className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 size-9 items-center justify-center rounded-full lg:flex bg-bg/90 text-ink transition hover:bg-bg"
+              className="absolute right-1 top-1/2 z-20 -translate-y-1/2 flex size-14 items-center justify-center text-white drop-shadow-[0_1px_5px_rgba(0,0,0,0.45)] transition duration-300 hover:opacity-70"
             >
-              <ChevronIcon className="size-4 -rotate-90" />
+              <ChevronIcon className="size-10 -rotate-90" />
             </button>
-            <div className="u-label absolute right-3 top-3 z-20 hidden lg:block rounded-full bg-ink/70 px-2.5 py-1 text-bg">
+            <div className="u-label absolute right-3 top-3 z-20 rounded-full bg-ink/70 px-2.5 py-1 text-bg">
               {index + 1} / {total}
-            </div>
-
-            {/* Mobile: thin-line pagination like the home hero, no arrows or thumbnails. */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/30 to-transparent lg:hidden" />
-            <div className="absolute inset-x-0 bottom-3 z-20 flex justify-center gap-2 px-5 lg:hidden">
-              {images.map((src, i) => (
-                <button
-                  key={`${src}-${i}`}
-                  type="button"
-                  aria-label={`Фото ${i + 1} з ${total}`}
-                  aria-current={i === index}
-                  onClick={() => setIndex(i)}
-                  className="flex h-6 w-8 items-center"
-                >
-                  <span
-                    className={cn(
-                      "block h-[3px] w-full transition-colors duration-300",
-                      i === index ? "bg-white" : "bg-white/50",
-                    )}
-                  />
-                </button>
-              ))}
             </div>
           </>
         )}
       </motion.div>
 
       {hasMany && (
-        <ul className="mt-3 hidden flex-wrap gap-2 lg:flex lg:max-w-[560px]">
+        <ul className="mt-3 flex flex-wrap gap-2 lg:max-w-[560px]">
           {images.map((src, i) => (
             <li key={`${src}-${i}`}>
               <button
