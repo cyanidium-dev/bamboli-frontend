@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Section from "@/components/shared/ui/Section";
 import Container from "@/components/shared/ui/Container";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { CategoryTile } from "@/data/home";
@@ -11,7 +12,7 @@ export default function CategoryStrip({
   categories: CategoryTile[];
 }) {
   return (
-    <section className="bg-mist pb-12 md:pb-14 lg:pb-20">
+    <Section tone="mist" spacing="continued">
       <Container>
         <SectionHeading
           label="Категорії"
@@ -24,7 +25,7 @@ export default function CategoryStrip({
           {categories.map((category, index) => (
             <Link key={category.slug} href={category.href} className="group/tile block">
               <div className="relative aspect-3/4 w-full overflow-hidden bg-sand">
-                <div className="absolute -inset-px transform-gpu transition-transform duration-[900ms] ease-out group-hover/tile:scale-[1.04]">
+                <div className="absolute -inset-px transform-gpu transition-transform duration-(--duration-slow) ease-out group-hover/tile:scale-[1.04]">
                   <Image
                     src={category.image}
                     alt={category.title}
@@ -34,18 +35,18 @@ export default function CategoryStrip({
                     className="object-cover"
                   />
                 </div>
-                <div className="absolute inset-0 bg-ink/5 transition-opacity duration-700 group-hover/tile:opacity-0" />
+                <div className="absolute inset-0 bg-ink/5 transition-opacity duration-(--duration-slow) group-hover/tile:opacity-0" />
               </div>
-              <h3 className="u-label mt-3 font-bold transition-colors group-hover/tile:text-clay">
+              <h3 className="u-h3 mt-3 transition-colors group-hover/tile:text-clay">
                 {category.title}
               </h3>
-              <p className="mt-1.5 line-clamp-2 text-[11px] text-muted">
+              <p className="u-caption mt-1.5 line-clamp-2">
                 {category.caption}
               </p>
             </Link>
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

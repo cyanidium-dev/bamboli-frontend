@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Section from "@/components/shared/ui/Section";
 import Container from "@/components/shared/ui/Container";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { toysCollection } from "@/data/home";
@@ -9,7 +10,7 @@ import ProductCarousel from "./ProductCarousel";
 
 export default function ToysCollection({ products }: { products: Product[] }) {
   return (
-    <section className="pt-14 md:pt-16 lg:pt-20">
+    <Section>
       <Container>
         <SectionHeading
           label={toysCollection.label}
@@ -24,7 +25,7 @@ export default function ToysCollection({ products }: { products: Product[] }) {
           >
             {/* Anchored to the bottom: the source photo has a caption baked
                 into its top edge, which this crop leaves out. */}
-            <div className="absolute -inset-px transform-gpu transition-transform duration-[900ms] ease-out group-hover/banner:scale-[1.03]">
+            <div className="absolute -inset-px transform-gpu transition-transform duration-(--duration-slow) ease-out group-hover/banner:scale-[1.03]">
               <Image
                 src={toysCollection.image.src}
                 alt={toysCollection.image.alt}
@@ -42,7 +43,7 @@ export default function ToysCollection({ products }: { products: Product[] }) {
               </p>
               <span className="u-label mt-5 inline-flex items-center gap-2">
                 Дивитись добірку
-                <ArrowIcon className="size-4 transition-transform duration-500 group-hover/banner:translate-x-1" />
+                <ArrowIcon className="size-4 transition-transform duration-(--duration-base) group-hover/banner:translate-x-1" />
               </span>
             </div>
           </Link>
@@ -54,6 +55,6 @@ export default function ToysCollection({ products }: { products: Product[] }) {
           />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

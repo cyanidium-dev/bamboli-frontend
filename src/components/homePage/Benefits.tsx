@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Container from "@/components/shared/ui/Container";
+import Section from "@/components/shared/ui/Section";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
 import Reveal from "@/components/shared/ui/Reveal";
 import { benefits, BenefitIcon } from "@/data/home";
 
@@ -46,7 +48,7 @@ const iconPaths: Record<BenefitIcon, React.ReactNode> = {
 
 export default function Benefits() {
   return (
-    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
+    <Section tone="mist">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the grid stacks over them. */}
         <Image
@@ -74,12 +76,11 @@ export default function Benefits() {
           className="pointer-events-none absolute left-[68.5%] top-[20.4%] -z-10 hidden w-[19.5%] h-auto lg:block"
         />
 
-        <div className="relative mb-10 max-w-[560px] lg:mb-14">
-          <p className="u-label mb-3 text-muted">Чому Bamboli</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-            Кожен стібок, кожна деталь — з любов&apos;ю
-          </h2>
-        </div>
+        <SectionHeading
+          label="Чому Bamboli"
+          title="Кожен стібок, кожна деталь — з любов'ю"
+          className="relative max-w-[560px]"
+        />
 
         <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
@@ -98,7 +99,7 @@ export default function Benefits() {
                   {iconPaths[benefit.icon]}
                 </svg>
                 <h3 className="u-label u-subheading mb-3">{benefit.title}</h3>
-                <p className="max-w-[340px] text-[13px] leading-relaxed text-muted">
+                <p className="u-body max-w-[340px]">
                   {benefit.text}
                 </p>
               </Reveal>
@@ -106,6 +107,6 @@ export default function Benefits() {
           ))}
         </ul>
       </Container>
-    </section>
+    </Section>
   );
 }

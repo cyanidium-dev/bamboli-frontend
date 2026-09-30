@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import Container from "@/components/shared/ui/Container";
+import Section from "@/components/shared/ui/Section";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
+import Button from "@/components/shared/ui/Button";
 import Reveal from "@/components/shared/ui/Reveal";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import AudienceTabs, { AudienceTab } from "@/components/homePage/AudienceTabs";
@@ -33,7 +35,7 @@ export default function VyshyvankaSpotlight({
           : babies;
 
   return (
-    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
+    <Section tone="mist">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <Reveal className="lg:sticky lg:top-[110px] lg:self-start">
@@ -46,19 +48,18 @@ export default function VyshyvankaSpotlight({
                 className="object-cover object-[50%_35%]"
               />
             </div>
-            <blockquote className="u-subheading mt-8 border-l border-clay pl-5 font-normal tracking-normal text-muted text-[16px] leading-[1.2] lg:text-[20px]">
+            <blockquote className="u-lead mt-8 border-l border-clay pl-5 font-normal">
               «{vyshyvanka.quote}»
             </blockquote>
           </Reveal>
 
           <div>
-            <p className="u-label mb-3 text-muted">{vyshyvanka.label}</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
-              {vyshyvanka.title}
-            </h2>
-            <p className="mt-5 max-w-[480px] text-[13px] leading-relaxed text-muted">
-              {vyshyvanka.text}
-            </p>
+            <SectionHeading
+              label={vyshyvanka.label}
+              title={vyshyvanka.title}
+              description={vyshyvanka.text}
+              className="mb-0"
+            />
 
             <AudienceTabs active={tab} onChange={setTab} className="mb-8 mt-9" />
 
@@ -79,15 +80,12 @@ export default function VyshyvankaSpotlight({
               </motion.div>
             </AnimatePresence>
 
-            <Link
-              href={vyshyvanka.cta.href}
-              className="u-label mt-12 inline-block border border-ink bg-ink px-7 py-4 text-bg transition duration-300 hover:bg-transparent hover:text-ink"
-            >
+            <Button href={vyshyvanka.cta.href} className="mt-12">
               {vyshyvanka.cta.label}
-            </Link>
+            </Button>
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

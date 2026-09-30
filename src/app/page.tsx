@@ -1,4 +1,5 @@
 import Container from "@/components/shared/ui/Container";
+import Section from "@/components/shared/ui/Section";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import Faq from "@/components/shared/faq/Faq";
 import Hero from "@/components/homePage/Hero";
@@ -69,7 +70,7 @@ export default async function HomePage() {
       <Hero />
 
       {novelties.length > 0 && (
-        <section className="bg-mist py-12 md:py-14 lg:py-20">
+        <Section tone="mist" spacing="flush">
           <Container>
             <SectionHeading
               label={newCollection.label}
@@ -84,12 +85,12 @@ export default async function HomePage() {
               label={newCollection.label}
             />
           </Container>
-        </section>
+        </Section>
       )}
 
       <CategoryStrip categories={categoryTiles} />
 
-      <section className="pt-14 md:pt-16 lg:pt-20">
+      <Section>
         <Container>
           <SectionHeading
             label="Топ товарів"
@@ -104,7 +105,7 @@ export default async function HomePage() {
             label="Топ товарів"
           />
         </Container>
-      </section>
+      </Section>
 
       <VyshyvankaSpotlight
         all={vyshyvankaAll}
@@ -113,7 +114,7 @@ export default async function HomePage() {
         babies={vyshyvankaBabies}
       />
 
-      <section className="pt-14 md:pt-16 lg:pt-20">
+      <Section>
         <Container>
           <SectionHeading
             label={babyCollection.label}
@@ -122,13 +123,13 @@ export default async function HomePage() {
           />
           <ProductCarousel products={baby} label={babyCollection.label} />
         </Container>
-      </section>
+      </Section>
 
       <ToysCollection products={toys} />
       <Benefits />
 
       {sale.length > 0 && (
-        <section className="pt-14 md:pt-16 lg:pt-20">
+        <Section>
           <Container>
             <SectionHeading
               label={saleCollection.label}
@@ -144,7 +145,7 @@ export default async function HomePage() {
               label={saleCollection.label}
             />
           </Container>
-        </section>
+        </Section>
       )}
 
       <InstagramReels />

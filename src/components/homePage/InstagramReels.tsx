@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Section from "@/components/shared/ui/Section";
+import Button from "@/components/shared/ui/Button";
 import Container from "@/components/shared/ui/Container";
 import InViewVideo from "@/components/shared/ui/InViewVideo";
 import { reels } from "@/data/home";
@@ -7,39 +9,27 @@ import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 
 export default function InstagramReels() {
   return (
-    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
+    <Section tone="sand">
       <Container>
         <div className="mb-8 flex flex-wrap items-end justify-between gap-6 lg:mb-12">
           <div>
             <p className="u-label mb-3 text-muted">Ми в Instagram</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-              {siteInfo.instagram.handle}
-            </h2>
-            <p className="mt-3 text-[13px] text-muted">
+            <h2 className="u-h2">{siteInfo.instagram.handle}</h2>
+            <p className="u-body mt-5">
               <span className="text-ink">{siteInfo.instagram.followers}</span>{" "}
               родин стежать за новинками, закулісся й дітками в Bamboli
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <a
-              href={siteInfo.instagram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="u-label flex items-center gap-2 border border-ink bg-ink px-6 py-3.5 text-bg transition duration-300 hover:bg-transparent hover:text-ink"
-            >
+            <Button href={siteInfo.instagram.url} size="sm">
               <InstagramIcon className="size-4" />
               Підписатися
-            </a>
-            <a
-              href={siteInfo.telegram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="u-label flex items-center gap-2 border border-ink/25 px-6 py-3.5 transition duration-300 hover:border-ink"
-            >
+            </Button>
+            <Button href={siteInfo.telegram.url} variant="outline" size="sm">
               <TelegramIcon className="size-4" />
               Telegram
-            </a>
+            </Button>
           </div>
         </div>
 
@@ -73,6 +63,6 @@ export default function InstagramReels() {
           ))}
         </ul>
       </Container>
-    </section>
+    </Section>
   );
 }

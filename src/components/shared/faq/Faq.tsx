@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
+import Section from "@/components/shared/ui/Section";
+import Button from "@/components/shared/ui/Button";
 import { FaqItem } from "@/data/faq";
 import { PlusIcon } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
@@ -40,14 +41,7 @@ export default function Faq({
   };
 
   return (
-    <section
-      id={id}
-      className={
-        id
-          ? "scroll-mt-[90px] pt-14 md:pt-16 lg:scroll-mt-[100px] lg:pt-20"
-          : "pt-14 md:pt-16 lg:pt-20"
-      }
-    >
+    <Section id={id}>
       <Container>
         <div className="relative isolate grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
           {decorative && (
@@ -63,19 +57,14 @@ export default function Faq({
 
           <div className="relative lg:sticky lg:top-[110px] lg:self-start">
             <p className="u-label mb-3 text-muted">{label}</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-              {title}
-            </h2>
-            <p className="mt-5 max-w-[340px] text-[13px] leading-relaxed text-muted">
+            <h2 className="u-h2">{title}</h2>
+            <p className="u-body mt-5 max-w-[340px]">
               {description}
             </p>
             {allHref && (
-              <Link
-                href={allHref}
-                className="u-label mt-8 inline-block border-b border-ink pb-1 transition hover:opacity-60"
-              >
+              <Button variant="text-link" href={allHref} className="mt-9">
                 Усі питання
-              </Link>
+              </Button>
             )}
           </div>
 
@@ -111,7 +100,7 @@ export default function Faq({
                     )}
                   >
                     <div className="overflow-hidden">
-                      <p className="max-w-[640px] pb-6 pr-10 text-[13px] leading-relaxed text-muted">
+                      <p className="u-body max-w-[640px] pb-6 pr-10">
                         {item.answer}
                       </p>
                     </div>
@@ -129,6 +118,6 @@ export default function Faq({
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
-    </section>
+    </Section>
   );
 }

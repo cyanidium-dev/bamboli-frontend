@@ -5,9 +5,11 @@ type Tone = "white" | "mist" | "sand";
 /**
  * default — the section opens with the standard gap (margin above a coloured
  *           block, padding above a plain one).
- * flush   — no gap above: the section continues the block before it.
+ * flush   — no gap above: the section follows a block of another tone.
+ * continued — a coloured section that carries on the same-tone block above:
+ *           bottom padding only, the block above supplies the top.
  */
-type Spacing = "default" | "flush";
+type Spacing = "default" | "flush" | "continued";
 
 const toneClass: Record<Tone, string> = {
   white: "",
@@ -18,6 +20,7 @@ const toneClass: Record<Tone, string> = {
 /** Vertical rhythm: docs/spec/design-system.md § 3. */
 function spacingClass(tone: Tone, spacing: Spacing) {
   if (tone === "white") return spacing === "default" ? "u-section-pt" : "";
+  if (spacing === "continued") return "u-section-pb";
   return spacing === "default" ? "u-section-mt u-section-py" : "u-section-py";
 }
 
