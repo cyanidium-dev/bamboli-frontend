@@ -15,7 +15,7 @@ const MIN_QUERY_LENGTH = 2;
 const RESULTS_LIMIT = 24;
 
 function matches(product: Product, query: string) {
-  return [product.title, product.subtitle, product.brand]
+  return [product.title, product.brand]
     .filter(Boolean)
     .some((field) => field!.toLowerCase().includes(query));
 }
