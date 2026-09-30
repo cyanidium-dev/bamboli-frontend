@@ -172,6 +172,16 @@ placeholder:text-muted/70 focus:border-ink
 ### Заголовок секції (`ui/SectionHeading`)
 Необов’язковий підпис (`u-label text-muted`) + заголовок `u-display` + необов’язкове посилання праворуч, яке лишається в одному рядку із заголовком на всіх ширинах.
 
+### Базові компоненти (`src/components/shared/ui`)
+
+| Компонент | Призначення |
+|-----------|-------------|
+| `Section` | Обгортка секції: `tone` (`white`, `mist`, `sand`), `spacing` (`default`, `flush`), `id` (додає `scroll-mt` під хедер). Відступи бере з токенів |
+| `Button` | `variant`: `filled`, `outline`, `light` (на фото), `text-link`; `size`: `md` (`px-7 py-4`), `sm` (`px-6 py-3.5`); `fullWidth`; з `href` рендерить `Link` (для `http` відкриває нову вкладку, `tel:`/`mailto:` звичайний `<a>`). Зовнішні відступи задає батьківський елемент |
+| `SectionHeading` | Eyebrow + H2 + необов’язковий абзац + посилання справа; `align`, `className="mb-0"` для скасування нижнього відступу |
+| `PageHeading` | H1 внутрішніх сторінок (`u-h1`) з необов’язковими eyebrow й абзацом |
+| `Field`, `fieldControl()` | Label + поле + помилка. `on="color"` (світла рамка `line`) або `on="white"` (`ink/40`, підпис `ink`); `floatingError` виносить помилку з потоку |
+
 ### Інші спільні компоненти
 `Header`, `Footer`, `CartDrawer`, `SearchOverlay`, `Faq`, `SizeChart`, `ContactForm`,
 `ScrollRow`, `ScrollTabs`, `Backdrop`, `Logo`, `InViewVideo`, `Reveal`.
@@ -204,6 +214,5 @@ placeholder:text-muted/70 focus:border-ink
 - `InstagramReels`: абзац під H2 з `mt-3` замість `mt-5`.
 - Відступ «абзац → кнопка» плаває між `mt-9`, `mt-10` і `mt-12`.
 - Ширина абзацу під H2 плаває: 340 / 380 / 480 px.
-- Кнопки не винесені в компонент, класи дублюються (кандидат на `ui/Button` з розмірами `md` і `sm`).
-- Секції не винесені в компонент (кандидат на `ui/Section` з пропсами `tone` і `spacing`).
+- `Section`, `Button`, `PageHeading`, `Field` створені, але сторінки ще не переведені на них (етап 3 плану).
 - Немає файлу в Figma й каталогу компонентів (Storybook).

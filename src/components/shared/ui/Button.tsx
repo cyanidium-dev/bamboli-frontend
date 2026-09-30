@@ -1,0 +1,89 @@
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+type Variant = "filled" | "outline" | "light" | "text-link";
+type Size = "md" | "sm";
+
+type BaseProps = {
+  /** filled — main CTA; outline — secondary; light — on photos; text-link — underlined. */
+  variant?: Variant;
+  /** Ignored by text-link. */
+  size?: Size;
+  fullWidth?: boolean;
+  className?: string;
+  children: React.ReactNode;
+};
+
+type ButtonProps = BaseProps &
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps> & {
+    href?: undefined;
+  };
+
+type LinkProps = BaseProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof BaseProps | "href"> & {
+    href: string;
+  };
+
+const variantClass: Record<Variant, string> = {
+  filled:
+    "inline-flex items-center justify-center gap-2 border border-ink bg-ink text-bg hover:bg-transparent hover:text-ink",
+  outline:
+    "inline-flex items-center justify-center gap-2 border border-ink/25 hover:border-ink",
+  light:
+    "inline-flex items-center justify-center gap-2 border border-white bg-white text-ink hover:bg-transparent hover:text-white",
+  "text-link": "inline-block border-b border-ink pb-1 hover:opacity-60",
+};
+
+const sizeClass: Record<Size, string> = {
+  md: "px-7 py-4",
+  sm: "px-6 py-3.5",
+};
+
+const external = /^(https?:|tel:|mailto:)/;
+
+/**
+ * The only place button styling lives. Outer spacing (mt-*) belongs to the
+ * parent, not to the button.
+ */
+export default function Button(props: ButtonProps | LinkProps) {
+  const { variant = "filled", size = "md", fullWidth, className, children } = props;
+
+  const classes = cn(
+    "u-label transition duration-(--duration-fast) disabled:pointer-events-none disabled:opacity-50",
+    variantClass[variant],
+    variant !== "text-link" && sizeClass[size],
+    fullWidth && "w-full",
+    className,
+  );
+
+  if (props.href !== undefined) {
+    const { href, variant: _v, size: _s, fullWidth: _f, className: _c, children: _ch, ...rest } = props;
+
+    if (external.test(href)) {
+      const isWeb = href.startsWith("http");
+      return (
+        <a
+          href={href}
+          className={classes}
+          {...(isWeb ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          {...rest}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <Link href={href} className={classes} {...rest}>
+        {children}
+      </Link>
+    );
+  }
+
+  const { variant: _v, size: _s, fullWidth: _f, className: _c, children: _ch, ...rest } = props;
+  return (
+    <button type="button" className={classes} {...rest}>
+      {children}
+    </button>
+  );
+}
