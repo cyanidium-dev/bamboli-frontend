@@ -50,7 +50,7 @@ export default async function BlogArticlePage({
     <Container className="pb-20 lg:pb-28">
       <ArticleHero post={post} />
 
-      <div className="pt-12 lg:flex lg:gap-16 lg:pt-16">
+      <div className="pt-12 lg:flex lg:justify-between lg:gap-16 lg:pt-16">
         <article className="min-w-0 flex-1 lg:max-w-3xl">
           <ArticleContent blocks={post.content} />
 
