@@ -164,18 +164,18 @@ export default function CatalogView({
     filterBy === "category" ? setCategory(value) : setSize(value);
 
   const actions = (
-    <div className="-mb-2.5 -mr-2.5 ml-auto flex shrink-0 items-center">
+    <div className="ml-auto flex shrink-0 items-center gap-4">
       {hasFilter && (
         <button
           type="button"
           onClick={() => setFilterOpen((open) => !open)}
           aria-expanded={filterOpen}
           aria-label="Фільтри"
-          className="relative flex size-10 items-center justify-center transition hover:opacity-70"
+          className="relative flex size-5 items-center justify-center transition hover:opacity-70"
         >
           <FilterIcon className="size-5" />
           {activeFilters > 0 && (
-            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
+            <span className="absolute -right-1.5 -top-1.5 flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
               {activeFilters}
             </span>
           )}
@@ -188,7 +188,7 @@ export default function CatalogView({
           onClick={() => setSortOpen((open) => !open)}
           aria-expanded={sortOpen}
           aria-label={`Сортування: ${sortOptions.find((option) => option.key === sort)?.label}`}
-          className="flex size-10 items-center justify-center transition hover:opacity-70"
+          className="flex size-5 items-center justify-center transition hover:opacity-70"
         >
           <SortIcon className="size-5" />
         </button>
