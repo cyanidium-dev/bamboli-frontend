@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
 
@@ -18,6 +19,7 @@ export default function ScrollTabs({
   const ref = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const pathname = usePathname();
 
   const update = useCallback(() => {
     const el = ref.current;
@@ -31,6 +33,20 @@ export default function ScrollTabs({
       left: direction * ref.current.clientWidth * 0.6,
       behavior: "smooth",
     });
+
+  // After a navigation the row starts at the left again: bring the active tab
+  // (marked aria-current) back into view so it doesn't hide off-screen.
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const active = el?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!el || !active) return;
+    const box = el.getBoundingClientRect();
+    const tab = active.getBoundingClientRect();
+    if (tab.left < box.left || tab.right > box.right) {
+      el.scrollLeft += tab.left - box.left - (box.width - tab.width) / 2;
+    }
+    update();
+  }, [pathname, update]);
 
   useEffect(() => {
     const el = ref.current;
@@ -97,7 +113,7 @@ export default function ScrollTabs({
 
   return (
     <div className="relative max-w-full">
-      <div ref={ref} className={cn("no-scrollbar overflow-x-auto", className)}>
+      <div ref={ref} className={cn("no-scrollbar overflow-x-auto overflow-y-hidden", className)}>
         {children}
       </div>
       <button
@@ -107,7 +123,7 @@ export default function ScrollTabs({
         tabIndex={canPrev ? 0 : -1}
         className={cn(arrow, "left-0 justify-start bg-gradient-to-r", !canPrev && "pointer-events-none opacity-0")}
       >
-        <ChevronIcon className="size-4 rotate-90" />
+        <ChevronIcon className="size-4 -translate-y-0.5 rotate-90" />
       </button>
       <button
         type="button"
@@ -116,7 +132,7 @@ export default function ScrollTabs({
         tabIndex={canNext ? 0 : -1}
         className={cn(arrow, "right-0 justify-end bg-gradient-to-l", !canNext && "pointer-events-none opacity-0")}
       >
-        <ChevronIcon className="size-4 -rotate-90" />
+        <ChevronIcon className="size-4 -translate-y-0.5 -rotate-90" />
       </button>
     </div>
   );

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Page from "@/components/shared/ui/Page";
 import CatalogView from "@/components/catalogPage/CatalogView";
-import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import { getProducts } from "@/lib/api";
 
 export const metadata: Metadata = {
@@ -19,12 +18,11 @@ export default async function CatalogPage({
 
   return (
     <Page>
-      <CatalogHeader
-        title="Каталог"
-        caption="Одяг з натуральних тканин від 56 до 164 см, вишиванки, іграшки й посуд — в одному кошику."
-        breadcrumbs={[{ label: "Каталог" }]}
-      />
       <CatalogView
+        heading={{
+          title: "Каталог",
+          breadcrumbs: [{ label: "Каталог" }],
+        }}
         products={products}
         filterBy="category"
         initialSort={sort === "new" ? "new" : "featured"}

@@ -245,3 +245,35 @@ export function ThreadsIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function FilterIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      className={className}
+      aria-hidden
+    >
+      <path d="M3 6h14M3 14h14" />
+      <circle cx="7" cy="6" r="1.8" fill="var(--color-bg)" />
+      <circle cx="13" cy="14" r="1.8" fill="var(--color-bg)" />
+    </svg>
+  );
+}
+
+export function SortIcon({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.1"
+      className={className}
+      aria-hidden
+    >
+      <path d="M7 16V4M4 7l3-3 3 3M13 4v12M10 13l3 3 3-3" />
+    </svg>
+  );
+}

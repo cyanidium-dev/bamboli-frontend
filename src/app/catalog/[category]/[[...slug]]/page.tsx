@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import ScrollTabs from "@/components/shared/ui/ScrollTabs";
 import Page from "@/components/shared/ui/Page";
 import CatalogView from "@/components/catalogPage/CatalogView";
-import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import {
   getAksesuaryProducts,
   getCategoryBySlug,
@@ -59,7 +58,10 @@ const odyagGroupChips = (activeSlug: string) =>
     active: group.slug === activeSlug,
   }));
 
-const odyagSubChips = (group: (typeof odyagGroups)[number], activeSub?: string) => [
+const odyagSubChips = (
+  group: (typeof odyagGroups)[number],
+  activeSub?: string,
+) => [
   { label: "Всі", href: `/catalog/odyag/${group.slug}`, active: !activeSub },
   ...group.subcategories.map((sub) => ({
     label: sub.title,
@@ -71,7 +73,11 @@ const odyagSubChips = (group: (typeof odyagGroups)[number], activeSub?: string) 
 /** Toys: subcategory tabs on top, brands as a separate row below. */
 const toyRows = (activeSub?: string, activeBrand?: string) => ({
   chips: [
-    { label: "Всі", href: "/catalog/igrashky", active: !activeSub && !activeBrand },
+    {
+      label: "Всі",
+      href: "/catalog/igrashky",
+      active: !activeSub && !activeBrand,
+    },
     ...toySubcategories.map((sub) => ({
       label: sub.title,
       href: `/catalog/igrashky/${sub.slug}`,
@@ -95,7 +101,10 @@ const aksesuaryChips = (activeSub?: string) => [
   })),
 ];
 
-async function resolve(category: string, slug: string[]): Promise<Resolved | null> {
+async function resolve(
+  category: string,
+  slug: string[],
+): Promise<Resolved | null> {
   if (category === "sale") {
     if (slug.length > 0) return null;
     return {
@@ -301,85 +310,103 @@ export default async function CategoryPage({
   const topChips =
     category === "sale" || category === "new"
       ? resolved.chips
-      : [...resolved.chips, { label: "SALE", href: "/catalog/sale", active: false }];
+      : [
+          ...resolved.chips,
+          { label: "SALE", href: "/catalog/sale", active: false },
+        ];
 
   return (
     <Page>
-      <CatalogHeader
-        title={resolved.title}
-        breadcrumbs={[{ label: "Каталог", href: "/catalog" }, ...resolved.breadcrumbs]}
-      />
-
-      {[topChips].map((row, rowIndex) => {
-        // Two rows read as two levels: main tabs (underline) over
-        // subcategory pills. Without a second row the single row stays pills.
-        const isTabs =
-          rowIndex === 0 && (resolved.subChips !== undefined || category === "aksesuary");
-        return (
-          row.length > 0 && (
-            <ScrollTabs
-              key={rowIndex}
-              className={cn(
-                "-mx-1 flex max-w-full items-center px-1",
-                isTabs
-                  ? "gap-6 border-b border-line"
-                  : "mb-8 gap-1.5 lg:mb-12",
-              )}
-            >
-              {!isTabs && resolved.subChipsLabel && (
-                <span className="u-label mr-1.5 shrink-0 text-muted">
-                  {resolved.subChipsLabel}
-                </span>
-              )}
-              {row.map((chip) =>
-                isTabs ? (
-                  <Link
-                    key={chip.href}
-                    href={chip.href}
-                    className={cn(
-                      "u-label -mb-px shrink-0 border-b-2 py-3 transition",
-                      chip.active
-                        ? "border-ink text-ink"
-                        : chip.href === "/catalog/sale"
-                          ? "border-transparent text-clay hover:opacity-70"
-                          : "border-transparent text-muted hover:text-ink",
-                    )}
-                  >
-                    {chip.label}
-                  </Link>
-                ) : (
-                  <Link
-                    key={chip.href}
-                    href={chip.href}
-                    className={cn(
-                      "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
-                      chip.active
-                        ? "border-ink bg-ink text-bg"
-                        : chip.href === "/catalog/sale"
-                          ? "border-line text-clay hover:border-clay"
-                          : "border-line hover:border-ink",
-                    )}
-                  >
-                    {chip.label}
-                  </Link>
-                ),
-              )}
-            </ScrollTabs>
-          )
-        );
-      })}
-
       <CatalogView
+        heading={{
+          title: resolved.title,
+          breadcrumbs: [
+            { label: "Каталог", href: "/catalog" },
+            ...resolved.breadcrumbs,
+          ],
+        }}
         products={resolved.products}
-        filterBy={category === "sale" || category === "new" ? "category" : "size"}
+        filterBy={
+          category === "sale" || category === "new" ? "category" : "size"
+        }
         localCategoryFilter={category === "sale" || category === "new"}
-        tabsAbove={topChips.length > 0 && (resolved.subChips !== undefined || category === "aksesuary")}
+        tabsAbove={
+          topChips.length > 0 &&
+          (resolved.subChips !== undefined || category === "aksesuary")
+        }
         filterGroups={
           resolved.subChips
-            ? [{ label: resolved.subChipsLabel ?? "Тип", chips: resolved.subChips }]
+            ? [
+                {
+                  label: resolved.subChipsLabel ?? "Тип",
+                  chips: resolved.subChips,
+                },
+              ]
             : []
         }
-      />
+      >
+        {[topChips].map((row, rowIndex) => {
+          // Two rows read as two levels: main tabs (underline) over
+          // subcategory pills. Without a second row the single row stays pills.
+          const isTabs =
+            rowIndex === 0 &&
+            (resolved.subChips !== undefined || category === "aksesuary");
+          return (
+            row.length > 0 && (
+              <ScrollTabs
+                key={rowIndex}
+                className={cn(
+                  "-mx-1 flex max-w-full items-center px-1",
+                  isTabs
+                    ? "gap-6 border-b border-line"
+                    : "mb-8 gap-1.5 lg:mb-12",
+                )}
+              >
+                {!isTabs && resolved.subChipsLabel && (
+                  <span className="u-label mr-1.5 shrink-0 text-muted">
+                    {resolved.subChipsLabel}
+                  </span>
+                )}
+                {row.map((chip) =>
+                  isTabs ? (
+                    <Link
+                      key={chip.href}
+                      href={chip.href}
+                      aria-current={chip.active ? "page" : undefined}
+                      className={cn(
+                        "u-label -mb-px shrink-0 border-b-2 py-3 transition",
+                        chip.active
+                          ? "border-ink text-ink"
+                          : chip.href === "/catalog/sale"
+                            ? "border-transparent text-clay hover:opacity-70"
+                            : "border-transparent text-muted hover:text-ink",
+                      )}
+                    >
+                      {chip.label}
+                    </Link>
+                  ) : (
+                    <Link
+                      key={chip.href}
+                      href={chip.href}
+                      aria-current={chip.active ? "page" : undefined}
+                      className={cn(
+                        "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
+                        chip.active
+                          ? "border-ink bg-ink text-bg"
+                          : chip.href === "/catalog/sale"
+                            ? "border-line text-clay hover:border-clay"
+                            : "border-line hover:border-ink",
+                      )}
+                    >
+                      {chip.label}
+                    </Link>
+                  ),
+                )}
+              </ScrollTabs>
+            )
+          );
+        })}
+      </CatalogView>
     </Page>
   );
 }

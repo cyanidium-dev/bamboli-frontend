@@ -11,10 +11,13 @@ export default function CatalogHeader({
   title,
   caption,
   breadcrumbs,
+  actions,
 }: {
   title: string;
   caption?: string;
   breadcrumbs: Crumb[];
+  /** Icon buttons pinned to the right, on the bottom line of the heading block. */
+  actions?: React.ReactNode;
 }) {
   return (
     <div className="mb-6 lg:mb-10">
@@ -36,7 +39,10 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <PageHeading title={title} description={caption} />
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+        <PageHeading title={title} description={caption} />
+        {actions}
+      </div>
     </div>
   );
 }
