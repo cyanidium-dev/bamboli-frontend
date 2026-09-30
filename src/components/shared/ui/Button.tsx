@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "filled" | "outline" | "light" | "text-link";
+type Variant = "filled" | "outline" | "outline-light" | "light" | "text-link";
 type Size = "md" | "sm";
 
 type BaseProps = {
-  /** filled — main CTA; outline — secondary; light — on photos; text-link — underlined. */
+  /** filled — main CTA; outline — secondary; outline-light / light — on dark backgrounds and photos; text-link — underlined. */
   variant?: Variant;
   /** Ignored by text-link. */
   size?: Size;
@@ -29,6 +29,8 @@ const variantClass: Record<Variant, string> = {
     "inline-flex items-center justify-center gap-2 border border-ink bg-ink text-bg hover:bg-transparent hover:text-ink",
   outline:
     "inline-flex items-center justify-center gap-2 border border-ink/25 hover:border-ink",
+  "outline-light":
+    "inline-flex items-center justify-center gap-2 border border-bg hover:bg-bg hover:text-ink",
   light:
     "inline-flex items-center justify-center gap-2 border border-white bg-white text-ink hover:bg-transparent hover:text-white",
   "text-link": "inline-block border-b border-ink pb-1 hover:opacity-60",

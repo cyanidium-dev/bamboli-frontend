@@ -39,7 +39,7 @@ export default function ContactsShowroom() {
 
               <Button
                 href={siteInfo.mapsUrl}
-                variant="light"
+                variant="outline-light"
                 className="mt-10 self-start"
               >
                 {contactsShowroom.ctaLabel}

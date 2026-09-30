@@ -41,7 +41,7 @@ export default function Showroom() {
 
               <Button
                 href={siteInfo.mapsUrl}
-                variant="light"
+                variant="outline-light"
                 className="mt-10 self-start"
               >
                 {showroom.ctaLabel}

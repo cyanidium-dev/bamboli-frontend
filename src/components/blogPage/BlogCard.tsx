@@ -38,7 +38,7 @@ export default function BlogCard({
         </div>
 
         <Link href={`/blog/${post.slug}`} className="block">
-          <h3 className="u-lead mb-2 line-clamp-2 text-ink transition-colors group-hover/card:text-clay">
+          <h3 className="u-title mb-2 line-clamp-2 transition-colors group-hover/card:text-clay">
             {post.title}
           </h3>
         </Link>
