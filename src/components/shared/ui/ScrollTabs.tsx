@@ -97,7 +97,7 @@ export default function ScrollTabs({
 
   return (
     <div className="relative max-w-full">
-      <div ref={ref} className={cn("no-scrollbar overflow-x-auto", className)}>
+      <div ref={ref} className={cn("no-scrollbar overflow-x-auto overflow-y-hidden", className)}>
         {children}
       </div>
       <button
