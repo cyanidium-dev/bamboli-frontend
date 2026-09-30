@@ -372,6 +372,7 @@ export default async function CategoryPage({
                     <Link
                       key={chip.href}
                       href={chip.href}
+                      aria-current={chip.active ? "page" : undefined}
                       className={cn(
                         "u-label -mb-px shrink-0 border-b-2 py-3 transition",
                         chip.active
@@ -387,6 +388,7 @@ export default async function CategoryPage({
                     <Link
                       key={chip.href}
                       href={chip.href}
+                      aria-current={chip.active ? "page" : undefined}
                       className={cn(
                         "shrink-0 border px-2.5 py-1.5 text-[11px] leading-none transition",
                         chip.active
