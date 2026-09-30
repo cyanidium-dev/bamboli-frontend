@@ -48,7 +48,9 @@ export default function VyshyvankaSpotlight({
                 className="object-cover object-[50%_35%]"
               />
             </div>
-            <p className="u-body mt-8">«{vyshyvanka.quote}»</p>
+            <blockquote className="u-body mt-8 border-l border-clay pl-5">
+              «{vyshyvanka.quote}»
+            </blockquote>
           </Reveal>
 
           <div>
