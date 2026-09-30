@@ -10,6 +10,8 @@ type BaseProps = {
   /** Ignored by text-link. */
   size?: Size;
   fullWidth?: boolean;
+  /** Disables the button and marks it busy (form submit in flight). */
+  loading?: boolean;
   className?: string;
   children: React.ReactNode;
 };
@@ -52,6 +54,7 @@ export default function Button(props: ButtonProps | LinkProps) {
     variant = "filled",
     size = "md",
     fullWidth,
+    loading,
     className,
     children,
     ...rest
@@ -62,6 +65,7 @@ export default function Button(props: ButtonProps | LinkProps) {
     variantClass[variant],
     variant !== "text-link" && sizeClass[size],
     fullWidth && "w-full",
+    loading && "cursor-progress",
     className,
   );
 
@@ -90,7 +94,13 @@ export default function Button(props: ButtonProps | LinkProps) {
   }
 
   return (
-    <button type="button" className={classes} {...(rest as Omit<ButtonProps, keyof BaseProps>)}>
+    <button
+      type="button"
+      className={classes}
+      aria-busy={loading || undefined}
+      {...(rest as Omit<ButtonProps, keyof BaseProps>)}
+      disabled={loading || (rest as ButtonProps).disabled}
+    >
       {children}
     </button>
   );

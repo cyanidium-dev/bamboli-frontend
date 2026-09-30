@@ -132,6 +132,13 @@
     cursor: not-allowed;
   }
 
+  /* One visible keyboard focus for everything interactive. Fields keep their
+     own border-based focus (outline-none on the element wins over this). */
+  :where(a, button, summary, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 3px;
+  }
+
   ::selection {
     background: var(--color-ink);
     color: var(--color-bg);
@@ -347,6 +354,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
   *,
   *::before,
   *::after {

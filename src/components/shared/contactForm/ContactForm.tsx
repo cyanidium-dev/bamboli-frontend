@@ -160,7 +160,7 @@ export default function ContactForm({
       </label>
 
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-        <Button type="submit" disabled={status === "sending"}>
+        <Button type="submit" loading={status === "sending"}>
           {status === "sending" ? uiText.form.sending : uiText.form.send}
         </Button>
         {status === "error" && (
