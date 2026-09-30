@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CheckoutView from "@/components/checkoutPage/CheckoutView";
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function CheckoutPage() {
   return (
-    <Container className="pb-10 pt-10 lg:pt-14">
+    <Page>
       <CheckoutView />
-    </Container>
+    </Page>
   );
 }

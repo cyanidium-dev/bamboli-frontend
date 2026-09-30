@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import ProductView from "@/components/productPage/ProductView";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import Section from "@/components/shared/ui/Section";
@@ -43,7 +44,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <Container className="pt-6 lg:pt-10">
+      <Page bottom={false}>
         <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
           <Link href="/" className="transition hover:text-ink">
             Головна
@@ -66,7 +67,7 @@ export default async function ProductPage({
         </nav>
 
         <ProductView product={product} />
-      </Container>
+      </Page>
 
       <Section tone="sand">
         <Container>

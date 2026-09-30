@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollTabs from "@/components/shared/ui/ScrollTabs";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogView from "@/components/catalogPage/CatalogView";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import {
@@ -304,7 +304,7 @@ export default async function CategoryPage({
       : [...resolved.chips, { label: "SALE", href: "/catalog/sale", active: false }];
 
   return (
-    <Container className="pb-10 pt-10 lg:pt-14">
+    <Page>
       <CatalogHeader
         title={resolved.title}
         breadcrumbs={[{ label: "Каталог", href: "/catalog" }, ...resolved.breadcrumbs]}
@@ -380,6 +380,6 @@ export default async function CategoryPage({
             : []
         }
       />
-    </Container>
+    </Page>
   );
 }

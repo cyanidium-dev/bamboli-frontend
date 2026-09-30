@@ -8,7 +8,7 @@ export default function ArticleHero({ post }: { post: BlogPost }) {
   const category = findBlogCategory(post.category);
 
   return (
-    <div className="pt-6 lg:pt-10">
+    <div>
       <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
         <Link href="/" className="transition hover:text-ink">
           Головна

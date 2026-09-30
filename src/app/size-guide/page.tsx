@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import SizeGuideChoose from "@/components/sizeGuidePage/SizeGuideChoose";
 import SizeGuideTable from "@/components/sizeGuidePage/SizeGuideTable";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function SizeGuidePage() {
   return (
     <>
-      <Container className="pb-0 pt-10 lg:pt-14">
+      <Page bottom={false}>
         <CatalogHeader
           title={sizeGuideHero.title}
           caption={sizeGuideHero.text}
@@ -27,7 +27,7 @@ export default function SizeGuidePage() {
         <SizeGuideChoose />
         <SizeGuideTable />
         <SizeGuideCare />
-      </Container>
+      </Page>
 
       <SizeGuideContactSection />
     </>
