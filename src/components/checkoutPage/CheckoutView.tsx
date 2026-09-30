@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "motion/react";
 import { FREE_SHIPPING_FROM, useCartStore } from "@/store/cartStore";
 import { cn, formatPrice } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
+import Button from "@/components/shared/ui/Button";
+import PageHeading from "@/components/shared/ui/PageHeading";
+import Field, { fieldControl } from "@/components/shared/ui/Field";
 
 interface Fields {
   name: string;
@@ -59,10 +61,6 @@ const paymentOptions: { value: PaymentMethod; title: string; text: string }[] = 
   },
 ];
 
-/** Inputs sit on white: full-ink text and a mid-strength outline keep them readable. */
-const inputClass =
-  "w-full border bg-transparent px-3.5 py-3 text-[13px] text-ink outline-none transition placeholder:text-muted focus:border-ink";
-
 export default function CheckoutView() {
   const items = useCartStore((state) => state.items);
   const clear = useCartStore((state) => state.clear);
@@ -114,15 +112,15 @@ export default function CheckoutView() {
         className="mx-auto max-w-[440px] py-24 text-center"
       >
         <p className="u-label mb-5 text-muted">Замовлення прийнято</p>
-        <h1 className="u-display mb-5 text-[34px] leading-[1.1]">Дякуємо!</h1>
-        <p className="mb-9 text-[13px] leading-relaxed text-muted">
+        <h1 className="u-h1 mb-5">Дякуємо!</h1>
+        <p className="u-body mb-9">
           Це демонстраційна версія магазину, тож замовлення нікуди не
           надсилається. У бойовій версії тут буде номер замовлення й лист на
           пошту.
         </p>
-        <Link href="/catalog" className="u-label border-b border-ink pb-1">
+        <Button variant="text-link" href="/catalog">
           Повернутись до каталогу
-        </Link>
+        </Button>
       </motion.div>
     );
   }
@@ -130,35 +128,33 @@ export default function CheckoutView() {
   if (mounted && items.length === 0) {
     return (
       <div className="mx-auto max-w-[420px] py-24 text-center">
-        <h1 className="u-display mb-4 text-[30px]">Кошик порожній</h1>
-        <p className="mb-8 text-[13px] text-muted">
+        <h1 className="u-h1 mb-5">Кошик порожній</h1>
+        <p className="u-body mb-9">
           Додайте щось із каталогу, щоб оформити замовлення.
         </p>
-        <Link href="/catalog" className="u-label border-b border-ink pb-1">
+        <Button variant="text-link" href="/catalog">
           До каталогу
-        </Link>
+        </Button>
       </div>
     );
   }
 
   return (
     <>
-      <h1 className="u-display mb-10 text-[20px] leading-[1.1] sm:text-[28px] lg:mb-14 lg:text-[34px]">
-        Оформлення
-      </h1>
+      <PageHeading title="Оформлення" className="mb-10 lg:mb-14" />
 
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
         <form onSubmit={submit} noValidate>
           <p className="u-label mb-6 text-ink">Отримувач</p>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field
+            <TextField
               label="Імʼя та прізвище"
               value={fields.name}
               onChange={set("name")}
               invalid={touched && invalid.name}
               hint="Вкажіть імʼя та прізвище"
             />
-            <Field
+            <TextField
               label="Телефон"
               value={fields.phone}
               onChange={set("phone")}
@@ -178,7 +174,7 @@ export default function CheckoutView() {
             onChange={setDelivery}
           />
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
-            <Field
+            <TextField
               label="Місто"
               value={fields.city}
               onChange={set("city")}
@@ -186,7 +182,7 @@ export default function CheckoutView() {
               hint="Вкажіть місто"
             />
             {delivery === "branch" ? (
-              <Field
+              <TextField
                 label="Відділення або поштомат"
                 value={fields.branch}
                 onChange={set("branch")}
@@ -194,7 +190,7 @@ export default function CheckoutView() {
                 hint="Вкажіть відділення або поштомат"
               />
             ) : (
-              <Field
+              <TextField
                 label="Вулиця"
                 value={fields.street}
                 onChange={set("street")}
@@ -204,14 +200,14 @@ export default function CheckoutView() {
             )}
             {delivery === "courier" && (
               <>
-                <Field
+                <TextField
                   label="Будинок"
                   value={fields.house}
                   onChange={set("house")}
                   invalid={touched && invalid.house}
                   hint="Вкажіть номер будинку"
                 />
-                <Field
+                <TextField
                   label="Квартира (за наявності)"
                   value={fields.apartment}
                   onChange={set("apartment")}
@@ -231,24 +227,18 @@ export default function CheckoutView() {
             onChange={setPayment}
           />
 
-          <div className="mt-5">
-            <label className="u-label mb-2 block text-ink">
-              Коментар до замовлення
-            </label>
+          <Field label="Коментар до замовлення" on="white" className="mt-5">
             <textarea
               value={fields.comment}
               onChange={set("comment")}
               rows={3}
-              className={cn(inputClass, "resize-none border-ink/40")}
+              className={fieldControl({ on: "white", className: "resize-none" })}
             />
-          </div>
+          </Field>
 
-          <button
-            type="submit"
-            className="u-label mt-10 w-full border border-ink bg-ink px-6 py-4 text-bg transition duration-300 hover:bg-transparent hover:text-ink lg:w-auto lg:px-14"
-          >
+          <Button type="submit" className="mt-10 w-full lg:w-auto lg:px-14">
             Підтвердити замовлення
-          </button>
+          </Button>
         </form>
 
         <aside className="order-first lg:sticky lg:top-[110px] lg:order-none lg:self-start">
@@ -293,7 +283,7 @@ export default function CheckoutView() {
                       </div>
                       <div className="flex min-w-0 flex-1 flex-col">
                         <p className="u-label">{item.title}</p>
-                        <p className="mt-1.5 text-[11px] text-muted">
+                        <p className="u-caption mt-1.5">
                           {item.colorName}
                           {item.size ? ` · ${item.size}` : ""} · {item.quantity} шт
                         </p>
@@ -329,7 +319,7 @@ export default function CheckoutView() {
   );
 }
 
-function Field({
+function TextField({
   label,
   value,
   onChange,
@@ -347,8 +337,8 @@ function Field({
   placeholder?: string;
 }) {
   return (
-    <div className="relative">
-      <label className="u-label mb-2 block text-ink">{label}</label>
+    // The error floats out of flow, so showing it never shifts the fields below.
+    <Field label={label} error={invalid ? hint : undefined} on="white" floatingError>
       <input
         type="text"
         value={value}
@@ -356,15 +346,9 @@ function Field({
         inputMode={inputMode}
         placeholder={placeholder}
         aria-invalid={invalid}
-        className={cn(inputClass, invalid ? "border-clay" : "border-ink/40")}
+        className={fieldControl({ invalid, on: "white" })}
       />
-      {/* Out of flow, so showing an error never shifts the fields below. */}
-      {invalid && (
-        <p className="absolute left-0 top-full mt-1 text-[11px] leading-none text-clay">
-          {hint}
-        </p>
-      )}
-    </div>
+    </Field>
   );
 }
 
@@ -414,7 +398,7 @@ function OptionGroup<T extends string>({
               </span>
               <span className="min-w-0">
                 <span className="u-label block">{option.title}</span>
-                <span className="mt-1.5 block text-[11px] leading-snug text-muted">
+                <span className="u-caption mt-1.5 block leading-snug">
                   {option.text}
                 </span>
               </span>

@@ -1,19 +1,19 @@
-import Link from "next/link";
+import Button from "@/components/shared/ui/Button";
 import Container from "@/components/shared/ui/Container";
 
 export default function NotFound() {
   return (
     <Container className="flex min-h-[60svh] flex-col items-center justify-center py-24 text-center">
       <p className="u-label mb-5 text-muted">404</p>
-      <h1 className="u-display mb-5 text-[34px] leading-[1.1] lg:text-[40px]">
+      <h1 className="u-h1 mb-5">
         Сторінку не знайдено
       </h1>
-      <p className="mb-9 max-w-[360px] text-[13px] text-muted">
+      <p className="u-body mb-9 max-w-[380px]">
         Можливо, товар уже розібрали або адреса змінилась.
       </p>
-      <Link href="/catalog" className="u-label border-b border-ink pb-1">
+      <Button variant="text-link" href="/catalog">
         До каталогу
-      </Link>
+      </Button>
     </Container>
   );
 }

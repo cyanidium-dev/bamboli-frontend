@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
 import { cn, declOfNum } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import Button from "@/components/shared/ui/Button";
 
 type SortKey = "recent" | "price-asc" | "price-desc";
 
@@ -67,13 +67,13 @@ export default function FavoritesView({ products }: { products: Product[] }) {
   if (favorites.length === 0) {
     return (
       <div className="flex flex-col items-center gap-5 py-20 text-center">
-        <p className="u-display text-[24px]">У вас поки немає обраного</p>
-        <p className="max-w-[280px] text-[13px] text-muted">
+        <p className="u-display text-[20px]">У вас поки немає обраного</p>
+        <p className="u-body max-w-[280px]">
           Натискайте сердечко на товарах, які вам сподобались — вони з&apos;являться тут.
         </p>
-        <Link href="/catalog" className="u-label border-b border-ink pb-1">
+        <Button variant="text-link" href="/catalog">
           До каталогу
-        </Link>
+        </Button>
       </div>
     );
   }
@@ -131,7 +131,7 @@ export default function FavoritesView({ products }: { products: Product[] }) {
 
       <ProductGrid products={visible} priorityCount={4} />
 
-      <p className="mt-10 text-[11px] text-muted">
+      <p className="u-caption mt-10">
         {visible.length}{" "}
         {declOfNum(visible.length, ["товар", "товари", "товарів"])}
       </p>
