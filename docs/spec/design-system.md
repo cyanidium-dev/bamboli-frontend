@@ -191,7 +191,7 @@ placeholder:text-muted/70 focus:border-ink
 
 | Компонент | Призначення |
 |-----------|-------------|
-| `Page` | Обгортка вмісту внутрішньої сторінки: `Container` + `pt-10 lg:pt-14` (40 / 56px) + знизу `u-section-pb` (48 / 56 / 80px). `bottom={false}` для сторінок, що закінчуються секцією з фоном (товар, таблиця розмірів) |
+| `Page` | Обгортка вмісту внутрішньої сторінки: `Container` + `pt-3 lg:pt-4` (12 / 16px) + знизу `u-section-pb` (48 / 56 / 80px). `bottom={false}` для сторінок, що закінчуються секцією з фоном (товар, таблиця розмірів) |
 | `Section` | Обгортка секції: `tone` (`white`, `mist`, `sand`), `spacing` (`default`, `flush`, `continued`), `id` (додає `scroll-mt` під хедер). Відступи бере з токенів |
 | `Button` | `variant`: `filled`, `outline`, `outline-light` (на темному фоні), `light` (на фото), `text-link`; `size`: `md` (`px-7 py-4`), `sm` (`px-6 py-3.5`); `fullWidth`; з `href` рендерить `Link` (для `http` відкриває нову вкладку, `tel:`/`mailto:` звичайний `<a>`). Зовнішні відступи задає батьківський елемент |
 | `SectionHeading` | Eyebrow + H2 + необов’язковий абзац + посилання справа; `align`, `className="mb-0"` для скасування нижнього відступу |
