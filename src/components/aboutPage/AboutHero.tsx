@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import Reveal from "@/components/shared/ui/Reveal";
 import { aboutHero } from "@/data/about";
 
 export default function AboutHero() {
   return (
-    <Container className="pb-12 pt-10 md:pb-14 lg:pb-20 lg:pt-14">
+    <Page>
       <nav aria-label="Навігація" className="u-label mb-10 text-muted lg:mb-16">
         <Link href="/" className="transition hover:text-ink">
           Головна
@@ -60,6 +60,6 @@ export default function AboutHero() {
           </div>
         </Reveal>
       </div>
-    </Container>
+    </Page>
   );
 }

@@ -1,17 +1,17 @@
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import { contactsHero } from "@/data/contacts";
 
 export default function ContactsHero() {
   return (
     <div className="flow-root bg-mist">
-      <Container className="pb-0 pt-10 lg:pt-14">
+      <Page bottom={false}>
         <CatalogHeader
           title={contactsHero.title}
           caption={contactsHero.text}
           breadcrumbs={[{ label: "Контакти" }]}
         />
-      </Container>
+      </Page>
     </div>
   );
 }
