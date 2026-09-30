@@ -23,7 +23,7 @@ export default function SizeGuideModal({
       <Backdrop isVisible={isOpen} onClose={onClose} />
       <AnimatePresence>
         {isOpen && (
-          <div className="pointer-events-none fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6">
+          <div className="pointer-events-none fixed inset-0 z-modal flex items-end justify-center sm:items-center sm:p-6">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}

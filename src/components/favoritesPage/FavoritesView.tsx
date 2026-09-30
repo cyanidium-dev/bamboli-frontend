@@ -103,7 +103,7 @@ export default function FavoritesView({ products }: { products: Product[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-0 top-full z-40 mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
+                className="absolute right-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
               >
                 {sortOptions.map((option) => (
                   <li key={option.key}>

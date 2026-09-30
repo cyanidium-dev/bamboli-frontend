@@ -20,7 +20,7 @@ export default function FlyToCartLayer() {
   const target = anchor?.getBoundingClientRect();
 
   return createPortal(
-    <div className="pointer-events-none fixed inset-0 z-[120]">
+    <div className="pointer-events-none fixed inset-0 z-toast">
       <AnimatePresence>
         {flights.map((flight) => {
           const endTop = target ? target.top + target.height / 2 : 40;

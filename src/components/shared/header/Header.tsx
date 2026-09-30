@@ -79,7 +79,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-[80] transition-colors duration-500",
+        "sticky top-0 z-header transition-colors duration-500",
         scrolled
           ? "border-b border-line bg-mist/85 backdrop-blur-md"
           : "border-b border-transparent bg-mist",
@@ -138,7 +138,7 @@ export default function Header() {
                 </Link>
                 <div
                   className={cn(
-                    "absolute -left-8 top-full z-40 transition duration-300",
+                    "absolute -left-8 top-full z-sticky transition duration-300",
                     isOpen ? "visible opacity-100" : "invisible opacity-0",
                   )}
                 >
@@ -182,7 +182,7 @@ export default function Header() {
             </button>
             <div
               className={cn(
-                "absolute -left-8 top-full z-40 transition duration-300",
+                "absolute -left-8 top-full z-sticky transition duration-300",
                 openDesktopMenu === infoMenu.label ? "visible opacity-100" : "invisible opacity-0",
               )}
             >
@@ -215,7 +215,7 @@ export default function Header() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.4, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 520, damping: 22 }}
-                  className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] leading-4 text-bg tabular-nums"
+                  className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[10px] leading-4 text-bg tabular-nums"
                 >
                   {favoritesCount}
                 </motion.span>
@@ -239,7 +239,7 @@ export default function Header() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.4, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 520, damping: 22 }}
-                  className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] leading-4 text-bg tabular-nums"
+                  className="absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[10px] leading-4 text-bg tabular-nums"
                 >
                   {count}
                 </motion.span>

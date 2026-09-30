@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import Backdrop from "@/components/shared/ui/Backdrop";
+import Button from "@/components/shared/ui/Button";
 import { CloseIcon, MinusIcon, PlusIcon } from "@/components/shared/ui/Icons";
 import { FREE_SHIPPING_FROM, useCartStore } from "@/store/cartStore";
-import { cn, declOfNum, formatPrice } from "@/lib/utils";
+import { declOfNum, formatPrice } from "@/lib/utils";
 
 export default function CartDrawer() {
   const isOpen = useCartStore((state) => state.isOpen);
@@ -39,7 +40,7 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed right-0 top-0 z-[100] flex h-dvh w-full max-w-[420px] flex-col bg-bg"
+            className="fixed right-0 top-0 z-modal flex h-dvh w-full max-w-[420px] flex-col bg-bg"
             role="dialog"
             aria-label="Кошик"
           >
@@ -60,23 +61,19 @@ export default function CartDrawer() {
 
             {!mounted || items.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-                <p className="u-display text-[24px]">Тут поки порожньо</p>
-                <p className="max-w-[240px] text-[13px] text-muted">
+                <p className="u-display text-[20px]">Тут поки порожньо</p>
+                <p className="u-body max-w-[240px]">
                   Оберіть щось із нової колекції — доставка від{" "}
                   {formatPrice(FREE_SHIPPING_FROM)} безкоштовна.
                 </p>
-                <Link
-                  href="/catalog"
-                  onClick={close}
-                  className="u-label border-b border-ink pb-1"
-                >
+                <Button variant="text-link" href="/catalog" onClick={close}>
                   До каталогу
-                </Link>
+                </Button>
               </div>
             ) : (
               <>
                 <div className="border-b border-line px-5 py-3.5 lg:px-6">
-                  <p className="mb-2 text-[11px] text-muted">
+                  <p className="u-caption mb-2">
                     {left > 0
                       ? `До безкоштовної доставки — ${formatPrice(left)}`
                       : "Безкоштовна доставка застосована"}
@@ -137,7 +134,7 @@ export default function CartDrawer() {
                               </button>
                             </div>
 
-                            <p className="mt-1.5 text-[11px] text-muted">
+                            <p className="u-caption mt-1.5">
                               {item.colorName}
                               {item.size ? ` · розмір ${item.size}` : ""}
                             </p>
@@ -196,18 +193,11 @@ export default function CartDrawer() {
                     </div>
                   </dl>
 
-                  <Link
-                    href="/checkout"
-                    onClick={close}
-                    className={cn(
-                      "u-label flex w-full items-center justify-center border border-ink bg-ink px-4 py-3.5 text-bg",
-                      "transition duration-300 hover:bg-transparent hover:text-ink",
-                    )}
-                  >
+                  <Button href="/checkout" onClick={close} size="sm" fullWidth>
                     Оформити замовлення
-                  </Link>
+                  </Button>
 
-                  <p className="mt-3 text-center text-[11px] text-muted">
+                  <p className="u-caption mt-3 text-center">
                     {count}{" "}
                     {declOfNum(count, ["товар", "товари", "товарів"])} у кошику
                   </p>

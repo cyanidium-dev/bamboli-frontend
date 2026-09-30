@@ -58,6 +58,8 @@
 
 Правила:
 - Сторінка «Про нас»: заголовок hero — `<h1 className="u-h2">`: семантично H1, візуально як заголовок секції (20 / 28 / 34).
+- Заголовки порожніх станів (кошик, пошук): `u-display text-[20px]`, без росту на великих екранах.
+- Виняток: напис «Created by» у футері — 8px, службовий кредит розробника, не контент сайту.
 - Виняток: заголовок на фото-банері `ToysCollection` — `u-display text-[26px] leading-[1.15]` (вузька картка, 34px завеликий).
 - Один розмір H2 на всьому сайті: **20 / 28 / 34**. Варіант 30 / 36 (зараз у `ContactSection` і `VyshyvankaSpotlight`) — відхилення, його треба привести до стандарту.
 - Абзац під H2: `13px`, `leading-relaxed`, `text-muted`, `max-w` 340–480 px (стандарт 380 px, у вузьких блоках 340 px).
@@ -89,7 +91,7 @@
 | `--section-pad` | 3rem → 3.5rem (md) → 5rem (lg) | `.u-section-py`, `.u-section-pb` |
 | `--ease-soft` | `cubic-bezier(0.22, 1, 0.36, 1)` | Tailwind `ease-soft` |
 | `--duration-fast / base / slow` | 300 / 500 / 800ms | `duration-(--duration-fast)` |
-| `--z-sticky / header / backdrop / modal / toast` | 40 / 80 / 90 / 100 / 120 | `.z-sticky`, `.z-header`, `.z-backdrop`, `.z-modal`, `.z-toast` |
+| `--z-sticky / header / backdrop / modal / toast` | 40 / 80 / 90 / 100 / 120 (sticky — також випадаючі меню сортування й підменю хедера) | `.z-sticky`, `.z-header`, `.z-backdrop`, `.z-modal`, `.z-toast` |
 
 Усередині компонента для локального шарування (бейдж над фото) лишаються `z-10` / `z-20`; усе, що конкурує з іншими компонентами, бере токен.
 

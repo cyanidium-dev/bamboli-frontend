@@ -46,7 +46,7 @@ export default function ProductCard({
               -inset-px paints the layer a pixel past the clip box: grid columns
               land on fractional widths, and an antialiased edge on that seam is
               exactly the 1px hairline you see while hovering. */}
-          <div className="absolute -inset-px transform-gpu transition-transform duration-[800ms] ease-out lg:group-hover/card:scale-[1.025]">
+          <div className="absolute -inset-px transform-gpu transition-transform duration-(--duration-slow) ease-out lg:group-hover/card:scale-[1.025]">
             <Image
               key={`${color.id}-front`}
               src={front}
@@ -54,7 +54,7 @@ export default function ProductCard({
               fill
               sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
               priority={priority}
-              className="object-cover transition-opacity duration-[550ms] ease-out lg:group-hover/card:opacity-0"
+              className="object-cover transition-opacity duration-(--duration-base) ease-out lg:group-hover/card:opacity-0"
             />
             <Image
               key={`${color.id}-back`}
@@ -63,7 +63,7 @@ export default function ProductCard({
               fill
               sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
               aria-hidden
-              className="object-cover opacity-0 transition-opacity duration-[550ms] ease-out lg:group-hover/card:opacity-100"
+              className="object-cover opacity-0 transition-opacity duration-(--duration-base) ease-out lg:group-hover/card:opacity-100"
             />
           </div>
         </Link>
@@ -106,7 +106,7 @@ export default function ProductCard({
         </div>
 
         <Link href={`/product/${product.slug}`} className="block">
-          <h3 className="u-label mb-1.5 line-clamp-2 font-bold">{product.title}</h3>
+          <h3 className="u-h3 mb-1.5 line-clamp-2">{product.title}</h3>
         </Link>
 
         <div className="mt-auto flex items-baseline justify-center gap-2">
@@ -123,7 +123,7 @@ export default function ProductCard({
             {formatPrice(price)}
           </motion.span>
           {oldPrice && (
-            <span className="text-[11px] text-muted line-through tabular-nums">
+            <span className="u-caption line-through tabular-nums">
               {formatPrice(oldPrice)}
             </span>
           )}
