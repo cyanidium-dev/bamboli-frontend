@@ -11,6 +11,8 @@ import { useCartStore } from "@/store/cartStore";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import SizeGuideModal from "@/components/productPage/SizeGuideModal";
 import ProductGallery from "@/components/productPage/ProductGallery";
+import Button from "@/components/shared/ui/Button";
+import { uiText } from "@/data/uiText";
 
 export default function ProductView({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
@@ -77,17 +79,13 @@ export default function ProductView({ product }: { product: Product }) {
 
       <div className="lg:sticky lg:top-[110px] lg:self-start">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="u-display text-[22px] leading-[1.12] sm:text-[24px] lg:text-[26px]">
-              {product.title}
-            </h1>
-            <p className="mt-2 text-[12px] text-muted">{product.subtitle}</p>
-          </div>
+          <h1 className="u-h2">{product.title}</h1>
           <FavoriteButton slug={product.slug} variant="plain" />
         </div>
 
         <div className="mt-5 flex items-baseline gap-3">
           <span
+            // eslint-disable-next-line no-restricted-syntax -- price is the focal point of the product page
             className={cn("text-[18px] tabular-nums", oldPrice && "text-clay")}
           >
             {formatPrice(price)}
@@ -167,15 +165,11 @@ export default function ProductView({ product }: { product: Product }) {
           </div>
         )}
 
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="u-label mt-9 w-full border border-ink bg-ink px-6 py-4 text-bg transition duration-300 hover:bg-transparent hover:text-ink"
-        >
-          Додати в кошик
-        </button>
+        <Button onClick={handleAdd} fullWidth className="mt-9">
+          {uiText.cart.add}
+        </Button>
 
-        <p className="mt-3 text-center text-[11px] text-muted">
+        <p className="u-caption mt-3 text-center">
           Безкоштовна доставка від 2 500 грн
         </p>
 
@@ -193,7 +187,7 @@ export default function ProductView({ product }: { product: Product }) {
                   {section.title}
                   <ChevronIcon
                     className={cn(
-                      "size-4 transition-transform duration-400",
+                      "size-4 transition-transform duration-(--duration-base)",
                       open && "rotate-180",
                     )}
                   />
@@ -207,7 +201,7 @@ export default function ProductView({ product }: { product: Product }) {
                       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="whitespace-pre-line pb-5 text-[13px] leading-relaxed text-muted">
+                      <p className="u-body whitespace-pre-line pb-5">
                         {section.body}
                       </p>
                     </motion.div>

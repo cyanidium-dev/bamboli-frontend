@@ -2,20 +2,22 @@ import Image from "next/image";
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { values, valuesImage } from "@/data/about";
+import Section from "@/components/shared/ui/Section";
 
 export default function Values() {
   return (
-    <section className="pt-14 md:pt-16 lg:pt-20">
+    <Section>
       <Container>
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <span
             aria-hidden
+            // eslint-disable-next-line no-restricted-syntax -- decorative numeral, not text
             className="u-display pointer-events-none absolute -top-8 left-[calc(100%-40px)] hidden select-none text-[140px] leading-none text-line lg:block"
           >
             03
           </span>
           <p className="u-label mb-3 text-muted">Наші цінності</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
+          <h2 className="u-h2">
             Що для нас важливо
           </h2>
         </div>
@@ -47,8 +49,8 @@ export default function Values() {
                   <p className="u-label mb-3 text-clay">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="u-label u-subheading mb-2">{value.title}</h3>
-                  <p className="text-[13px] leading-relaxed text-muted">
+                  <h3 className="u-h3 mb-2">{value.title}</h3>
+                  <p className="u-body">
                     {value.text}
                   </p>
                 </Reveal>
@@ -57,6 +59,6 @@ export default function Values() {
           </ul>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

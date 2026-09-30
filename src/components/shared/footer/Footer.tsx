@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8">
           <div>
             <Logo className="mb-4 w-[140px]" />
-            <p className="max-w-[300px] text-[13px] text-muted">
+            <p className="u-body max-w-[300px]">
               Базовий дитячий одяг як у дорослих. Шиємо у Львові з натуральних
               тканин — з любов&apos;ю до кожної деталі.
             </p>
@@ -104,6 +104,7 @@ export default function Footer() {
           </div>
 
           <div>
+            {/* eslint-disable-next-line no-restricted-syntax -- developer credit, not site content */}
             <p className="text-[8px] leading-[120%] font-medium uppercase">
               Created by:
             </p>

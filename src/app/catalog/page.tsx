@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogView from "@/components/catalogPage/CatalogView";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import { getProducts } from "@/lib/api";
@@ -18,7 +18,7 @@ export default async function CatalogPage({
   const [products, { sort }] = await Promise.all([getProducts(), searchParams]);
 
   return (
-    <Container className="pb-10 pt-10 lg:pt-14">
+    <Page>
       <CatalogHeader
         title="Каталог"
         caption="Одяг з натуральних тканин від 56 до 164 см, вишиванки, іграшки й посуд — в одному кошику."
@@ -29,6 +29,6 @@ export default async function CatalogPage({
         filterBy="category"
         initialSort={sort === "new" ? "new" : "featured"}
       />
-    </Container>
+    </Page>
   );
 }

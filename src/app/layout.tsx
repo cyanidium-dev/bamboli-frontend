@@ -6,6 +6,7 @@ import Footer from "@/components/shared/footer/Footer";
 import CartDrawer from "@/components/shared/cart/CartDrawer";
 import FlyToCartLayer from "@/components/shared/addToCart/FlyToCartLayer";
 import SearchProvider from "@/components/shared/search/SearchProvider";
+import MotionProvider from "@/components/shared/MotionProvider";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -40,12 +41,14 @@ export default function RootLayout({
       className={montserrat.variable}
     >
       <body className="flex min-h-dvh flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <CartDrawer />
-        <FlyToCartLayer />
-        <SearchProvider />
+        <MotionProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+          <FlyToCartLayer />
+          <SearchProvider />
+        </MotionProvider>
       </body>
     </html>
   );

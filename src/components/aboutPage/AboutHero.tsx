@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import Reveal from "@/components/shared/ui/Reveal";
 import { aboutHero } from "@/data/about";
+import { uiText } from "@/data/uiText";
 
 export default function AboutHero() {
   return (
-    <Container className="pb-12 pt-10 md:pb-14 lg:pb-20 lg:pt-14">
+    <Page>
       <nav aria-label="Навігація" className="u-label mb-10 text-muted lg:mb-16">
         <Link href="/" className="transition hover:text-ink">
-          Головна
+          {uiText.nav.home}
         </Link>
         <span className="px-2">/</span>
         <span className="text-ink">Про нас</span>
@@ -19,6 +20,7 @@ export default function AboutHero() {
         <div className="relative lg:col-span-5">
           <span
             aria-hidden
+            // eslint-disable-next-line no-restricted-syntax -- decorative numeral, not text
             className="u-display pointer-events-none absolute -top-10 left-0 hidden select-none text-[140px] leading-none text-line lg:block"
           >
             01
@@ -26,12 +28,12 @@ export default function AboutHero() {
 
           <div className="relative flex h-full flex-col justify-center">
             <p className="u-label mb-4 text-clay">Bamboli</p>
-            <h1 className="u-display text-[40px] leading-[0.98] lg:text-[50px]">
+            <h1 className="u-h2">
               {aboutHero.title}
             </h1>
 
             <div className="mt-8 max-w-[380px]">
-              <p className="text-[13px] leading-relaxed text-muted">
+              <p className="u-body">
                 {aboutHero.text}
               </p>
               <div className="mt-8 flex items-center gap-4">
@@ -60,6 +62,6 @@ export default function AboutHero() {
           </div>
         </Reveal>
       </div>
-    </Container>
+    </Page>
   );
 }

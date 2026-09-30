@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import { deliveryHero, deliverySections } from "@/data/delivery";
 
 export default function DeliveryHero() {
   return (
-    <Container className="pb-0 pt-10 lg:pt-14">
+    <Page bottom={false}>
       <CatalogHeader
         title={deliveryHero.title}
         caption={deliveryHero.text}
@@ -26,6 +26,6 @@ export default function DeliveryHero() {
           </Link>
         ))}
       </nav>
-    </Container>
+    </Page>
   );
 }

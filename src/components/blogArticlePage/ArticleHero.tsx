@@ -3,15 +3,16 @@ import Link from "next/link";
 import { BlogPost } from "@/types/blog";
 import { findBlogCategory } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
+import { uiText } from "@/data/uiText";
 
 export default function ArticleHero({ post }: { post: BlogPost }) {
   const category = findBlogCategory(post.category);
 
   return (
-    <div className="pt-6 lg:pt-10">
+    <div>
       <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
         <Link href="/" className="transition hover:text-ink">
-          Головна
+          {uiText.nav.home}
         </Link>
         <span className="px-2">/</span>
         <Link href="/blog" className="transition hover:text-ink">
@@ -23,7 +24,7 @@ export default function ArticleHero({ post }: { post: BlogPost }) {
 
       {category && <p className="u-label mb-4 text-muted lg:mb-6">{category.title}</p>}
 
-      <h1 className="u-display mb-8 max-w-[820px] text-[32px] leading-[1.1] lg:mb-10 lg:text-[44px]">
+      <h1 className="u-h1 mb-8 max-w-[820px] lg:mb-10">
         {post.title}
       </h1>
 

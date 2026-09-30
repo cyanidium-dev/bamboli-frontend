@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import ProductView from "@/components/productPage/ProductView";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
+import Section from "@/components/shared/ui/Section";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/api";
 import { categories } from "@/data/categories";
+import { uiText } from "@/data/uiText";
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -42,10 +45,10 @@ export default async function ProductPage({
 
   return (
     <>
-      <Container className="pt-6 lg:pt-10">
+      <Page bottom={false}>
         <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
           <Link href="/" className="transition hover:text-ink">
-            Головна
+            {uiText.nav.home}
           </Link>
           <span className="px-2">/</span>
           <Link href="/catalog" className="transition hover:text-ink">
@@ -65,9 +68,9 @@ export default async function ProductPage({
         </nav>
 
         <ProductView product={product} />
-      </Container>
+      </Page>
 
-      <section className="mt-24 bg-sand py-16 lg:mt-32 lg:py-24">
+      <Section tone="sand">
         <Container>
           <SectionHeading
             label="Вам також сподобається"
@@ -75,7 +78,7 @@ export default async function ProductPage({
           />
           <ProductGrid products={related} priorityCount={0} />
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

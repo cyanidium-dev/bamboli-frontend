@@ -1,4 +1,6 @@
 import Link from "next/link";
+import PageHeading from "@/components/shared/ui/PageHeading";
+import { uiText } from "@/data/uiText";
 
 interface Crumb {
   label: string;
@@ -18,7 +20,7 @@ export default function CatalogHeader({
     <div className="mb-6 lg:mb-10">
       <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
         <Link href="/" className="transition hover:text-ink">
-          Головна
+          {uiText.nav.home}
         </Link>
         {breadcrumbs.map((crumb) => (
           <span key={crumb.label}>
@@ -34,12 +36,7 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[44px]">
-        {title}
-      </h1>
-      {caption && (
-        <p className="mt-3 max-w-[440px] text-[13px] text-muted">{caption}</p>
-      )}
+      <PageHeading title={title} description={caption} />
     </div>
   );
 }

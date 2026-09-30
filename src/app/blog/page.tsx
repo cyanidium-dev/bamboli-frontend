@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import CatalogHeader from "@/components/catalogPage/CatalogHeader";
 import BlogView from "@/components/blogPage/BlogView";
 import { getBlogCategories, getBlogPosts } from "@/lib/api";
@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
 
   return (
-    <Container className="pt-6 pb-14 lg:pt-10 lg:pb-20">
+    <Page>
       <CatalogHeader
         title="Блог"
         caption="Історії про розмір і догляд, вишиванки й традиції, малюків, іграшки та розвиток."
@@ -23,6 +23,6 @@ export default async function BlogPage() {
       />
 
       <BlogView posts={posts} categories={categories} />
-    </Container>
+    </Page>
   );
 }

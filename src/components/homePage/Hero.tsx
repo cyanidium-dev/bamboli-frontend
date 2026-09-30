@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { heroSlides } from "@/data/home";
 import type { HeroSlide } from "@/types/hero";
+import Button from "@/components/shared/ui/Button";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
 
@@ -91,7 +92,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               href={slide.cta.href}
               aria-hidden
               tabIndex={-1}
-              className="absolute inset-0 z-[1]"
+              className="absolute inset-0 z-10"
             />
 
             <div
@@ -113,22 +114,17 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                 >
                   {slide.eyebrow}
                 </p>
-                <Heading
-                  className={cn(
-                    "u-display text-[36px] leading-[1.05] sm:text-[48px] xl:text-[48px]",
-                  )}
-                >
+                <Heading className="u-h1-hero">
                   {slide.title}
                 </Heading>
-                <Link
+                <Button
                   href={slide.cta.href}
+                  variant="light"
                   tabIndex={isActive ? 0 : -1}
-                  className={cn(
-                    "u-label pointer-events-auto relative z-[2] mt-7 border border-white bg-white px-7 py-4 text-ink transition duration-300 hover:bg-transparent hover:text-white",
-                  )}
+                  className="pointer-events-auto relative z-20 mt-7"
                 >
                   {slide.cta.label}
-                </Link>
+                </Button>
               </div>
             </div>
           </div>

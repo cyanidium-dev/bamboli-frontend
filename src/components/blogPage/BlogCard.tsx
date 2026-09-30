@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BlogPost } from "@/types/blog";
 import { findBlogCategory } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
+import Button from "@/components/shared/ui/Button";
 
 export default function BlogCard({
   post,
@@ -25,7 +26,7 @@ export default function BlogCard({
           fill
           priority={priority}
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-          className="object-cover transition-transform duration-[800ms] ease-out lg:group-hover/card:scale-[1.03]"
+          className="object-cover transition-transform duration-(--duration-slow) ease-out lg:group-hover/card:scale-[1.03]"
         />
       </Link>
 
@@ -37,21 +38,22 @@ export default function BlogCard({
         </div>
 
         <Link href={`/blog/${post.slug}`} className="block">
-          <h3 className="u-subheading mb-2 line-clamp-2 text-[19px] leading-[1.25] transition-colors group-hover/card:text-clay lg:text-[21px]">
+          <h3 className="u-title mb-2 line-clamp-2 transition-colors group-hover/card:text-clay">
             {post.title}
           </h3>
         </Link>
 
-        <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed text-muted">
+        <p className="mb-4 line-clamp-2 u-body">
           {post.excerpt}
         </p>
 
-        <Link
+        <Button
+          variant="text-link"
           href={`/blog/${post.slug}`}
-          className="u-label mt-auto inline-block w-fit border-b border-ink pb-1 transition hover:opacity-60"
+          className="mt-auto w-fit"
         >
           Читати статтю
-        </Link>
+        </Button>
       </div>
     </article>
   );

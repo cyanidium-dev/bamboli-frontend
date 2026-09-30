@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
 import { cn, declOfNum } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import Button from "@/components/shared/ui/Button";
+import { uiText } from "@/data/uiText";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 type SortKey = "recent" | "price-asc" | "price-desc";
 
@@ -66,15 +68,16 @@ export default function FavoritesView({ products }: { products: Product[] }) {
 
   if (favorites.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-5 py-20 text-center">
-        <p className="u-display text-[24px]">У вас поки немає обраного</p>
-        <p className="max-w-[280px] text-[13px] text-muted">
-          Натискайте сердечко на товарах, які вам сподобались — вони з&apos;являться тут.
-        </p>
-        <Link href="/catalog" className="u-label border-b border-ink pb-1">
-          До каталогу
-        </Link>
-      </div>
+      <EmptyState
+        className="py-20"
+        title="У вас поки немає обраного"
+        text="Натискайте сердечко на товарах, які вам сподобались — вони з'являться тут."
+        action={
+          <Button variant="text-link" href="/catalog">
+            {uiText.nav.toCatalog}
+          </Button>
+        }
+      />
     );
   }
 
@@ -103,7 +106,7 @@ export default function FavoritesView({ products }: { products: Product[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-0 top-full z-40 mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
+                className="absolute right-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
               >
                 {sortOptions.map((option) => (
                   <li key={option.key}>
@@ -131,7 +134,7 @@ export default function FavoritesView({ products }: { products: Product[] }) {
 
       <ProductGrid products={visible} priorityCount={4} />
 
-      <p className="mt-10 text-[11px] text-muted">
+      <p className="u-caption mt-10">
         {visible.length}{" "}
         {declOfNum(visible.length, ["товар", "товари", "товарів"])}
       </p>

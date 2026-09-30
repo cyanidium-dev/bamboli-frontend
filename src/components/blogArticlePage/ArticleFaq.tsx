@@ -21,7 +21,7 @@ export default function ArticleFaq({ items }: { items: BlogFaqItem[] }) {
 
   return (
     <div className="mt-14 max-w-[720px] lg:mt-16">
-      <h2 className="u-display mb-6 text-[20px] leading-[1.2] sm:text-[24px] lg:text-[24px]">
+      <h2 className="u-h2-long mb-6">
         Часті запитання
       </h2>
 
@@ -57,7 +57,7 @@ export default function ArticleFaq({ items }: { items: BlogFaqItem[] }) {
                 )}
               >
                 <div className="overflow-hidden">
-                  <p className="pb-6 pr-10 text-[13px] leading-relaxed text-muted">
+                  <p className="pb-6 pr-10 u-body">
                     {item.answer}
                   </p>
                 </div>

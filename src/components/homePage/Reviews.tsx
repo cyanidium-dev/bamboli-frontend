@@ -1,3 +1,5 @@
+import Section from "@/components/shared/ui/Section";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
 import Container from "@/components/shared/ui/Container";
 import ScrollRow from "@/components/shared/ui/ScrollRow";
 import { reviews } from "@/data/home";
@@ -6,14 +8,9 @@ export default function Reviews() {
   if (!reviews.enabled || reviews.items.length === 0) return null;
 
   return (
-    <section className="bg-mist py-12 md:py-14 lg:py-20">
+    <Section tone="mist" spacing="flush">
       <Container>
-        <div className="mb-8 lg:mb-12">
-          <p className="u-label mb-3 text-muted">Відгуки</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-            Що кажуть родини
-          </h2>
-        </div>
+        <SectionHeading label="Відгуки" title="Що кажуть родини" />
 
         <ScrollRow
           label="Відгуки покупців"
@@ -32,8 +29,8 @@ export default function Reviews() {
               </blockquote>
               <figcaption className="mt-8 border-t border-line pt-5">
                 <p className="u-label">{review.name}</p>
-                <p className="mt-1.5 text-[11px] text-muted">{review.meta}</p>
-                <p className="mt-3 text-[11px] text-muted">
+                <p className="u-caption mt-1.5">{review.meta}</p>
+                <p className="u-caption mt-3">
                   Купили: <span className="text-ink">{review.product}</span>
                 </p>
               </figcaption>
@@ -41,6 +38,6 @@ export default function Reviews() {
           ))}
         </ScrollRow>
       </Container>
-    </section>
+    </Section>
   );
 }

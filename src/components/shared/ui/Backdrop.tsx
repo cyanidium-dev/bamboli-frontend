@@ -23,7 +23,7 @@ export default function Backdrop({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="no-doc-scroll fixed inset-0 z-[90] bg-ink/25 backdrop-blur-[2px]"
+          className="no-doc-scroll fixed inset-0 z-backdrop bg-ink/25 backdrop-blur-[2px]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

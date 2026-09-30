@@ -48,7 +48,7 @@ export default function ScrollRow({
   };
 
   const arrowClass =
-    "absolute z-30 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/95 text-ink shadow-[0_2px_14px_rgba(23,22,20,0.08)] transition duration-300 hover:border-ink lg:flex";
+    "absolute z-20 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/95 text-ink shadow-[0_2px_14px_rgba(23,22,20,0.08)] transition duration-300 hover:border-ink lg:flex";
 
   return (
     <div className="relative">

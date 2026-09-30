@@ -204,7 +204,7 @@ export default function CatalogView({
           >
             Фільтр
             {activeFilters > 0 && (
-              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[9px] tracking-normal text-bg">
+              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
                 {activeFilters}
               </span>
             )}
@@ -241,7 +241,7 @@ export default function CatalogView({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute left-0 top-full z-40 mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
+                className="absolute left-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
               >
                 {sortOptions.map((option) => (
                   <li key={option.key}>
@@ -330,12 +330,12 @@ export default function CatalogView({
       {visible.length > 0 ? (
         <ProductGrid products={visible} priorityCount={4} />
       ) : (
-        <p className="py-20 text-center text-[13px] text-muted">
+        <p className="u-body py-20 text-center">
           За цим фільтром зараз нічого немає. Спробуйте інший.
         </p>
       )}
 
-      <p className="mt-10 text-[11px] text-muted">
+      <p className="u-caption mt-10">
         {visible.length}{" "}
         {declOfNum(visible.length, ["товар", "товари", "товарів"])}
       </p>

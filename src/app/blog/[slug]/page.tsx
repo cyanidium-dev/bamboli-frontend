@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Container from "@/components/shared/ui/Container";
+import Page from "@/components/shared/ui/Page";
 import ArticleHero from "@/components/blogArticlePage/ArticleHero";
 import ArticleContent from "@/components/blogArticlePage/ArticleContent";
 import ArticleFaq from "@/components/blogArticlePage/ArticleFaq";
@@ -47,10 +47,10 @@ export default async function BlogArticlePage({
   const related = await getRelatedBlogPosts(post, 4);
 
   return (
-    <Container className="pb-20 lg:pb-28">
+    <Page>
       <ArticleHero post={post} />
 
-      <div className="pt-12 lg:flex lg:gap-16 lg:pt-16">
+      <div className="pt-12 lg:flex lg:justify-between lg:gap-16 lg:pt-16">
         <article className="min-w-0 flex-1 lg:max-w-3xl">
           <ArticleContent blocks={post.content} />
 
@@ -63,6 +63,6 @@ export default async function BlogArticlePage({
       </div>
 
       <ArticleSchema post={post} />
-    </Container>
+    </Page>
   );
 }

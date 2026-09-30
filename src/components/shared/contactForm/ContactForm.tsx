@@ -3,32 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Button from "@/components/shared/ui/Button";
+import Field, { fieldControl } from "@/components/shared/ui/Field";
+import { uiText } from "@/data/uiText";
 
 const messengers = ["Telegram", "Viber", "WhatsApp", "Дзвінок"];
-
-export const contactTopics = [
-  "Розмір",
-  "Замовлення",
-  "Обмін",
-  "Співпраця",
-  "Інше",
-];
 
 type Status = "idle" | "sending" | "success" | "error";
 type Errors = Partial<Record<"name" | "phone" | "consent", string>>;
 
-const fieldClass =
-  "w-full border border-line bg-surface px-4 py-3.5 text-[14px] outline-none transition placeholder:text-muted/70 focus:border-ink";
-
 /** Shared form: home, /contacts, /size-guide. Delivers to Telegram via /api/contact. */
 export default function ContactForm({
-  withTopic = false,
   defaultTopic,
   messagePlaceholder = "Ваше питання: зріст і вік дитини, модель, що цікавить…",
   submitDecor,
 }: {
-  withTopic?: boolean;
   defaultTopic?: string;
   messagePlaceholder?: string;
   submitDecor?: React.ReactNode;
@@ -46,7 +35,7 @@ export default function ContactForm({
       name: String(data.get("name") ?? "").trim(),
       phone: String(data.get("phone") ?? "").trim(),
       messenger: String(data.get("messenger") ?? ""),
-      topic: String(data.get("topic") ?? defaultTopic ?? ""),
+      topic: defaultTopic ?? "",
       message: String(data.get("message") ?? "").trim(),
       consent: data.get("consent") === "on",
       website: String(data.get("website") ?? ""),
@@ -54,10 +43,10 @@ export default function ContactForm({
     };
 
     const nextErrors: Errors = {};
-    if (payload.name.length < 2) nextErrors.name = "Вкажіть ім'я";
+    if (payload.name.length < 2) nextErrors.name = uiText.form.errors.name;
     if (payload.phone.replace(/\D/g, "").length < 10)
-      nextErrors.phone = "Вкажіть номер телефону";
-    if (!payload.consent) nextErrors.consent = "Потрібна згода";
+      nextErrors.phone = uiText.form.errors.phone;
+    if (!payload.consent) nextErrors.consent = uiText.form.errors.consent;
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -79,39 +68,30 @@ export default function ContactForm({
   if (status === "success") {
     return (
       <div className="border border-line bg-surface p-8 lg:p-10" role="status">
-        <p className="u-display text-[28px] leading-[1.15]">Дякуємо!</p>
-        <p className="mt-3 text-[13px] leading-relaxed text-muted">
+        <p className="u-state-title">{uiText.form.thanks}</p>
+        <p className="u-body mt-5">
           Ми отримали ваше повідомлення й зв&apos;яжемося найближчим часом у
           зручному для вас месенджері.
         </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="u-label mt-6 border-b border-ink pb-1"
-        >
-          Надіслати ще одне
-        </button>
+        <Button variant="text-link" onClick={() => setStatus("idle")} className="mt-9">
+          {uiText.form.sendAnother}
+        </Button>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate className="grid gap-4 sm:grid-cols-2">
-      <label className="block">
-        <span className="u-label mb-2 block text-muted">Ім&apos;я</span>
+      <Field label="Ім'я" error={errors.name}>
         <input
           name="name"
           autoComplete="given-name"
           aria-invalid={Boolean(errors.name)}
-          className={cn(fieldClass, errors.name && "border-clay")}
+          className={fieldControl({ invalid: Boolean(errors.name) })}
         />
-        {errors.name && (
-          <span className="mt-1.5 block text-[11px] text-clay">{errors.name}</span>
-        )}
-      </label>
+      </Field>
 
-      <label className="block">
-        <span className="u-label mb-2 block text-muted">Телефон</span>
+      <Field label="Телефон" error={errors.phone}>
         <input
           name="phone"
           type="tel"
@@ -119,14 +99,11 @@ export default function ContactForm({
           autoComplete="tel"
           placeholder="+380"
           aria-invalid={Boolean(errors.phone)}
-          className={cn(fieldClass, errors.phone && "border-clay")}
+          className={fieldControl({ invalid: Boolean(errors.phone) })}
         />
-        {errors.phone && (
-          <span className="mt-1.5 block text-[11px] text-clay">{errors.phone}</span>
-        )}
-      </label>
+      </Field>
 
-      <fieldset className={cn(!withTopic && "sm:col-span-2")}>
+      <fieldset className="sm:col-span-2">
         <legend className="u-label mb-2 block text-muted">Зручний месенджер</legend>
         <div className="flex flex-wrap gap-1.5">
           {messengers.map((messenger, index) => (
@@ -146,30 +123,14 @@ export default function ContactForm({
         </div>
       </fieldset>
 
-      {withTopic && (
-        <label className="block">
-          <span className="u-label mb-2 block text-muted">Тема</span>
-          <select
-            name="topic"
-            defaultValue={defaultTopic ?? contactTopics[0]}
-            className={fieldClass}
-          >
-            {contactTopics.map((topic) => (
-              <option key={topic}>{topic}</option>
-            ))}
-          </select>
-        </label>
-      )}
-
-      <label className="block sm:col-span-2">
-        <span className="u-label mb-2 block text-muted">Питання</span>
+      <Field label="Питання" className="sm:col-span-2">
         <textarea
           name="message"
           rows={4}
           placeholder={messagePlaceholder}
-          className={cn(fieldClass, "resize-y")}
+          className={fieldControl({ className: "resize-y" })}
         />
-      </label>
+      </Field>
 
       {/* Honeypot: invisible to people, irresistible to bots. */}
       <input
@@ -199,13 +160,9 @@ export default function ContactForm({
       </label>
 
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="u-label border border-ink bg-ink px-8 py-4 text-bg transition duration-300 hover:bg-transparent hover:text-ink disabled:opacity-60"
-        >
-          {status === "sending" ? "Надсилаємо…" : "Надіслати"}
-        </button>
+        <Button type="submit" loading={status === "sending"}>
+          {status === "sending" ? uiText.form.sending : uiText.form.send}
+        </Button>
         {status === "error" && (
           <p className="text-[12px] text-clay" role="alert">
             Не вдалося надіслати. Спробуйте ще раз або напишіть нам у Telegram.

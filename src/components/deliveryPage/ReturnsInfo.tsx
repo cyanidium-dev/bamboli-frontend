@@ -1,17 +1,14 @@
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { returnsSteps } from "@/data/delivery";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
+import Section from "@/components/shared/ui/Section";
 
 export default function ReturnsInfo() {
   return (
-    <section id="returns" className="scroll-mt-[90px] pt-14 md:pt-16 lg:scroll-mt-[100px] lg:pt-20">
+    <Section id="returns">
       <Container>
-        <div className="mb-10 max-w-[560px] lg:mb-14">
-          <p className="u-label mb-3 text-muted">Обмін і повернення</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-            Якщо розмір не підійшов
-          </h2>
-        </div>
+        <SectionHeading label="Обмін і повернення" title="Якщо розмір не підійшов" className="max-w-[560px]" />
 
         <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {returnsSteps.map((step, index) => (
@@ -20,10 +17,10 @@ export default function ReturnsInfo() {
                 <p className="u-label mb-3 text-clay">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h3 className="u-subheading text-[18px] leading-[1.2]">
+                <h3 className="u-lead text-ink">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-muted">
+                <p className="mt-2 u-body">
                   {step.text}
                 </p>
               </Reveal>
@@ -31,6 +28,6 @@ export default function ReturnsInfo() {
           ))}
         </ol>
       </Container>
-    </section>
+    </Section>
   );
 }

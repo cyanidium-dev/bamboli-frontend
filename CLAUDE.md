@@ -18,6 +18,7 @@
 | Адмін-панель Sanity | [docs/spec/admin-sanity.md](docs/spec/admin-sanity.md) |
 | Інтеграції (KeyCRM, платіжні системи, Нова Пошта, GTM) | [docs/spec/integrations.md](docs/spec/integrations.md) |
 | SEO | [docs/spec/seo.md](docs/spec/seo.md) |
+| **Дизайн-система** (кольори, типографіка, компоненти, рух) | [docs/spec/design-system.md](docs/spec/design-system.md) |
 | **Маркетингова структура сайту** (цінності, УТП, FAQ, блоки всіх сторінок) | [docs/spec/marketing-structure.md](docs/spec/marketing-structure.md) |
 | Контент з Instagram (каталог, фото, tone of voice) | [docs/spec/instagram-content-export.md](docs/spec/instagram-content-export.md) |
 | **⚠️ Що НЕ входить в обсяг** | [docs/spec/scope-boundaries.md](docs/spec/scope-boundaries.md) |
@@ -83,6 +84,14 @@ npm run type-check
 ```
 
 ---
+
+## 🎨 Дизайн-система (коротко)
+Повні правила: [docs/spec/design-system.md](docs/spec/design-system.md). Стандартизація: [docs/spec/standardization-plan.md](docs/spec/standardization-plan.md).
+
+- **Не вводь одноразових значень.** Розміри тексту тільки з шкали (ролі `u-h1`, `u-h2`, `u-body`, `u-small`…), кольори тільки з палітри, відступи секцій тільки через `Section` / `Page`, z-index тільки токени. `npm run lint` ловить довільні `text-[Npx]`, `z-[N]`, HEX і `duration-[Nms]`; виняток дозволений лише з `eslint-disable-next-line … -- причина`.
+- **Компоненти:** `Section`, `Page`, `SectionHeading`, `PageHeading`, `Button` (варіанти `filled`, `outline`, `outline-light`, `light`, `text-link`), `Field`, `EmptyState` у `src/components/shared/ui`. Не пиши руками класи кнопок, полів і секцій.
+- **Тексти:** звернення «ви», формат ціни «1 200 грн», повторювані UI-тексти беремо зі словника `src/data/uiText.ts`. Правила: [docs/spec/content-guidelines.md](docs/spec/content-guidelines.md).
+- Завдання зі стандартизації не змінюють контент (тексти, поля, структуру сторінок): лише відображення.
 
 ## 📝 Примітки для розробника
 - **Не пиши промокоди** — поза обсягом

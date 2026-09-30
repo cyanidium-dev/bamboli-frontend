@@ -10,12 +10,13 @@ import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
 import { declOfNum } from "@/lib/utils";
 import { useSearchStore } from "@/store/searchStore";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 const MIN_QUERY_LENGTH = 2;
 const RESULTS_LIMIT = 24;
 
 function matches(product: Product, query: string) {
-  return [product.title, product.subtitle, product.brand]
+  return [product.title, product.brand]
     .filter(Boolean)
     .some((field) => field!.toLowerCase().includes(query));
 }
@@ -50,7 +51,7 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-0 right-0 top-0 z-[100] flex max-h-dvh flex-col overflow-y-auto bg-bg"
+            className="fixed left-0 right-0 top-0 z-modal flex max-h-dvh flex-col overflow-y-auto bg-bg"
             role="dialog"
             aria-label="Пошук товарів"
           >
@@ -65,6 +66,7 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Пошук товарів…"
+                  // eslint-disable-next-line no-restricted-syntax -- 16px on desktop keeps iOS from zooming the input
                   className="min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted lg:text-[16px]"
                 />
                 <button
@@ -81,23 +83,26 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
                 <div className="mt-6 border-t border-line pt-6">
                   {results.length > 0 ? (
                     <>
-                      <p className="mb-5 text-[12px] text-muted">
+                      <p className="u-small mb-5">
                         {results.length}{" "}
                         {declOfNum(results.length, ["товар", "товари", "товарів"])}
                       </p>
                       <ProductGrid products={results} priorityCount={4} />
                     </>
                   ) : (
-                    <div className="flex flex-col items-center gap-2 py-10 text-center">
-                      <p className="u-display text-[20px]">Нічого не знайдено</p>
-                      <p className="text-[13px] text-muted">
-                        Спробуйте інший запит або перегляньте{" "}
-                        <Link href="/catalog" onClick={close} className="border-b border-ink text-ink">
-                          весь каталог
-                        </Link>
-                        .
-                      </p>
-                    </div>
+                    <EmptyState
+                      className="py-10"
+                      title="Нічого не знайдено"
+                      text={
+                        <>
+                          Спробуйте інший запит або перегляньте{" "}
+                          <Link href="/catalog" onClick={close} className="border-b border-ink text-ink">
+                            весь каталог
+                          </Link>
+                          .
+                        </>
+                      }
+                    />
                   )}
                 </div>
               )}

@@ -3,10 +3,12 @@ import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { showroom } from "@/data/about";
 import { siteInfo } from "@/data/siteInfo";
+import Section from "@/components/shared/ui/Section";
+import Button from "@/components/shared/ui/Button";
 
 export default function Showroom() {
   return (
-    <section className="pt-14 md:pt-16 lg:pt-20">
+    <Section>
       <Container>
         <Reveal>
           <div className="grid overflow-hidden bg-ink text-bg md:grid-cols-2">
@@ -22,10 +24,10 @@ export default function Showroom() {
 
             <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 lg:py-20">
               <p className="u-label mb-5 text-bg/60">{showroom.label}</p>
-              <h2 className="u-display max-w-[420px] text-[20px] leading-[1.12] sm:text-[30px] lg:text-[36px]">
+              <h2 className="u-h2 max-w-[420px]">
                 {showroom.title}
               </h2>
-              <p className="mt-6 max-w-[400px] text-[13px] leading-relaxed text-bg/70">
+              <p className="u-body mt-6 max-w-[380px] text-bg/70">
                 {showroom.text}
               </p>
 
@@ -37,18 +39,17 @@ export default function Showroom() {
                 </li>
               </ul>
 
-              <a
+              <Button
                 href={siteInfo.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="u-label mt-10 self-start border border-bg px-7 py-4 transition duration-300 hover:bg-bg hover:text-ink"
+                variant="outline-light"
+                className="mt-10 self-start"
               >
                 {showroom.ctaLabel}
-              </a>
+              </Button>
             </div>
           </div>
         </Reveal>
       </Container>
-    </section>
+    </Section>
   );
 }
