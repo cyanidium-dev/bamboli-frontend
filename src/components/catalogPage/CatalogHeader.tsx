@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PageHeading from "@/components/shared/ui/PageHeading";
 
 interface Crumb {
   label: string;
@@ -34,12 +35,7 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <h1 className="u-display text-[34px] leading-[1.08] lg:text-[44px]">
-        {title}
-      </h1>
-      {caption && (
-        <p className="mt-3 max-w-[440px] text-[13px] text-muted">{caption}</p>
-      )}
+      <PageHeading title={title} description={caption} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import Section from "@/components/shared/ui/Section";
 import Container from "@/components/shared/ui/Container";
 import ContactForm from "@/components/shared/contactForm/ContactForm";
 import { siteInfo } from "@/data/siteInfo";
@@ -5,15 +6,13 @@ import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 
 export default function SizeGuideContactSection() {
   return (
-    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
+    <Section tone="sand">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Не впевнені з розміром?</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
-              Допоможемо підібрати
-            </h2>
-            <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">
+            <h2 className="u-h2">Допоможемо підібрати</h2>
+            <p className="u-body mt-5 max-w-[380px]">
               Напишіть зріст і вік дитини та товар, що цікавить, — підкажемо
               розмір у зручному месенджері.
             </p>
@@ -50,6 +49,6 @@ export default function SizeGuideContactSection() {
           />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

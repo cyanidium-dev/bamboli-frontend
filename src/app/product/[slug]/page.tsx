@@ -4,6 +4,7 @@ import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import ProductView from "@/components/productPage/ProductView";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
+import Section from "@/components/shared/ui/Section";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/api";
 import { categories } from "@/data/categories";
@@ -67,7 +68,7 @@ export default async function ProductPage({
         <ProductView product={product} />
       </Container>
 
-      <section className="mt-24 bg-sand py-16 lg:mt-32 lg:py-24">
+      <Section tone="sand">
         <Container>
           <SectionHeading
             label="Вам також сподобається"
@@ -75,7 +76,7 @@ export default async function ProductPage({
           />
           <ProductGrid products={related} priorityCount={0} />
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

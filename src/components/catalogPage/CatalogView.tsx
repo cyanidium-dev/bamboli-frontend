@@ -204,7 +204,7 @@ export default function CatalogView({
           >
             Фільтр
             {activeFilters > 0 && (
-              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[9px] tracking-normal text-bg">
+              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
                 {activeFilters}
               </span>
             )}
@@ -330,12 +330,12 @@ export default function CatalogView({
       {visible.length > 0 ? (
         <ProductGrid products={visible} priorityCount={4} />
       ) : (
-        <p className="py-20 text-center text-[13px] text-muted">
+        <p className="u-body py-20 text-center">
           За цим фільтром зараз нічого немає. Спробуйте інший.
         </p>
       )}
 
-      <p className="mt-10 text-[11px] text-muted">
+      <p className="u-caption mt-10">
         {visible.length}{" "}
         {declOfNum(visible.length, ["товар", "товари", "товарів"])}
       </p>

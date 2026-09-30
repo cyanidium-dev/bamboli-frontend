@@ -1,21 +1,19 @@
+import SectionHeading from "@/components/shared/ui/SectionHeading";
 import SizeChart from "@/components/shared/sizeGuide/SizeChart";
 import { sizeGroups } from "@/data/sizeGuide";
 
 export default function SizeGuideTable() {
   return (
     <div className="mb-14 border-t border-line pt-10 lg:mb-20 lg:pt-14">
-      <p className="u-label mb-3 text-muted">Мірки</p>
-      <h2 className="u-display text-[20px] leading-[1.1] sm:text-[26px] lg:text-[30px]">
-        Як правильно виміряти
-      </h2>
+      <SectionHeading label="Мірки" title="Як правильно виміряти" />
 
-      <div className="mt-8 max-w-[640px]">
+      <div className="max-w-[640px]">
         <SizeChart />
       </div>
 
       <div className="mt-12 max-w-[640px]">
         <p className="u-label mb-3 text-muted">Розмірні групи Bamboli</p>
-        <p className="mb-5 text-[13px] leading-relaxed text-muted">
+        <p className="u-body mb-5">
           На картці товару розмір обирається за розмірною групою — від неї
           залежить кількість тканини й фурнітури, тому ціна на різні розміри
           одного виробу може відрізнятися.
