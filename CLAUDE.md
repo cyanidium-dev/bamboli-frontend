@@ -85,6 +85,14 @@ npm run type-check
 
 ---
 
+## 🎨 Дизайн-система (коротко)
+Повні правила: [docs/spec/design-system.md](docs/spec/design-system.md). Стандартизація: [docs/spec/standardization-plan.md](docs/spec/standardization-plan.md).
+
+- **Не вводь одноразових значень.** Розміри тексту тільки з шкали (ролі `u-h1`, `u-h2`, `u-body`, `u-small`…), кольори тільки з палітри, відступи секцій тільки через `Section` / `Page`, z-index тільки токени. `npm run lint` ловить довільні `text-[Npx]`, `z-[N]`, HEX і `duration-[Nms]`; виняток дозволений лише з `eslint-disable-next-line … -- причина`.
+- **Компоненти:** `Section`, `Page`, `SectionHeading`, `PageHeading`, `Button` (варіанти `filled`, `outline`, `outline-light`, `light`, `text-link`), `Field`, `EmptyState` у `src/components/shared/ui`. Не пиши руками класи кнопок, полів і секцій.
+- **Тексти:** звернення «ви», формат ціни «1 200 грн», повторювані UI-тексти беремо зі словника `src/data/uiText.ts`. Правила: [docs/spec/content-guidelines.md](docs/spec/content-guidelines.md).
+- Завдання зі стандартизації не змінюють контент (тексти, поля, структуру сторінок): лише відображення.
+
 ## 📝 Примітки для розробника
 - **Не пиши промокоди** — поза обсягом
 - **Не робі особистий кабінет** — поза обсягом
