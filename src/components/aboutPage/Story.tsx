@@ -2,10 +2,11 @@ import Image from "next/image";
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { story } from "@/data/about";
+import Section from "@/components/shared/ui/Section";
 
 export default function Story() {
   return (
-    <section className="pt-14 md:pt-16 lg:pt-20">
+    <Section>
       <Container>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-6">
           <Reveal className="lg:col-span-6">
@@ -33,10 +34,10 @@ export default function Story() {
 
             <div className="relative flex h-full flex-col justify-center">
               <p className="u-label mb-3 text-clay">{story.label}</p>
-              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[32px]">
+              <h2 className="u-h2">
                 {story.title}
               </h2>
-              <div className="mt-6 space-y-4 text-[13px] leading-relaxed text-muted">
+              <div className="mt-6 space-y-4 u-body">
                 {story.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -45,6 +46,6 @@ export default function Story() {
           </Reveal>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

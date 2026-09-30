@@ -3,10 +3,11 @@ import Container from "@/components/shared/ui/Container";
 import ContactForm from "@/components/shared/contactForm/ContactForm";
 import { collab, legalDetails } from "@/data/contacts";
 import { siteInfo } from "@/data/siteInfo";
+import Section from "@/components/shared/ui/Section";
 
 export default function ContactsFormSection() {
   return (
-    <section className="mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20 overflow-hidden">
+    <Section tone="sand" className="overflow-hidden">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the two-column layout collapses. */}
         <Image
@@ -30,10 +31,10 @@ export default function ContactsFormSection() {
           <div className="flex flex-col gap-10">
             <div>
               <p className="u-label mb-3 text-muted">Напишіть нам</p>
-              <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
+              <h2 className="u-h2">
                 Форма зворотного зв&apos;язку
               </h2>
-              <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">
+              <p className="mt-5 max-w-[380px] u-body">
                 Оберіть тему й розкажіть, чим допомогти — відповімо в
                 зручному месенджері.
               </p>
@@ -41,7 +42,7 @@ export default function ContactsFormSection() {
 
             <div>
               <p className="u-label mb-2 text-ink">{collab.label}</p>
-              <p className="max-w-[380px] text-[13px] leading-relaxed text-muted">
+              <p className="max-w-[380px] u-body">
                 {collab.text}{" "}
                 <a
                   href={`mailto:${siteInfo.email}`}
@@ -68,6 +69,6 @@ export default function ContactsFormSection() {
           />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

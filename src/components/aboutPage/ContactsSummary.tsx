@@ -1,29 +1,27 @@
-import Link from "next/link";
 import Container from "@/components/shared/ui/Container";
 import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
 import { siteInfo } from "@/data/siteInfo";
+import Button from "@/components/shared/ui/Button";
+import Section from "@/components/shared/ui/Section";
 
 export default function ContactsSummary() {
   return (
-    <section className="pt-14 pb-12 md:pt-16 md:pb-14 lg:pt-20 lg:pb-20">
+    <Section className="u-section-pb">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Контакти</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
+            <h2 className="u-h2">
               Завжди на зв&apos;язку
             </h2>
-            <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">
+            <p className="mt-5 max-w-[380px] u-body">
               Питання про розмір, наявність чи замовлення — пишіть у зручний
               месенджер, відповідаємо щодня.
             </p>
 
-            <Link
-              href="/contacts"
-              className="u-label mt-9 inline-block border-b border-ink pb-1 transition hover:opacity-60"
-            >
+            <Button variant="text-link" href="/contacts" className="mt-9">
               Усі контакти
-            </Link>
+            </Button>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2">
@@ -77,6 +75,6 @@ export default function ContactsSummary() {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

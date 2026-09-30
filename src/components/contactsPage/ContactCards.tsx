@@ -8,6 +8,7 @@ import {
   ThreadsIcon,
 } from "@/components/shared/ui/Icons";
 import { contactCards, onlineHours, type ContactCardKind } from "@/data/contacts";
+import Section from "@/components/shared/ui/Section";
 
 const icons: Record<ContactCardKind, (props: { className?: string }) => React.ReactElement> = {
   phone: PhoneIcon,
@@ -19,7 +20,7 @@ const icons: Record<ContactCardKind, (props: { className?: string }) => React.Re
 
 export default function ContactCards() {
   return (
-    <section className="bg-mist pt-4 pb-12 md:pb-14 lg:pt-6 lg:pb-20">
+    <Section tone="mist" spacing="continued" className="pt-4 lg:pt-6">
       <Container>
         <Reveal>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -44,9 +45,9 @@ export default function ContactCards() {
             })}
           </ul>
 
-          <p className="mt-6 text-[13px] text-muted">{onlineHours}</p>
+          <p className="mt-6 u-body">{onlineHours}</p>
         </Reveal>
       </Container>
-    </section>
+    </Section>
   );
 }

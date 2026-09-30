@@ -3,13 +3,11 @@ import Container from "@/components/shared/ui/Container";
 import ContactForm from "@/components/shared/contactForm/ContactForm";
 import { siteInfo } from "@/data/siteInfo";
 import { InstagramIcon, TelegramIcon } from "@/components/shared/ui/Icons";
+import Section from "@/components/shared/ui/Section";
 
 export default function DeliveryContactSection() {
   return (
-    <section
-      id="contacts"
-      className="scroll-mt-[90px] mt-14 bg-sand py-12 md:py-14 md:mt-16 lg:mt-20 lg:scroll-mt-[100px] lg:py-20 overflow-hidden"
-    >
+    <Section tone="sand" id="contacts" className="overflow-hidden">
       <Container className="relative isolate">
         {/* Decorative accents from the Figma design — hidden on small screens where the two-column layout collapses. */}
         <Image
@@ -40,10 +38,10 @@ export default function DeliveryContactSection() {
         <div className="relative grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
           <div>
             <p className="u-label mb-3 text-muted">Залишились питання?</p>
-            <h2 className="u-display text-[20px] leading-[1.1] sm:text-[30px] lg:text-[36px]">
+            <h2 className="u-h2">
               Допоможемо з доставкою й оплатою
             </h2>
-            <p className="mt-5 max-w-[380px] text-[13px] leading-relaxed text-muted">
+            <p className="mt-5 max-w-[380px] u-body">
               Напишіть номер замовлення чи запитання про обмін — відповідаємо в
               зручному месенджері щодня.
             </p>
@@ -80,6 +78,6 @@ export default function DeliveryContactSection() {
           />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

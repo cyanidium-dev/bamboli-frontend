@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BlogPost } from "@/types/blog";
 import { findBlogCategory } from "@/data/blog";
 import { formatDate } from "@/lib/utils";
+import Button from "@/components/shared/ui/Button";
 
 export default function BlogCard({
   post,
@@ -37,21 +38,22 @@ export default function BlogCard({
         </div>
 
         <Link href={`/blog/${post.slug}`} className="block">
-          <h3 className="u-subheading mb-2 line-clamp-2 text-[19px] leading-[1.25] transition-colors group-hover/card:text-clay lg:text-[21px]">
+          <h3 className="u-lead mb-2 line-clamp-2 text-ink transition-colors group-hover/card:text-clay">
             {post.title}
           </h3>
         </Link>
 
-        <p className="mb-4 line-clamp-2 text-[13px] leading-relaxed text-muted">
+        <p className="mb-4 line-clamp-2 u-body">
           {post.excerpt}
         </p>
 
-        <Link
+        <Button
+          variant="text-link"
           href={`/blog/${post.slug}`}
-          className="u-label mt-auto inline-block w-fit border-b border-ink pb-1 transition hover:opacity-60"
+          className="mt-auto w-fit"
         >
           Читати статтю
-        </Link>
+        </Button>
       </div>
     </article>
   );

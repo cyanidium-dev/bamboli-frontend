@@ -31,7 +31,7 @@ export default function AboutHero() {
             </h1>
 
             <div className="mt-8 max-w-[380px]">
-              <p className="text-[13px] leading-relaxed text-muted">
+              <p className="u-body">
                 {aboutHero.text}
               </p>
               <div className="mt-8 flex items-center gap-4">

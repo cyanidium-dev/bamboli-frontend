@@ -68,7 +68,7 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
               return (
                 <h2
                   key={index}
-                  className="u-display pt-2 text-[24px] leading-[1.2] lg:text-[24px]"
+                  className="u-display pt-2 text-[24px] leading-[1.2]"
                 >
                   {block.text}
                 </h2>
@@ -111,7 +111,7 @@ export default async function ArticleContent({ blocks }: { blocks: BlogContentBl
                     />
                   </div>
                   {block.caption && (
-                    <figcaption className="mt-3 text-[12px] text-muted">
+                    <figcaption className="mt-3 u-small">
                       {block.caption}
                     </figcaption>
                   )}

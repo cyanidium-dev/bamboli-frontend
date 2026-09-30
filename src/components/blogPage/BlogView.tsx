@@ -93,7 +93,7 @@ export default function BlogView({
           </motion.div>
         </AnimatePresence>
       ) : (
-        <p className="py-16 text-center text-[13px] text-muted">
+        <p className="py-16 text-center u-body">
           У цій темі поки немає статей.
         </p>
       )}

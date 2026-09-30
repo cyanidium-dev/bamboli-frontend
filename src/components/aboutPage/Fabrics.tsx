@@ -1,24 +1,21 @@
 import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { fabrics } from "@/data/about";
+import SectionHeading from "@/components/shared/ui/SectionHeading";
+import Section from "@/components/shared/ui/Section";
 
 export default function Fabrics() {
   return (
-    <section className="mt-14 bg-mist py-12 md:py-14 md:mt-16 lg:mt-20 lg:py-20">
+    <Section tone="mist">
       <Container>
-        <div className="mb-10 max-w-[560px] lg:mb-14">
-          <p className="u-label mb-3 text-muted">Наші тканини</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
-            Тільки те, що приємно шкірі
-          </h2>
-        </div>
+        <SectionHeading label="Наші тканини" title="Тільки те, що приємно шкірі" className="max-w-[560px]" />
 
         <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
           {fabrics.map((fabric, index) => (
             <li key={fabric.title} className="bg-mist">
               <Reveal delay={index * 0.05} className="h-full p-7">
                 <h3 className="u-label u-subheading mb-3">{fabric.title}</h3>
-                <p className="text-[13px] leading-relaxed text-muted">
+                <p className="u-body">
                   {fabric.text}
                 </p>
               </Reveal>
@@ -26,6 +23,6 @@ export default function Fabrics() {
           ))}
         </ul>
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -3,14 +3,15 @@ import Container from "@/components/shared/ui/Container";
 import Reveal from "@/components/shared/ui/Reveal";
 import { ArrowIcon } from "@/components/shared/ui/Icons";
 import { quickAnswers } from "@/data/contacts";
+import Section from "@/components/shared/ui/Section";
 
 export default function QuickAnswers() {
   return (
-    <section className="pt-14 md:pt-16 lg:pt-20">
+    <Section>
       <Container>
         <Reveal>
           <p className="u-label mb-3 text-muted">Перш ніж писати</p>
-          <h2 className="u-display text-[20px] leading-[1.1] sm:text-[28px] lg:text-[34px]">
+          <h2 className="u-h2">
             Швидкі відповіді
           </h2>
 
@@ -43,6 +44,6 @@ export default function QuickAnswers() {
           </ul>
         </Reveal>
       </Container>
-    </section>
+    </Section>
   );
 }
