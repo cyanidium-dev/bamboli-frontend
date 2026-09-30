@@ -14,7 +14,7 @@ export default function Fabrics() {
           {fabrics.map((fabric, index) => (
             <li key={fabric.title} className="bg-mist">
               <Reveal delay={index * 0.05} className="h-full p-7">
-                <h3 className="u-label u-subheading mb-3">{fabric.title}</h3>
+                <h3 className="u-h3 mb-3">{fabric.title}</h3>
                 <p className="u-body">
                   {fabric.text}
                 </p>

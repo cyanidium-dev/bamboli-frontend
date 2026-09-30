@@ -48,7 +48,7 @@ export default function Values() {
                   <p className="u-label mb-3 text-clay">
                     {String(index + 1).padStart(2, "0")}
                   </p>
-                  <h3 className="u-label u-subheading mb-2">{value.title}</h3>
+                  <h3 className="u-h3 mb-2">{value.title}</h3>
                   <p className="u-body">
                     {value.text}
                   </p>

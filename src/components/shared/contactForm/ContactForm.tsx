@@ -67,7 +67,7 @@ export default function ContactForm({
   if (status === "success") {
     return (
       <div className="border border-line bg-surface p-8 lg:p-10" role="status">
-        <p className="u-display text-[20px]">Дякуємо!</p>
+        <p className="u-state-title">Дякуємо!</p>
         <p className="u-body mt-5">
           Ми отримали ваше повідомлення й зв&apos;яжемося найближчим часом у
           зручному для вас месенджері.

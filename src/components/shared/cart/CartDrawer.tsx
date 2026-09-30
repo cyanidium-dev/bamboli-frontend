@@ -61,7 +61,7 @@ export default function CartDrawer() {
 
             {!mounted || items.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-                <p className="u-display text-[20px]">Тут поки порожньо</p>
+                <p className="u-state-title">Тут поки порожньо</p>
                 <p className="u-body max-w-[240px]">
                   Оберіть щось із нової колекції — доставка від{" "}
                   {formatPrice(FREE_SHIPPING_FROM)} безкоштовна.

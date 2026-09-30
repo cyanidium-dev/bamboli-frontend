@@ -67,7 +67,7 @@ export default function FavoritesView({ products }: { products: Product[] }) {
   if (favorites.length === 0) {
     return (
       <div className="flex flex-col items-center gap-5 py-20 text-center">
-        <p className="u-display text-[20px]">У вас поки немає обраного</p>
+        <p className="u-state-title">У вас поки немає обраного</p>
         <p className="u-body max-w-[280px]">
           Натискайте сердечко на товарах, які вам сподобались — вони з&apos;являться тут.
         </p>

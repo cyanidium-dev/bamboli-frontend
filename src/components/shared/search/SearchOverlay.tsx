@@ -89,7 +89,7 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
                     </>
                   ) : (
                     <div className="flex flex-col items-center gap-2 py-10 text-center">
-                      <p className="u-display text-[20px]">Нічого не знайдено</p>
+                      <p className="u-state-title">Нічого не знайдено</p>
                       <p className="u-body">
                         Спробуйте інший запит або перегляньте{" "}
                         <Link href="/catalog" onClick={close} className="border-b border-ink text-ink">

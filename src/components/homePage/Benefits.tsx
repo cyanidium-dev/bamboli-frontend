@@ -98,7 +98,7 @@ export default function Benefits() {
                 >
                   {iconPaths[benefit.icon]}
                 </svg>
-                <h3 className="u-label u-subheading mb-3">{benefit.title}</h3>
+                <h3 className="u-h3 mb-3">{benefit.title}</h3>
                 <p className="u-body max-w-[340px]">
                   {benefit.text}
                 </p>
