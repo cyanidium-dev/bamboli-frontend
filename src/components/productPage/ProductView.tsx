@@ -84,6 +84,7 @@ export default function ProductView({ product }: { product: Product }) {
 
         <div className="mt-5 flex items-baseline gap-3">
           <span
+            // eslint-disable-next-line no-restricted-syntax -- price is the focal point of the product page
             className={cn("text-[18px] tabular-nums", oldPrice && "text-clay")}
           >
             {formatPrice(price)}

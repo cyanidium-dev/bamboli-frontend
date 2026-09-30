@@ -11,6 +11,7 @@ export default function Values() {
         <div className="relative mb-10 max-w-[560px] lg:mb-14">
           <span
             aria-hidden
+            // eslint-disable-next-line no-restricted-syntax -- decorative numeral, not text
             className="u-display pointer-events-none absolute -top-8 left-[calc(100%-40px)] hidden select-none text-[140px] leading-none text-line lg:block"
           >
             03

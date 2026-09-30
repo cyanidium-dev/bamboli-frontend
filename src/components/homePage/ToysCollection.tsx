@@ -35,6 +35,7 @@ export default function ToysCollection({ products }: { products: Product[] }) {
               />
             </div>
             <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink/85 via-ink/55 to-transparent p-6 pt-28 text-bg">
+              {/* eslint-disable-next-line no-restricted-syntax -- caption of the narrow photo banner */}
               <p className="u-display text-[26px] leading-[1.15]">
                 {toysCollection.caption}
               </p>

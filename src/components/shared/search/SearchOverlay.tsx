@@ -65,6 +65,7 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Пошук товарів…"
+                  // eslint-disable-next-line no-restricted-syntax -- 16px on desktop keeps iOS from zooming the input
                   className="min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted lg:text-[16px]"
                 />
                 <button

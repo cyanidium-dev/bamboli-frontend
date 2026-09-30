@@ -26,7 +26,7 @@ export default function BlogCard({
           fill
           priority={priority}
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-          className="object-cover transition-transform duration-[800ms] ease-out lg:group-hover/card:scale-[1.03]"
+          className="object-cover transition-transform duration-(--duration-slow) ease-out lg:group-hover/card:scale-[1.03]"
         />
       </Link>
 

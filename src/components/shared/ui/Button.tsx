@@ -48,7 +48,14 @@ const external = /^(https?:|tel:|mailto:)/;
  * parent, not to the button.
  */
 export default function Button(props: ButtonProps | LinkProps) {
-  const { variant = "filled", size = "md", fullWidth, className, children } = props;
+  const {
+    variant = "filled",
+    size = "md",
+    fullWidth,
+    className,
+    children,
+    ...rest
+  } = props;
 
   const classes = cn(
     "u-label transition duration-(--duration-fast) disabled:pointer-events-none disabled:opacity-50",
@@ -59,7 +66,7 @@ export default function Button(props: ButtonProps | LinkProps) {
   );
 
   if (props.href !== undefined) {
-    const { href, variant: _v, size: _s, fullWidth: _f, className: _c, children: _ch, ...rest } = props;
+    const { href, ...anchorProps } = rest as Omit<LinkProps, keyof BaseProps>;
 
     if (external.test(href)) {
       const isWeb = href.startsWith("http");
@@ -68,7 +75,7 @@ export default function Button(props: ButtonProps | LinkProps) {
           href={href}
           className={classes}
           {...(isWeb ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          {...rest}
+          {...anchorProps}
         >
           {children}
         </a>
@@ -76,15 +83,14 @@ export default function Button(props: ButtonProps | LinkProps) {
     }
 
     return (
-      <Link href={href} className={classes} {...rest}>
+      <Link href={href} className={classes} {...anchorProps}>
         {children}
       </Link>
     );
   }
 
-  const { variant: _v, size: _s, fullWidth: _f, className: _c, children: _ch, ...rest } = props;
   return (
-    <button type="button" className={classes} {...rest}>
+    <button type="button" className={classes} {...(rest as Omit<ButtonProps, keyof BaseProps>)}>
       {children}
     </button>
   );

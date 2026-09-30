@@ -19,6 +19,7 @@ export default function AboutHero() {
         <div className="relative lg:col-span-5">
           <span
             aria-hidden
+            // eslint-disable-next-line no-restricted-syntax -- decorative numeral, not text
             className="u-display pointer-events-none absolute -top-10 left-0 hidden select-none text-[140px] leading-none text-line lg:block"
           >
             01

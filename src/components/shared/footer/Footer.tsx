@@ -104,6 +104,7 @@ export default function Footer() {
           </div>
 
           <div>
+            {/* eslint-disable-next-line no-restricted-syntax -- developer credit, not site content */}
             <p className="text-[8px] leading-[120%] font-medium uppercase">
               Created by:
             </p>

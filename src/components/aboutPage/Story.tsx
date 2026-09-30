@@ -27,6 +27,7 @@ export default function Story() {
           <Reveal delay={0.05} className="relative lg:col-span-6 lg:pl-6">
             <span
               aria-hidden
+              // eslint-disable-next-line no-restricted-syntax -- decorative numeral, not text
               className="u-display pointer-events-none absolute -top-8 right-0 hidden select-none text-[140px] leading-none text-line lg:block"
             >
               02

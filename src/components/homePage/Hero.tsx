@@ -92,7 +92,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
               href={slide.cta.href}
               aria-hidden
               tabIndex={-1}
-              className="absolute inset-0 z-[1]"
+              className="absolute inset-0 z-10"
             />
 
             <div
@@ -121,7 +121,7 @@ export default function Hero({ slides = heroSlides }: { slides?: HeroSlide[] }) 
                   href={slide.cta.href}
                   variant="light"
                   tabIndex={isActive ? 0 : -1}
-                  className="pointer-events-auto relative z-[2] mt-7"
+                  className="pointer-events-auto relative z-20 mt-7"
                 >
                   {slide.cta.label}
                 </Button>
