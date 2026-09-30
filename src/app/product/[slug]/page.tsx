@@ -9,6 +9,7 @@ import Section from "@/components/shared/ui/Section";
 import SectionHeading from "@/components/shared/ui/SectionHeading";
 import { getProductBySlug, getProducts, getRelatedProducts } from "@/lib/api";
 import { categories } from "@/data/categories";
+import { uiText } from "@/data/uiText";
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -47,7 +48,7 @@ export default async function ProductPage({
       <Page bottom={false}>
         <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
           <Link href="/" className="transition hover:text-ink">
-            Головна
+            {uiText.nav.home}
           </Link>
           <span className="px-2">/</span>
           <Link href="/catalog" className="transition hover:text-ink">

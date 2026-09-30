@@ -3,13 +3,14 @@ import Link from "next/link";
 import Page from "@/components/shared/ui/Page";
 import Reveal from "@/components/shared/ui/Reveal";
 import { aboutHero } from "@/data/about";
+import { uiText } from "@/data/uiText";
 
 export default function AboutHero() {
   return (
     <Page>
       <nav aria-label="Навігація" className="u-label mb-10 text-muted lg:mb-16">
         <Link href="/" className="transition hover:text-ink">
-          Головна
+          {uiText.nav.home}
         </Link>
         <span className="px-2">/</span>
         <span className="text-ink">Про нас</span>

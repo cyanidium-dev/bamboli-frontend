@@ -9,6 +9,8 @@ import { ChevronIcon } from "@/components/shared/ui/Icons";
 import Button from "@/components/shared/ui/Button";
 import PageHeading from "@/components/shared/ui/PageHeading";
 import Field, { fieldControl } from "@/components/shared/ui/Field";
+import { uiText } from "@/data/uiText";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 interface Fields {
   name: string;
@@ -109,33 +111,36 @@ export default function CheckoutView() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-[440px] py-24 text-center"
+        className="mx-auto max-w-[440px] py-24"
       >
-        <p className="u-label mb-5 text-muted">Замовлення прийнято</p>
-        <h1 className="u-h1 mb-5">Дякуємо!</h1>
-        <p className="u-body mb-9">
-          Це демонстраційна версія магазину, тож замовлення нікуди не
-          надсилається. У бойовій версії тут буде номер замовлення й лист на
-          пошту.
-        </p>
-        <Button variant="text-link" href="/catalog">
-          Повернутись до каталогу
-        </Button>
+        <EmptyState
+          as="h1"
+          eyebrow="Замовлення прийнято"
+          title={uiText.form.thanks}
+          text="Це демонстраційна версія магазину, тож замовлення нікуди не надсилається. У бойовій версії тут буде номер замовлення й лист на пошту."
+          action={
+            <Button variant="text-link" href="/catalog">
+              Повернутись до каталогу
+            </Button>
+          }
+        />
       </motion.div>
     );
   }
 
   if (mounted && items.length === 0) {
     return (
-      <div className="mx-auto max-w-[420px] py-24 text-center">
-        <h1 className="u-h1 mb-5">Кошик порожній</h1>
-        <p className="u-body mb-9">
-          Додайте щось із каталогу, щоб оформити замовлення.
-        </p>
-        <Button variant="text-link" href="/catalog">
-          До каталогу
-        </Button>
-      </div>
+      <EmptyState
+        as="h1"
+        className="mx-auto max-w-[420px] py-24"
+        title="Кошик порожній"
+        text="Додайте щось із каталогу, щоб оформити замовлення."
+        action={
+          <Button variant="text-link" href="/catalog">
+            {uiText.nav.toCatalog}
+          </Button>
+        }
+      />
     );
   }
 
@@ -148,11 +153,11 @@ export default function CheckoutView() {
           <p className="u-label mb-6 text-ink">Отримувач</p>
           <div className="grid gap-5 sm:grid-cols-2">
             <TextField
-              label="Імʼя та прізвище"
+              label="Ім'я та прізвище"
               value={fields.name}
               onChange={set("name")}
               invalid={touched && invalid.name}
-              hint="Вкажіть імʼя та прізвище"
+              hint="Вкажіть ім'я та прізвище"
             />
             <TextField
               label="Телефон"
@@ -237,7 +242,7 @@ export default function CheckoutView() {
           </Field>
 
           <Button type="submit" className="mt-10 w-full lg:w-auto lg:px-14">
-            Підтвердити замовлення
+            {uiText.cart.confirmOrder}
           </Button>
         </form>
 

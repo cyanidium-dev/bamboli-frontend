@@ -8,6 +8,8 @@ import { cn, declOfNum } from "@/lib/utils";
 import { ChevronIcon } from "@/components/shared/ui/Icons";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import Button from "@/components/shared/ui/Button";
+import { uiText } from "@/data/uiText";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 type SortKey = "recent" | "price-asc" | "price-desc";
 
@@ -66,15 +68,16 @@ export default function FavoritesView({ products }: { products: Product[] }) {
 
   if (favorites.length === 0) {
     return (
-      <div className="flex flex-col items-center gap-5 py-20 text-center">
-        <p className="u-state-title">У вас поки немає обраного</p>
-        <p className="u-body max-w-[280px]">
-          Натискайте сердечко на товарах, які вам сподобались — вони з&apos;являться тут.
-        </p>
-        <Button variant="text-link" href="/catalog">
-          До каталогу
-        </Button>
-      </div>
+      <EmptyState
+        className="py-20"
+        title="У вас поки немає обраного"
+        text="Натискайте сердечко на товарах, які вам сподобались — вони з'являться тут."
+        action={
+          <Button variant="text-link" href="/catalog">
+            {uiText.nav.toCatalog}
+          </Button>
+        }
+      />
     );
   }
 

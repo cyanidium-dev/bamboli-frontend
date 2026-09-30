@@ -9,6 +9,8 @@ import Button from "@/components/shared/ui/Button";
 import { CloseIcon, MinusIcon, PlusIcon } from "@/components/shared/ui/Icons";
 import { FREE_SHIPPING_FROM, useCartStore } from "@/store/cartStore";
 import { declOfNum, formatPrice } from "@/lib/utils";
+import { uiText } from "@/data/uiText";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 export default function CartDrawer() {
   const isOpen = useCartStore((state) => state.isOpen);
@@ -60,16 +62,21 @@ export default function CartDrawer() {
             </div>
 
             {!mounted || items.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-                <p className="u-state-title">Тут поки порожньо</p>
-                <p className="u-body max-w-[240px]">
-                  Оберіть щось із нової колекції — доставка від{" "}
-                  {formatPrice(FREE_SHIPPING_FROM)} безкоштовна.
-                </p>
-                <Button variant="text-link" href="/catalog" onClick={close}>
-                  До каталогу
-                </Button>
-              </div>
+              <EmptyState
+                className="flex-1 justify-center px-8"
+                title="Тут поки порожньо"
+                text={
+                  <>
+                    Оберіть щось із нової колекції — доставка від{" "}
+                    {formatPrice(FREE_SHIPPING_FROM)} безкоштовна.
+                  </>
+                }
+                action={
+                  <Button variant="text-link" href="/catalog" onClick={close}>
+                    {uiText.nav.toCatalog}
+                  </Button>
+                }
+              />
             ) : (
               <>
                 <div className="border-b border-line px-5 py-3.5 lg:px-6">
@@ -194,7 +201,7 @@ export default function CartDrawer() {
                   </dl>
 
                   <Button href="/checkout" onClick={close} size="sm" fullWidth>
-                    Оформити замовлення
+                    {uiText.cart.checkout}
                   </Button>
 
                   <p className="u-caption mt-3 text-center">

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Button from "./Button";
+import { uiText } from "@/data/uiText";
 
 /**
  * Eyebrow + H2 (+ paragraph) (+ link on the right). The link stays beside the
@@ -14,7 +15,7 @@ export default function SectionHeading({
   title,
   description,
   href,
-  hrefLabel = "Дивитись усе",
+  hrefLabel = uiText.nav.viewAll,
   align = "left",
   className,
 }: {

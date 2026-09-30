@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "@/components/shared/ui/Button";
 import Field, { fieldControl } from "@/components/shared/ui/Field";
+import { uiText } from "@/data/uiText";
 
 const messengers = ["Telegram", "Viber", "WhatsApp", "Дзвінок"];
 
@@ -42,10 +43,10 @@ export default function ContactForm({
     };
 
     const nextErrors: Errors = {};
-    if (payload.name.length < 2) nextErrors.name = "Вкажіть ім'я";
+    if (payload.name.length < 2) nextErrors.name = uiText.form.errors.name;
     if (payload.phone.replace(/\D/g, "").length < 10)
-      nextErrors.phone = "Вкажіть номер телефону";
-    if (!payload.consent) nextErrors.consent = "Потрібна згода";
+      nextErrors.phone = uiText.form.errors.phone;
+    if (!payload.consent) nextErrors.consent = uiText.form.errors.consent;
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -67,13 +68,13 @@ export default function ContactForm({
   if (status === "success") {
     return (
       <div className="border border-line bg-surface p-8 lg:p-10" role="status">
-        <p className="u-state-title">Дякуємо!</p>
+        <p className="u-state-title">{uiText.form.thanks}</p>
         <p className="u-body mt-5">
           Ми отримали ваше повідомлення й зв&apos;яжемося найближчим часом у
           зручному для вас месенджері.
         </p>
         <Button variant="text-link" onClick={() => setStatus("idle")} className="mt-9">
-          Надіслати ще одне
+          {uiText.form.sendAnother}
         </Button>
       </div>
     );
@@ -160,7 +161,7 @@ export default function ContactForm({
 
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
         <Button type="submit" disabled={status === "sending"}>
-          {status === "sending" ? "Надсилаємо…" : "Надіслати"}
+          {status === "sending" ? uiText.form.sending : uiText.form.send}
         </Button>
         {status === "error" && (
           <p className="text-[12px] text-clay" role="alert">

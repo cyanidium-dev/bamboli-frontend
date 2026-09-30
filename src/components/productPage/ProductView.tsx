@@ -12,6 +12,7 @@ import { ChevronIcon } from "@/components/shared/ui/Icons";
 import SizeGuideModal from "@/components/productPage/SizeGuideModal";
 import ProductGallery from "@/components/productPage/ProductGallery";
 import Button from "@/components/shared/ui/Button";
+import { uiText } from "@/data/uiText";
 
 export default function ProductView({ product }: { product: Product }) {
   const [colorIndex, setColorIndex] = useState(0);
@@ -165,7 +166,7 @@ export default function ProductView({ product }: { product: Product }) {
         )}
 
         <Button onClick={handleAdd} fullWidth className="mt-9">
-          Додати в кошик
+          {uiText.cart.add}
         </Button>
 
         <p className="u-caption mt-3 text-center">

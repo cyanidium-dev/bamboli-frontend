@@ -8,6 +8,7 @@ import Button from "@/components/shared/ui/Button";
 import { FaqItem } from "@/data/faq";
 import { PlusIcon } from "@/components/shared/ui/Icons";
 import { cn } from "@/lib/utils";
+import { uiText } from "@/data/uiText";
 
 /** Animated accordion (CSS grid-rows) + FAQPage JSON-LD. Shared by / and /delivery. */
 export default function Faq({
@@ -63,7 +64,7 @@ export default function Faq({
             </p>
             {allHref && (
               <Button variant="text-link" href={allHref} className="mt-9">
-                Усі питання
+                {uiText.nav.allQuestions}
               </Button>
             )}
           </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PageHeading from "@/components/shared/ui/PageHeading";
+import { uiText } from "@/data/uiText";
 
 interface Crumb {
   label: string;
@@ -19,7 +20,7 @@ export default function CatalogHeader({
     <div className="mb-6 lg:mb-10">
       <nav aria-label="Навігація" className="u-label mb-6 text-muted lg:mb-10">
         <Link href="/" className="transition hover:text-ink">
-          Головна
+          {uiText.nav.home}
         </Link>
         {breadcrumbs.map((crumb) => (
           <span key={crumb.label}>

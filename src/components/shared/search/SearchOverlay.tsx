@@ -10,6 +10,7 @@ import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
 import { declOfNum } from "@/lib/utils";
 import { useSearchStore } from "@/store/searchStore";
+import EmptyState from "@/components/shared/ui/EmptyState";
 
 const MIN_QUERY_LENGTH = 2;
 const RESULTS_LIMIT = 24;
@@ -89,16 +90,19 @@ export default function SearchOverlay({ products }: { products: Product[] }) {
                       <ProductGrid products={results} priorityCount={4} />
                     </>
                   ) : (
-                    <div className="flex flex-col items-center gap-2 py-10 text-center">
-                      <p className="u-state-title">Нічого не знайдено</p>
-                      <p className="u-body">
-                        Спробуйте інший запит або перегляньте{" "}
-                        <Link href="/catalog" onClick={close} className="border-b border-ink text-ink">
-                          весь каталог
-                        </Link>
-                        .
-                      </p>
-                    </div>
+                    <EmptyState
+                      className="py-10"
+                      title="Нічого не знайдено"
+                      text={
+                        <>
+                          Спробуйте інший запит або перегляньте{" "}
+                          <Link href="/catalog" onClick={close} className="border-b border-ink text-ink">
+                            весь каталог
+                          </Link>
+                          .
+                        </>
+                      }
+                    />
                   )}
                 </div>
               )}
