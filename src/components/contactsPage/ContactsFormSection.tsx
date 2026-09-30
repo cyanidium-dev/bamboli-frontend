@@ -63,7 +63,6 @@ export default function ContactsFormSection() {
           </div>
 
           <ContactForm
-            withTopic
             defaultTopic="Інше"
             messagePlaceholder="Ваше питання: зріст і вік дитини, номер замовлення, пропозиція про співпрацю…"
           />

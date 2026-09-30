@@ -7,14 +7,6 @@ import { cn } from "@/lib/utils";
 
 const messengers = ["Telegram", "Viber", "WhatsApp", "Дзвінок"];
 
-export const contactTopics = [
-  "Розмір",
-  "Замовлення",
-  "Обмін",
-  "Співпраця",
-  "Інше",
-];
-
 type Status = "idle" | "sending" | "success" | "error";
 type Errors = Partial<Record<"name" | "phone" | "consent", string>>;
 
@@ -23,12 +15,10 @@ const fieldClass =
 
 /** Shared form: home, /contacts, /size-guide. Delivers to Telegram via /api/contact. */
 export default function ContactForm({
-  withTopic = false,
   defaultTopic,
   messagePlaceholder = "Ваше питання: зріст і вік дитини, модель, що цікавить…",
   submitDecor,
 }: {
-  withTopic?: boolean;
   defaultTopic?: string;
   messagePlaceholder?: string;
   submitDecor?: React.ReactNode;
@@ -46,7 +36,7 @@ export default function ContactForm({
       name: String(data.get("name") ?? "").trim(),
       phone: String(data.get("phone") ?? "").trim(),
       messenger: String(data.get("messenger") ?? ""),
-      topic: String(data.get("topic") ?? defaultTopic ?? ""),
+      topic: defaultTopic ?? "",
       message: String(data.get("message") ?? "").trim(),
       consent: data.get("consent") === "on",
       website: String(data.get("website") ?? ""),
@@ -126,7 +116,7 @@ export default function ContactForm({
         )}
       </label>
 
-      <fieldset className={cn(!withTopic && "sm:col-span-2")}>
+      <fieldset className="sm:col-span-2">
         <legend className="u-label mb-2 block text-muted">Зручний месенджер</legend>
         <div className="flex flex-wrap gap-1.5">
           {messengers.map((messenger, index) => (
@@ -145,21 +135,6 @@ export default function ContactForm({
           ))}
         </div>
       </fieldset>
-
-      {withTopic && (
-        <label className="block">
-          <span className="u-label mb-2 block text-muted">Тема</span>
-          <select
-            name="topic"
-            defaultValue={defaultTopic ?? contactTopics[0]}
-            className={fieldClass}
-          >
-            {contactTopics.map((topic) => (
-              <option key={topic}>{topic}</option>
-            ))}
-          </select>
-        </label>
-      )}
 
       <label className="block sm:col-span-2">
         <span className="u-label mb-2 block text-muted">Питання</span>
