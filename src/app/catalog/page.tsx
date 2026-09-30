@@ -21,8 +21,6 @@ export default async function CatalogPage({
       <CatalogView
         heading={{
           title: "Каталог",
-          caption:
-            "Одяг з натуральних тканин від 56 до 164 см, вишиванки, іграшки й посуд — в одному кошику.",
           breadcrumbs: [{ label: "Каталог" }],
         }}
         products={products}
