@@ -107,7 +107,7 @@ export default function ScrollTabs({
         tabIndex={canPrev ? 0 : -1}
         className={cn(arrow, "left-0 justify-start bg-gradient-to-r", !canPrev && "pointer-events-none opacity-0")}
       >
-        <ChevronIcon className="size-4 rotate-90" />
+        <ChevronIcon className="size-4 -translate-y-0.5 rotate-90" />
       </button>
       <button
         type="button"
@@ -116,7 +116,7 @@ export default function ScrollTabs({
         tabIndex={canNext ? 0 : -1}
         className={cn(arrow, "right-0 justify-end bg-gradient-to-l", !canNext && "pointer-events-none opacity-0")}
       >
-        <ChevronIcon className="size-4 -rotate-90" />
+        <ChevronIcon className="size-4 -translate-y-0.5 -rotate-90" />
       </button>
     </div>
   );
