@@ -331,7 +331,7 @@ export default function CatalogView({
         <ProductGrid products={visible} priorityCount={4} />
       ) : (
         <p className="u-body py-20 text-center">
-          За цим фільтром зараз нічого немає. Спробуйте інший.
+          У цій категорії немає товарів.
         </p>
       )}
 
