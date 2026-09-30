@@ -8,7 +8,8 @@ import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
 import { categories } from "@/data/categories";
 import { cn, declOfNum } from "@/lib/utils";
-import { ChevronIcon } from "@/components/shared/ui/Icons";
+import CatalogHeader from "@/components/catalogPage/CatalogHeader";
+import { FilterIcon, SortIcon } from "@/components/shared/ui/Icons";
 
 /** A group of link chips (types, brands) offered inside the «Фільтр» panel. */
 export interface FilterGroup {
@@ -38,6 +39,8 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
  * sit in the same row and mean three different things).
  */
 export default function CatalogView({
+  heading,
+  children,
   products,
   filterBy = "size",
   initialSort = "featured",
@@ -45,10 +48,18 @@ export default function CatalogView({
   localCategoryFilter = false,
   filterGroups = [],
 }: {
+  /** The page heading; the filter and sort icons sit on its bottom line. */
+  heading: {
+    title: string;
+    caption?: string;
+    breadcrumbs: { label: string; href?: string }[];
+  };
+  /** Rendered between the heading and the filter panel (category tabs / chips). */
+  children?: React.ReactNode;
   products: Product[];
   filterBy?: "size" | "category";
   initialSort?: SortKey;
-  /** A tab row sits right above the toolbar and already draws its top line. */
+  /** A tab row sits above the list and already draws its bottom line. */
   tabsAbove?: boolean;
   /** Section tabs filter this list in place instead of leaving for /catalog/<section>. */
   localCategoryFilter?: boolean;
@@ -152,8 +163,73 @@ export default function CatalogView({
   const setChip = (value: string | null) =>
     filterBy === "category" ? setCategory(value) : setSize(value);
 
+  const actions = (
+    <div className="flex shrink-0 items-center gap-1">
+      {hasFilter && (
+        <button
+          type="button"
+          onClick={() => setFilterOpen((open) => !open)}
+          aria-expanded={filterOpen}
+          aria-label="Фільтри"
+          className="relative flex size-10 items-center justify-center transition hover:opacity-70"
+        >
+          <FilterIcon className="size-5" />
+          {activeFilters > 0 && (
+            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
+              {activeFilters}
+            </span>
+          )}
+        </button>
+      )}
+
+      <div ref={sortRef} className="relative">
+        <button
+          type="button"
+          onClick={() => setSortOpen((open) => !open)}
+          aria-expanded={sortOpen}
+          aria-label={`Сортування: ${sortOptions.find((option) => option.key === sort)?.label}`}
+          className="flex size-10 items-center justify-center transition hover:opacity-70"
+        >
+          <SortIcon className="size-5" />
+        </button>
+
+        <AnimatePresence>
+          {sortOpen && (
+            <motion.ul
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
+            >
+              {sortOptions.map((option) => (
+                <li key={option.key}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSort(option.key);
+                      setSortOpen(false);
+                    }}
+                    className={cn(
+                      "block w-full px-4 py-2.5 text-left text-[12px] transition hover:bg-sand",
+                      option.key === sort ? "text-ink" : "text-muted",
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                </li>
+              ))}
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+
   return (
     <>
+      <CatalogHeader {...heading} actions={actions} />
+      {children}
       {filterBy === "category" && chips.length > 1 && (
         <ScrollTabs className="-mx-1 flex max-w-full items-center gap-6 border-b border-line px-1">
           {chips.map((chip, index) => {
@@ -189,143 +265,67 @@ export default function CatalogView({
         </ScrollTabs>
       )}
 
-      <div
-        className={cn(
-          "mb-8 flex flex-wrap items-center justify-between gap-4 border-line py-3.5 lg:mb-12",
-          filterBy === "category" || tabsAbove ? "border-b" : "border-y",
-        )}
-      >
-        {hasFilter ? (
-          <button
-            type="button"
-            onClick={() => setFilterOpen((open) => !open)}
-            aria-expanded={filterOpen}
-            className="u-label flex items-center gap-2 py-1"
+      <AnimatePresence initial={false}>
+        {hasFilter && filterOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
           >
-            Фільтр
-            {activeFilters > 0 && (
-              <span className="flex size-4 items-center justify-center rounded-full bg-ink text-[10px] tracking-normal text-bg">
-                {activeFilters}
-              </span>
-            )}
-            <ChevronIcon
-              className={cn(
-                "size-4 transition-transform duration-300",
-                filterOpen && "rotate-180",
+            <div className="space-y-5 border-b border-line pb-5 pt-5">
+              {filterGroups.map((group) => (
+                <div key={group.label}>
+                  <p className="u-label mb-2.5 text-muted">{group.label}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.chips.map((chip) => (
+                      <Link
+                        key={chip.href}
+                        href={chip.href}
+                        className={cn(
+                          "border px-2.5 py-1.5 text-[11px] leading-none transition",
+                          chip.active
+                            ? "border-ink bg-ink text-bg"
+                            : "border-line hover:border-ink",
+                        )}
+                      >
+                        {chip.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {showSizes && (
+                <div>
+                  <p className="u-label mb-2.5 text-muted">Розмір</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {allSizes.map((item) => (
+                      <button
+                        key={item}
+                        type="button"
+                        aria-pressed={size === item}
+                        onClick={() => setSize(size === item ? null : item)}
+                        className={cn(
+                          "border px-2.5 py-1.5 text-[11px] leading-none transition",
+                          size === item
+                            ? "border-ink bg-ink text-bg"
+                            : "border-line hover:border-ink",
+                        )}
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               )}
-            />
-          </button>
-        ) : (
-          <span />
+            </div>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        <div ref={sortRef} className="relative ml-auto shrink-0">
-          <button
-            type="button"
-            onClick={() => setSortOpen((open) => !open)}
-            className="u-label flex items-center gap-1.5 py-1"
-          >
-            {sortOptions.find((option) => option.key === sort)?.label}
-            <ChevronIcon
-              className={cn(
-                "size-4 transition-transform duration-300",
-                sortOpen && "rotate-180",
-              )}
-            />
-          </button>
-
-          <AnimatePresence>
-            {sortOpen && (
-              <motion.ul
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute left-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
-              >
-                {sortOptions.map((option) => (
-                  <li key={option.key}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSort(option.key);
-                        setSortOpen(false);
-                      }}
-                      className={cn(
-                        "block w-full px-4 py-2.5 text-left text-[12px] transition hover:bg-sand",
-                        option.key === sort && "text-ink",
-                        option.key !== sort && "text-muted",
-                      )}
-                    >
-                      {option.label}
-                    </button>
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <AnimatePresence initial={false}>
-          {hasFilter && filterOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="basis-full overflow-hidden"
-            >
-              <div className="space-y-5 pb-1 pt-3">
-                {filterGroups.map((group) => (
-                  <div key={group.label}>
-                    <p className="u-label mb-2.5 text-muted">{group.label}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {group.chips.map((chip) => (
-                        <Link
-                          key={chip.href}
-                          href={chip.href}
-                          className={cn(
-                            "border px-2.5 py-1.5 text-[11px] leading-none transition",
-                            chip.active
-                              ? "border-ink bg-ink text-bg"
-                              : "border-line hover:border-ink",
-                          )}
-                        >
-                          {chip.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-
-                {showSizes && (
-                  <div>
-                    <p className="u-label mb-2.5 text-muted">Розмір</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {allSizes.map((item) => (
-                        <button
-                          key={item}
-                          type="button"
-                          aria-pressed={size === item}
-                          onClick={() => setSize(size === item ? null : item)}
-                          className={cn(
-                            "border px-2.5 py-1.5 text-[11px] leading-none transition",
-                            size === item
-                              ? "border-ink bg-ink text-bg"
-                              : "border-line hover:border-ink",
-                          )}
-                        >
-                          {item}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      {(filterBy === "category" || tabsAbove) && <div className="mt-6 lg:mt-8" />}
 
       {visible.length > 0 ? (
         <ProductGrid products={visible} priorityCount={4} />
