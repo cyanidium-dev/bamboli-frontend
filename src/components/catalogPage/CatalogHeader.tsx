@@ -39,8 +39,13 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
-        <PageHeading title={title} description={caption} />
+      <div className="flex items-end justify-between gap-4">
+        {/* min-w-0: the title takes the width left by the icons and wraps inside it. */}
+        <PageHeading
+          title={title}
+          description={caption}
+          className="min-w-0 [&_h1]:break-words"
+        />
         {actions}
       </div>
     </div>
