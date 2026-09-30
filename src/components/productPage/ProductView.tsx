@@ -78,12 +78,7 @@ export default function ProductView({ product }: { product: Product }) {
 
       <div className="lg:sticky lg:top-[110px] lg:self-start">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="u-h2">
-              {product.title}
-            </h1>
-            <p className="u-small mt-2">{product.subtitle}</p>
-          </div>
+          <h1 className="u-h2">{product.title}</h1>
           <FavoriteButton slug={product.slug} variant="plain" />
         </div>
 
