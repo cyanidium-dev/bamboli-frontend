@@ -106,7 +106,7 @@ export default function ProductCard({
         </div>
 
         <Link href={`/product/${product.slug}`} className="block">
-          <h3 className="u-label mb-1.5 line-clamp-2 font-display font-bold">{product.title}</h3>
+          <h3 className="u-label mb-1.5 line-clamp-2 font-bold">{product.title}</h3>
         </Link>
 
         <div className="mt-auto flex items-baseline justify-center gap-2">

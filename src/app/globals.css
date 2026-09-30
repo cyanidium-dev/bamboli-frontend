@@ -15,7 +15,43 @@
   --color-clay: #a8624a;
 
   --font-sans: var(--font-montserrat);
-  --font-display: var(--font-montserrat);
+
+  /* Soft deceleration, no bounce: the one easing used for reveals and links. */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  /* Vertical rhythm between sections (mt / pt) and inside coloured ones (py). */
+  --section-gap: 3.5rem;
+  --section-pad: 3rem;
+
+  /* Transition durations. */
+  --duration-fast: 300ms;
+  --duration-base: 500ms;
+  --duration-slow: 800ms;
+
+  /* Page-level stacking order. Inside a component keep z-10 / z-20 for local
+     layering (badges over a photo); anything that competes with other
+     components takes a token. */
+  --z-sticky: 40;
+  --z-header: 80;
+  --z-backdrop: 90;
+  --z-modal: 100;
+  --z-toast: 120;
+}
+
+@media (width >= theme(--breakpoint-md)) {
+  :root {
+    --section-gap: 4rem;
+    --section-pad: 3.5rem;
+  }
+}
+
+@media (width >= theme(--breakpoint-lg)) {
+  :root {
+    --section-gap: 5rem;
+    --section-pad: 5rem;
+  }
 }
 
 @layer base {
@@ -44,7 +80,7 @@
     color: var(--color-ink);
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.3;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -113,7 +149,7 @@
 
   /* Headings: Montserrat 700, caps. */
   .u-display {
-    font-family: var(--font-display), system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: -0.01em;
     text-transform: uppercase;
@@ -122,8 +158,101 @@
   /* Subheadings: Montserrat 500. Sets no size or tracking, so it composes
      with .u-label as well as with explicit text sizes. */
   .u-subheading {
-    font-family: var(--font-display), system-ui, sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
     font-weight: 500;
+  }
+
+  /* Type scale. Each role is self-contained: size, weight, leading, tracking
+     and caps are set here, so markup only picks the role. Sizes step up at
+     the sm and lg breakpoints. */
+  .u-h1,
+  .u-h1-hero,
+  .u-h2 {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  /* Inner-page H1: 28 / 34 / 40. */
+  .u-h1 {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+  /* Home hero H1: 36 / 48. */
+  .u-h1-hero {
+    font-size: 36px;
+    line-height: 1.05;
+  }
+
+  /* Section H2: 20 / 28 / 34. */
+  .u-h2 {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  /* H3 / card title: the micro-label in bold. */
+  .u-h3 {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  /* Lead paragraph and pull quotes: 16 / 20, medium. */
+  .u-lead {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-muted);
+  }
+
+  /* Paragraph under a heading. */
+  .u-body {
+    font-size: 13px;
+    line-height: 1.625;
+    color: var(--color-muted);
+  }
+
+  /* Secondary text: card descriptions, meta lines. */
+  .u-small {
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+
+  .u-caption {
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+
+  @media (width >= theme(--breakpoint-sm)) {
+    .u-h1 {
+      font-size: 34px;
+    }
+
+    .u-h1-hero {
+      font-size: 48px;
+    }
+
+    .u-h2 {
+      font-size: 28px;
+    }
+  }
+
+  @media (width >= theme(--breakpoint-lg)) {
+    .u-h1 {
+      font-size: 40px;
+    }
+
+    .u-h2 {
+      font-size: 34px;
+    }
+
+    .u-lead {
+      font-size: 20px;
+    }
   }
 
   /* Understated link with a rule that grows from the left on hover. */
@@ -141,7 +270,7 @@
     background: currentColor;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 450ms var(--ease-soft);
   }
 
   .u-underline:hover::after,
@@ -151,6 +280,45 @@
 }
 
 @layer utilities {
+  /* Section spacing. Plain sections open with .u-section-pt; coloured ones
+     with .u-section-mt + .u-section-py (or -pb when they continue the block
+     above). All read --section-gap / --section-pad, which step at md and lg. */
+  .u-section-mt {
+    margin-top: var(--section-gap);
+  }
+
+  .u-section-pt {
+    padding-top: var(--section-gap);
+  }
+
+  .u-section-py {
+    padding-block: var(--section-pad);
+  }
+
+  .u-section-pb {
+    padding-bottom: var(--section-pad);
+  }
+
+  .z-sticky {
+    z-index: var(--z-sticky);
+  }
+
+  .z-header {
+    z-index: var(--z-header);
+  }
+
+  .z-backdrop {
+    z-index: var(--z-backdrop);
+  }
+
+  .z-modal {
+    z-index: var(--z-modal);
+  }
+
+  .z-toast {
+    z-index: var(--z-toast);
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
