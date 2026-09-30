@@ -39,7 +39,7 @@ export default function CatalogHeader({
         ))}
       </nav>
 
-      <div className="flex items-end justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
         <PageHeading title={title} description={caption} />
         {actions}
       </div>

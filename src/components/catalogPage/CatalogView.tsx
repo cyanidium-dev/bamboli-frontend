@@ -164,7 +164,7 @@ export default function CatalogView({
     filterBy === "category" ? setCategory(value) : setSize(value);
 
   const actions = (
-    <div className="flex shrink-0 items-center gap-1">
+    <div className="ml-auto flex shrink-0 items-center gap-1">
       {hasFilter && (
         <button
           type="button"
