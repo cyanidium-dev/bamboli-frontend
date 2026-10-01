@@ -171,7 +171,7 @@ export default function CatalogView({
           onClick={() => setFilterOpen((open) => !open)}
           aria-expanded={filterOpen}
           aria-label="Фільтри"
-          className="relative flex h-8 w-5 items-center py-1.5 justify-center transition hover:opacity-70"
+          className="relative flex h-5 w-5 items-center justify-center transition hover:opacity-70"
         >
           <FilterIcon className="size-5" />
           {activeFilters > 0 && (
@@ -188,7 +188,7 @@ export default function CatalogView({
           onClick={() => setSortOpen((open) => !open)}
           aria-expanded={sortOpen}
           aria-label={`Сортування: ${sortOptions.find((option) => option.key === sort)?.label}`}
-          className="flex h-8 w-5 items-center py-1.5 justify-center transition hover:opacity-70"
+          className="flex h-5 w-5 items-center justify-center transition hover:opacity-70"
         >
           <SortIcon className="size-5" />
         </button>
