@@ -26,7 +26,7 @@ export default function EmptyState({
   return (
     <div className={cn("flex flex-col items-center text-center", className)}>
       {eyebrow && <p className="u-label mb-5 text-muted">{eyebrow}</p>}
-      <Title className={as === "h1" ? "u-h1" : "u-state-title"}>{title}</Title>
+      <Title className={as === "h1" ? "u-h2" : "u-state-title"}>{title}</Title>
       {text && <p className="u-body mt-5 max-w-[380px]">{text}</p>}
       {action && <div className="mt-9">{action}</div>}
     </div>
