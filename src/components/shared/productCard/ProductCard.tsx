@@ -8,6 +8,7 @@ import { Badge, Product } from "@/types/product";
 import { cn, defaultSize, discountPercent, formatPrice } from "@/lib/utils";
 import FavoriteButton from "./FavoriteButton";
 import ColorSwatches from "./ColorSwatches";
+import { ChevronIcon } from "@/components/shared/ui/Icons";
 
 const badgeLabel: Record<Badge, string> = {
   new: "Новинка",
@@ -23,9 +24,13 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   const [colorIndex, setColorIndex] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const color = product.colors[colorIndex];
-  const [front, back = front] = color.images;
+  const imageCount = color.images.length;
+
+  const step = (direction: 1 | -1) =>
+    setImageIndex((imageIndex + direction + imageCount) % imageCount);
 
   // The first in-stock size decides the price shown, so the card always has a
   // concrete price instead of a «від» range.
@@ -47,24 +52,23 @@ export default function ProductCard({
               land on fractional widths, and an antialiased edge on that seam is
               exactly the 1px hairline you see while hovering. */}
           <div className="absolute -inset-px transform-gpu transition-transform duration-(--duration-slow) ease-out lg:group-hover/card:scale-[1.025]">
-            <Image
-              key={`${color.id}-front`}
-              src={front}
-              alt={product.title}
-              fill
-              sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
-              priority={priority}
-              className="object-cover transition-opacity duration-(--duration-base) ease-out lg:group-hover/card:opacity-0"
-            />
-            <Image
-              key={`${color.id}-back`}
-              src={back}
-              alt=""
-              fill
-              sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
-              aria-hidden
-              className="object-cover opacity-0 transition-opacity duration-(--duration-base) ease-out lg:group-hover/card:opacity-100"
-            />
+            {/* All photos of the colour stacked; only opacity changes, so
+                switching crossfades instead of popping. */}
+            {color.images.map((src, index) => (
+              <Image
+                key={`${color.id}-${index}`}
+                src={src}
+                alt={index === imageIndex ? product.title : ""}
+                aria-hidden={index !== imageIndex}
+                fill
+                sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
+                priority={priority && index === 0}
+                className={cn(
+                  "object-cover transition-opacity duration-(--duration-base) ease-out",
+                  index === imageIndex ? "opacity-100" : "opacity-0",
+                )}
+              />
+            ))}
           </div>
         </Link>
 
@@ -86,6 +90,44 @@ export default function ProductCard({
           </div>
         )}
 
+        {imageCount > 1 && (
+          <>
+            {([-1, 1] as const).map((direction) => (
+              <button
+                key={direction}
+                type="button"
+                onClick={() => step(direction)}
+                aria-label={direction === 1 ? "Наступне фото" : "Попереднє фото"}
+                className={cn(
+                  "absolute top-1/2 z-20 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-bg/60 text-ink transition hover:bg-bg active:scale-90",
+                  direction === 1 ? "right-1" : "left-1",
+                )}
+              >
+                <ChevronIcon
+                  className={cn(
+                    "size-5",
+                    direction === 1 ? "-rotate-90" : "rotate-90",
+                  )}
+                />
+              </button>
+            ))}
+          </>
+        )}
+
+        {imageCount > 1 && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center gap-1.5">
+            {color.images.map((_, index) => (
+              <span
+                key={index}
+                className={cn(
+                  "size-1.5 rounded-full bg-white transition-opacity duration-(--duration-base) drop-shadow-[0_1px_2px_rgba(23,22,20,0.35)]",
+                  index === imageIndex ? "opacity-100" : "opacity-50",
+                )}
+              />
+            ))}
+          </div>
+        )}
+
         <FavoriteButton
           slug={product.slug}
           className="absolute right-3 top-3 z-20"
@@ -100,7 +142,10 @@ export default function ProductCard({
             <ColorSwatches
               colors={product.colors}
               activeIndex={colorIndex}
-              onChange={setColorIndex}
+              onChange={(index) => {
+                setColorIndex(index);
+                setImageIndex(0);
+              }}
             />
           )}
         </div>
