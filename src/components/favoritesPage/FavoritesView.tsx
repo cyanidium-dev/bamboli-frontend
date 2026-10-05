@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useMemo, useState } from "react";
 import ProductGrid from "@/components/shared/productCard/ProductGrid";
 import { Product } from "@/types/product";
-import { cn, declOfNum } from "@/lib/utils";
-import { ChevronIcon } from "@/components/shared/ui/Icons";
+import { declOfNum } from "@/lib/utils";
+import Dropdown from "@/components/shared/ui/Dropdown";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import Button from "@/components/shared/ui/Button";
 import { uiText } from "@/data/uiText";
@@ -22,31 +21,9 @@ const sortOptions: { key: SortKey; label: string }[] = [
 export default function FavoritesView({ products }: { products: Product[] }) {
   const [mounted, setMounted] = useState(false);
   const [sort, setSort] = useState<SortKey>("recent");
-  const [sortOpen, setSortOpen] = useState(false);
-  const sortRef = useRef<HTMLDivElement>(null);
   const slugs = useFavoritesStore((state) => state.slugs);
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    if (!sortOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (!sortRef.current?.contains(event.target as Node)) {
-        setSortOpen(false);
-      }
-    };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSortOpen(false);
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [sortOpen]);
 
   const favorites = useMemo(() => {
     if (!mounted) return [];
@@ -84,52 +61,15 @@ export default function FavoritesView({ products }: { products: Product[] }) {
   return (
     <>
       <div className="mb-8 flex flex-wrap items-center justify-end gap-4 border-y border-line py-3.5 lg:mb-12">
-        <div ref={sortRef} className="relative shrink-0">
-          <button
-            type="button"
-            onClick={() => setSortOpen((open) => !open)}
-            className="u-label flex items-center gap-1.5 py-1"
-          >
-            {sortOptions.find((option) => option.key === sort)?.label}
-            <ChevronIcon
-              className={cn(
-                "size-4 transition-transform duration-300",
-                sortOpen && "rotate-180",
-              )}
-            />
-          </button>
-
-          <AnimatePresence>
-            {sortOpen && (
-              <motion.ul
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-0 top-full z-sticky mt-2 w-[210px] max-w-[calc(100vw-2rem)] border border-line bg-bg py-1 shadow-[0_8px_30px_rgba(23,22,20,0.06)]"
-              >
-                {sortOptions.map((option) => (
-                  <li key={option.key}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSort(option.key);
-                        setSortOpen(false);
-                      }}
-                      className={cn(
-                        "block w-full px-4 py-2.5 text-left text-[12px] transition hover:bg-sand",
-                        option.key === sort && "text-ink",
-                        option.key !== sort && "text-muted",
-                      )}
-                    >
-                      {option.label}
-                    </button>
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>
-        </div>
+        <Dropdown
+          className="shrink-0"
+          value={sort}
+          options={sortOptions.map((option) => ({
+            value: option.key,
+            label: option.label,
+          }))}
+          onChange={(value) => setSort(value as SortKey)}
+        />
       </div>
 
       <ProductGrid products={visible} priorityCount={4} />
