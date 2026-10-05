@@ -99,7 +99,7 @@ export default function ProductCard({
                 onClick={() => step(direction)}
                 aria-label={direction === 1 ? "Наступне фото" : "Попереднє фото"}
                 className={cn(
-                  "absolute top-1/2 z-20 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-bg/60 text-ink transition hover:bg-bg active:scale-90 lg:opacity-0 lg:group-hover/card:opacity-100 lg:focus-visible:opacity-100",
+                  "absolute top-1/2 z-20 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-bg/60 text-ink transition hover:bg-bg active:scale-90",
                   direction === 1 ? "right-1" : "left-1",
                 )}
               >
