@@ -351,6 +351,31 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /*
+   * Thin, quiet scrollbar for lists inside panels. Chrome/Safari ignore the
+   * ::-webkit-scrollbar rules when scrollbar-width is set, so the standard
+   * properties are only used where the webkit pseudo-elements don't exist.
+   */
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 2px;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    .thin-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-line) transparent;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
