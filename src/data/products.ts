@@ -101,6 +101,7 @@ const seeds: Seed[] = [
     audience: ["malyuky"],
     badges: ["top"],
     sizes: [
+      ["50–56", 880],
       ["56–62", 880],
       ["68–74", 980],
       ["80–86", 1080],
