@@ -34,7 +34,7 @@ export default function FavoriteButton({
         variant === "overlay"
           ? cn("size-9 hover:scale-110", active ? "text-ink" : "text-white")
           : cn(
-              "size-8 text-ink opacity-70 hover:opacity-100",
+              "size-8 text-ink opacity-70 hover:opacity-100 lg:size-10",
               active && "opacity-100",
             ),
         className,
@@ -49,7 +49,7 @@ export default function FavoriteButton({
                 "size-[22px] drop-shadow-[0_1px_3px_rgba(23,22,20,0.35)]",
                 active ? "fill-ink" : "fill-white",
               )
-            : cn("size-[18px]", active && "fill-ink"),
+            : cn("size-[18px] lg:size-6", active && "fill-ink"),
         )}
       />
     </button>

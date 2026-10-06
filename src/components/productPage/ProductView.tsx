@@ -85,7 +85,7 @@ export default function ProductView({ product }: { product: Product }) {
       </div>
 
       <div className="lg:sticky lg:top-[110px] lg:self-start">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center justify-between gap-4">
           <h1 className="u-h2">{product.title}</h1>
           <FavoriteButton slug={product.slug} variant="plain" />
         </div>
@@ -118,7 +118,11 @@ export default function ProductView({ product }: { product: Product }) {
 
         {hasSizes && (
           <div className="mt-8">
-            <div className="mb-6 flex justify-end">
+            <div className="mb-3 flex items-baseline justify-between">
+              <p className="u-label text-muted">
+                Розмір{size ? " — " : ""}
+                {size && <span className="text-ink">{size}</span>}
+              </p>
               <button
                 type="button"
                 onClick={() => setSizeGuideOpen(true)}
